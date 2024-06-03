@@ -1,4 +1,4 @@
-@WebShop_Backend_HostAddress = http://localhost:5045
+@WebShop_Backend_HostAddress = http://localhost:5020
 
 GET {{WebShop_Backend_HostAddress}}/weatherforecast/
 Accept: application/json
