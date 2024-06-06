@@ -51,6 +51,7 @@ namespace WebShop_Backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Basket")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("TEXT");
 
