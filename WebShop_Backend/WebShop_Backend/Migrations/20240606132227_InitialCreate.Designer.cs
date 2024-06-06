@@ -10,7 +10,7 @@ using WebShop_Backend.Infrastructure;
 namespace WebShop_Backend.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20240606084810_InitialCreate")]
+    [Migration("20240606132227_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,6 +54,7 @@ namespace WebShop_Backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Basket")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("TEXT");
 
