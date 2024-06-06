@@ -1,0 +1,675 @@
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: MuseoModerno, sans-serif;
+}
+
+header {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    background-color: coral;
+    border: 2px;
+    border-style: none none solid none;
+    border-color: rgb(250, 118, 70);
+    animation-name: anim;
+    animation-direction: normal;
+    animation-duration: .2s;
+}
+
+#logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#logo a {
+    display: flex;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 20pt;
+}
+
+nav {
+    position: relative;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 60px;
+    background-color: coral;
+}
+
+nav div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+}
+
+#nav-left {
+    display: flex;
+    justify-content: left;
+    margin-left: 10%;
+}
+
+#nav-left a {
+    height: 100%;
+    width: 100px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    margin-right: 10px;
+}
+
+#nav-left a:hover {
+    border-style: none none solid none;
+    border-width: 5px;
+    border-color: rgb(255, 255, 255);
+}
+
+#nav-right {
+    margin-right: 10%;
+}
+
+#search {
+    margin-right: 20px;
+    height: 35px;
+    width: 50%;
+}
+
+#input-box {
+    display: flex;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    background-position: 98% center;
+    padding-left: 5px;
+}
+
+#input-box::-webkit-search-decoration,
+#input-box::-webkit-search-cancel-button,
+#input-box::-webkit-search-results-button,
+#input-box::-webkit-search-results-decoration,
+#input-box::-ms-clear,
+#input-box::-ms-reveal {
+    display: none;
+}
+
+#input-logo {
+    position: absolute;
+    border: none;
+    outline: none;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 100%;
+    margin-right: 5px;
+}
+
+#input-logo:hover {
+    cursor: pointer;
+}
+
+#input-logo:active {
+    outline: none;
+}
+
+nav div a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav div button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+nav div a:hover, nav div button:hover {
+    cursor: pointer;
+}
+
+#cart {
+    --invertCart: 0%;
+    filter: invert(var(--invertCart));
+    margin-left: 0px;
+    width: 37px;
+    height: 22px;
+}
+
+#cart:hover {
+    --invertCart: 100%;
+    transition: .2s;
+    filter: invert(var(--invertCart));
+}
+
+#char {
+    --invert: 0%;
+    filter: invert(var(--invert));
+    margin-left: 20px;
+    width: 37px;
+    height: 22px;
+}
+
+#char:hover {
+    --invert: 100%;
+    transition: .2s;
+    filter: invert(var(--invert));
+}
+
+#menu-icon {
+    display: none;
+}
+
+#menu-icon:hover {
+    transition: .2s;
+    filter: invert(100%);
+}
+
+#sidebar {
+    display: none;
+    justify-content: center;
+    position: fixed;
+    margin-right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100vh - 60px - 90px);
+    background-color: rgba(255, 100, 70, .9)
+}
+
+#sidebar div {
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar div div {
+    flex-direction: row;
+    justify-content: center;
+}
+
+#sidebar div div input {
+    width: 30px;
+}
+
+#sidebar div div a {
+    color: black;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    background-color: rgb(245, 245, 245);
+}
+
+#searchArticles {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    width: 80%;
+    height: 100px;
+    background-color: white;
+}
+
+select {
+    border: none;
+    outline: none;
+}
+
+.filter, #sort {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 20%;
+    height: 35px;
+    background-color: rgb(245, 245, 245);
+}
+
+.filter:hover {
+    cursor: pointer;
+    border-style: solid;
+    border-width: 1px;
+    border-color: coral;
+}
+
+#articleForm {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 100px;
+    width: 50%;
+}
+
+#descriptionText {
+    display: flex;
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    justify-content: center;
+    background-color: white;
+    align-items: center;
+    margin: 25px auto;
+    width: 50%;
+}
+
+#articleForm div {
+    width: 100%;
+}
+
+#articleForm div div[class="buyButton"] {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 120px;
+    color: white;
+}
+
+#article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    margin: auto;
+    width: 20%;
+}
+
+#description {
+    display: flex;
+    flex-direction: column;
+}
+
+#description div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 30px;
+}
+
+#colorDiv div {
+    background-color: aqua;
+    width: 30px;
+    border-radius: 100%;
+}
+
+#description div select {
+    margin-top: 25px;
+    width: 120px;
+    height: 30px;
+}
+
+#buyDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+#quantity {
+    border-style: solid;
+    border-width: 1px;
+    border-color: coral;
+}
+
+#desciption h2 {
+    display: flex;
+    background-color: purple;
+    justify-content: center;
+}
+
+#article img {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#articles {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    min-height: calc(100vh - 60px - 150px);
+    width: 80%;
+}
+
+#supportText {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0px;
+    text-decoration: none;
+    color: black;
+    background-color: rgb(245, 245, 245);
+    width: calc(100% / 4);
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.item img {
+    margin-top: 20px;
+    object-fit: cover;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    width: 80%;
+    background-size: 100%;
+    background-position: center;
+}
+
+.item h1 {
+    display: flex;
+    justify-content: center;
+    width: 75%;
+}
+
+.buyButton {
+    background-color: coral;
+}
+
+.buyButton:hover {
+    background-color: rgb(232, 116, 74);
+}
+
+.buyButton:active {
+    background-color: rgb(216, 107, 68);
+}
+
+#cartMenu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin-top: 152px;
+    right: calc(57px + 10%);
+    width: 250px;
+    height: 75px;
+    border-width: 2px;
+    border-style: solid;
+    border-top: 0;
+    border-color: coral;
+    background-color: rgb(255, 166, 133);
+}
+
+#cartMenu div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#cartMenu div div {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#basketButton {
+    margin-top: 5px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    width: 75%;
+    height: 30px;
+}
+
+#basketButton:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#basketButton:active {
+    background-color: rgb(235, 235, 235);
+}
+
+#loginMenu {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    margin-top: 152px;
+    right: 10%;
+    width: 250px;
+    height: 200px;
+    border-width: 2px;
+    border-style: solid;
+    border-top: 0;
+    border-color: coral;
+    background-color: rgb(255, 166, 133);
+}
+
+#loginMenu div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#loginMenu div div {
+    display: block;
+    width: 80%;
+    margin-top: 10px;
+}
+
+#loginMenu div div div {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    justify-content: center;
+}
+
+#loginMenu div div div input[type=button] {
+    background-color: white;
+    width: 100%;
+}
+
+#loginMenu div div div input[type=button]:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#loginMenu div div div input[type=button]:active {
+    background-color: rgb(235, 235, 235);
+}
+
+#loginMenu div div input, #loginMenu div div textarea {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+#registerText {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#loginRegister {
+    margin: auto;
+    width: 30%;
+    margin-top: 50px;
+    margin-bottom: 17px;
+    background-color: coral;
+}
+
+#loginRegister div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 25px;
+}
+
+#loginRegister div input {
+    width: 75%;
+    border: none;
+    outline: none;
+}
+
+#passwordLogin, #name2 {
+    padding-top: 10px;
+}
+
+#loginRegister div input[type=button] {
+    background-color: white;
+    height: 30px;
+    width: 150px;
+}
+
+#loginRegister div input[type=button]:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+#loginRegister div input[type=button]:active {
+    background-color: rgb(214, 214, 214);
+}
+
+footer {
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    margin-top: auto;
+    width: 100%;
+    height: 150px;
+    background-color: rgb(43, 43, 43);
+    color: rgb(245, 245, 245);
+}
+
+.content {
+    margin: auto;
+    height: 0%;
+    width: 80%;
+}
+
+@media only screen and (max-width: 950px) {
+    .item{
+        width: calc(100% / 3);
+    }
+      #loginRegister {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .item{
+        width: calc(100% / 2);
+    }
+    .filter {
+        font-size: 10px;
+    }
+    .filter option {
+        font-size: 10px;
+    }
+    #cart {
+        display: none;
+    }
+
+    #cartMenu {
+        flex-direction: column;
+    }
+
+    #cartMenu, #cartContent {
+        flex-direction: column;
+    }
+
+    #char {
+        display: none;
+    }
+
+    #menu-icon {
+        display: flex;
+        width: 37px;
+        height: 22px;
+        margin-right: 20px;
+    }
+
+    #nav-left {
+        display: none;
+    }
+
+    #nav-right {
+        width: 100%;
+        margin-right: 0%;
+        margin-left: 20px;
+    }
+
+    #search {
+        height: 35px;
+        width: 100%;
+    }
+  }
+
+@media only screen and (max-width: 599px) {
+
+    .item img {
+      height: 100%;
+    }
+    #loginRegister {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .item img {
+      height: 90%;
+    }
+    #articleForm {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #loginRegister {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 335px) {
+    .item img {
+      height: 40%;
+      width: 85%;
+      background-size: cover;
+    }
+
+    .filter, #sort {
+        font-size: 12px;
+    }
+
+    .select select {
+        font-size: 10px;
+    }
+
+    #logo a {
+        font-size: 18px;
+    }
+}
