@@ -46,4 +46,19 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 
 logger.LogInformation("API starting...");
 
+try
+{
+    var context = services.GetRequiredService<WebShopContext>();
+    context.Database.Migrate();
+
+    if (!context.Products.Any())
+    {
+        FakeData.InitializeData(10);
+    }
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "Migration errror...");
+}
+
 app.Run();
