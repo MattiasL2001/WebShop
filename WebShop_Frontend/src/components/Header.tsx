@@ -4,11 +4,29 @@ import searchIcon from '../images/search_black.png';
 import shoppingCartIcon from '../images/WebShop Bag Logo White.png';
 import charIcon from '../images/char.png';
 import menuIcon from '../images/menu-icon.png';
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { GetProducts } from '../services/webShopServices';
+import { ProductList } from './models/Products';
 
 const Header: React.FC = () => {
   const [isCartMenuOpen, setCartMenuOpen] = useState(false);
   const [isLoginMenuOpen, setLoginMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const queryClient = useQueryClient();
+
+
+  let {data: products, isLoading, error} = useQuery({queryKey: ["products", isLoggedIn], queryFn: async () => {
+    return await GetProducts()
+  }
+  });
+
+  if (products) {
+    for (let i = 0; i < products.length; i++) {
+      console.log(products[i].name);
+    }
+  }
+  
 
   const cartMenuRef = useRef<HTMLDivElement | null>(null);
   const loginMenuRef = useRef<HTMLDivElement | null>(null);
