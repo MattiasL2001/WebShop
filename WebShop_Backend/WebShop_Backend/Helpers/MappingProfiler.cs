@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using WebShop_Backend.Dtos.Product;
-using WebShop_Backend.Dtos.User;
+using WebShop_Backend.Dtos;
 using WebShop_Backend.Entity;
 
 namespace WebShop_Backend.Helpers
@@ -10,12 +9,8 @@ namespace WebShop_Backend.Helpers
         public MappingProfiler() 
         {
             CreateMap<User, UserDto>();
-            CreateMap<User, RegisterUserDto>();
-            CreateMap<RegisterUserDto, User>();
-            CreateMap<UserLoginDto, User>();
 
-
-            CreateMap<ProductDto, Product>();
+            CreateMap<Product, ProductDto>();
         }
 
     }
