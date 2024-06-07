@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace InstapotAPI.Services
+namespace WebShop_Backend.Services
 {
     public static class FakeData
     {
