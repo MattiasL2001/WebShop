@@ -27,7 +27,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public async Task<User> UserLogin(User user)
         {
 
-            var validUser = await _dbContext.Users.Where(dbUser => dbUser.Username == user.Username && dbUser.Password == user.Password).FirstOrDefaultAsync();
+            var validUser = await _dbContext.Users.Where(dbUser => dbUser.Password == user.Password).FirstOrDefaultAsync();
 
             if (validUser == null)
             {
@@ -63,7 +63,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
 
         }
 
-        public async Task<List<int>> AddToBasket(int userId, int productId)
+        public async Task<HashSet<int>> AddToBasket(int userId, int productId)
         {
             var validUser = await _dbContext.Users.FindAsync(userId);
             var validProduct = await _dbContext.Products.FindAsync(productId);
@@ -78,7 +78,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             _dbContext.Update(validUser);
             _dbContext.SaveChanges();
 
-            return validUser.Basket;
+            return validUser.Basket.ToHashSet();
 
         }
 
