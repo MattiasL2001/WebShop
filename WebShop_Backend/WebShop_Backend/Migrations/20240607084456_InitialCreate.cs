@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,8 +20,10 @@ namespace WebShop_Backend.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PriceTotal = table.Column<decimal>(type: "TEXT", nullable: false),
-                    ProductAmount = table.Column<int>(type: "INTEGER", nullable: false)
+                    ProductAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductType = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductColor = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductGender = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +39,8 @@ namespace WebShop_Backend.Migrations
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Birthdate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PriceTotal = table.Column<decimal>(type: "TEXT", nullable: false),
                     Basket = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
