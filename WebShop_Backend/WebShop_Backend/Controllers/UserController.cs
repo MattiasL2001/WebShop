@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebShop_Backend.Entity;
-using WebShop_Backend.Dtos;
 using WebShop_Backend.Infrastructure.Repositorys;
+using WebShop_Backend.Dtos.User;
 
 namespace WebShop_Backend.Controllers
 {
@@ -23,25 +23,30 @@ namespace WebShop_Backend.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<UserDto>> RegisterUser(User user)
+        public async Task<ActionResult<RegisterUserDto>> RegisterUser(RegisterUserDto registerUserDto)
         {
+
+            var user = _mapper.Map<User>(registerUserDto);
 
             var registerdUser = await _userRepository.CreateUser(user);
 
-            var userDto = _mapper.Map<UserDto>(registerdUser);
+            registerUserDto = _mapper.Map<RegisterUserDto>(registerdUser);
 
-            return CreatedAtAction("GetUser", new { id = userDto.Id }, userDto);
+            return CreatedAtAction("GetUser", new { firstName = registerUserDto.Firstname }, registerUserDto);
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> LoginUser(User user)
+        public async Task<ActionResult> LoginUser(UserLoginDto userLoginDto)
         {
+
+            var user = _mapper.Map<User>(userLoginDto);
+
             var existingUser = await _userRepository.UserLogin(user);
 
             if (existingUser == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             return Redirect("https://localhost:7180/swagger/index.html");
@@ -65,10 +70,10 @@ namespace WebShop_Backend.Controllers
 
         [HttpGet]
         [Route("basket")]
-        public async Task<ActionResult<HashSet<int>>> GetBasket(int user)
+        public async Task<ActionResult<HashSet<int>>> GetBasket(int userId)
         {
 
-            var userBasket = await _userRepository.GetBasket(user);
+            var userBasket = await _userRepository.GetBasket(userId);
 
             if (userBasket == null) 
             {  
@@ -79,10 +84,10 @@ namespace WebShop_Backend.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<HashSet<int>>> AddToBasket(int userId, int productId)
+        public async Task<ActionResult<HashSet<int>>> AddToBasket(UpdateBasketDto addToBasketDto)
         {
 
-            var userBasket = await _userRepository.AddToBasket(userId,productId);
+            var userBasket = await _userRepository.AddToBasket(addToBasketDto.UserId,addToBasketDto.ProductId);
 
             if (userBasket == null)
             {
@@ -93,17 +98,17 @@ namespace WebShop_Backend.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteFromBasket(int userId, int productId)
+        public async Task<ActionResult> DeleteFromBasket(UpdateBasketDto updateBasketDto)
         {
 
-            var userBasket = await _userRepository.RemoveFromBasket(userId, productId);
+            var userBasket = await _userRepository.RemoveFromBasket(updateBasketDto.UserId, updateBasketDto.ProductId);
 
             if (userBasket == false)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            return Ok();
+            return NoContent();
         }
 
     }
