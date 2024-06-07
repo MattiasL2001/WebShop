@@ -17,9 +17,8 @@ button {
   flex-direction: column;
 }
 
-header {
+header, nav {
   position: relative;
-  top: 0;
   width: 100%;
   height: 90px;
   display: flex;
@@ -48,15 +47,6 @@ header {
   font-size: 20pt;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 90px;
-  background-color: coral;
-  border-bottom: 2px solid rgb(250, 118, 70);
-  animation: anim 0.2s;
-}
 nav #nav-left {
   display: flex;
   align-items: center;
@@ -68,8 +58,7 @@ nav #nav-left a {
   height: 100%;
   color: white;
   text-decoration: none;
-  margin-right: 10px;
-  margin-left: 20px;
+  margin: 0 10px 0 20px;
   font-weight: 500;
   font-size: 20pt;
 }
@@ -120,8 +109,7 @@ nav #nav-right #search #input-logo {
   height: 25px;
   background: transparent no-repeat;
   background-size: 100%;
-  margin-right: 5px;
-  margin-left: 10px;
+  margin: 0 5px 0 10px;
   border: none;
   outline: none;
 }
@@ -189,9 +177,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin: auto;
-  margin-top: 150px;
-  margin-bottom: 50px;
+  margin: 150px auto 50px;
   width: 80%;
   height: 100px;
   background-color: white;
@@ -215,15 +201,15 @@ select {
   border: 1px solid coral;
 }
 
-#articleForm, #descriptionText, #article, #description, #buyDiv, #articles, #supportText, .row, .item, .buyButton, #cartMenu, #loginMenu, #loginRegister, footer {
+#articleForm, #descriptionText, #article, #description, #buyDiv, #articles,
+#supportText, .row, .item, .buyButton, #cartMenu, #loginMenu, #loginRegister, footer {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #articleForm {
-  margin: auto;
-  margin-top: 100px;
+  margin: 100px auto 0;
   width: 50%;
 }
 
@@ -323,53 +309,34 @@ select {
   background-color: rgb(216, 107, 68);
 }
 
-#cartMenu,
-#loginMenu {
-  display: flex;
+#cartMenu, #loginMenu {
   flex-direction: column;
   position: absolute;
   top: 184px;
   right: 10%;
   width: 250px;
   padding: 20px;
-  border-style: solid;
-  border-color: coral;
+  border: 3px solid coral;
   border-top: none;
-  border-width: 3px;
   background-color: white;
   z-index: 999;
   opacity: 1;
   transform: translateY(0px);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-#loginMenu div div p,
-#cartMenu div div p {
-  color: coral;
-}
-
-#cartMenu.open,
-#loginMenu.open {
+#cartMenu.open, #loginMenu.open {
   opacity: 1;
   transform: translateY(50px);
 }
-
-#cartMenu p,
-#loginMenu p {
+#cartMenu p, #loginMenu p {
   margin-bottom: 10px;
   font-weight: bold;
 }
-
-#cartContent {
-  margin-bottom: 10px;
+#cartMenu div div p, #loginMenu div div p {
+  color: coral;
 }
 
-#cartContent p {
-  margin-bottom: 5px;
-}
-
-#basketButton,
-#loginButton {
+#basketButton, #loginButton {
   background-color: coral;
   color: white;
   border: none;
@@ -378,19 +345,14 @@ select {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-#basketButton:hover,
-#loginButton:hover {
+#basketButton:hover, #loginButton:hover {
   background-color: rgb(232, 116, 74);
 }
-
-#basketButton:active,
-#loginButton:active {
+#basketButton:active, #loginButton:active {
   background-color: rgb(216, 107, 68);
 }
 
-#email,
-#password {
+#email, #password {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
@@ -401,52 +363,34 @@ select {
   font-family: MuseoModerno, sans-serif;
   font-size: 14px;
 }
-
-#email:focus,
-#password:focus {
+#email:focus, #password:focus {
   border-color: coral;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 165, 79, 0.8);
 }
 
-#registerText {
-  font-size: 14px;
+#registerText, #logOut a {
   color: coral;
   text-decoration: none;
 }
-
-#registerText:hover {
-  text-decoration: underline;
-}
-
-#logOut a {
-  color: coral;
-  text-decoration: none;
-}
-
-#logOut a:hover {
+#registerText:hover, #logOut a:hover {
   text-decoration: underline;
 }
 
 #registerForm {
   margin: auto;
   width: 400px;
-  margin-top: 50px;
   margin-bottom: 17px;
   padding: 20px;
 }
-
 #registerForm div {
-  display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 #registerForm div h2 {
   color: coral;
 }
-
-#registerForm input {
+#registerForm div input {
   width: 75%;
   padding: 10px;
   margin: 8px 0;
@@ -458,8 +402,7 @@ select {
   font-family: MuseoModerno, sans-serif;
   font-size: 14px;
 }
-
-#registerForm input[type=button] {
+#registerForm div input[type=button] {
   width: 50%;
   background-color: coral;
   color: white;
@@ -469,24 +412,15 @@ select {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-#registerForm input[type=button]:hover {
+#registerForm div input[type=button]:hover {
   background-color: rgb(232, 116, 74);
 }
-
-#registerForm input[type=button]:active {
+#registerForm div input[type=button]:active {
   background-color: rgb(216, 107, 68);
 }
-
-#registerText {
+#registerForm #registerText {
   font-size: 12px;
-  color: coral;
-  text-decoration: none;
   margin-top: 10px;
-}
-
-#registerText:hover {
-  text-decoration: underline;
 }
 
 #passwordLogin, #name2 {
@@ -505,7 +439,6 @@ select {
   align-items: center;
   width: 100%;
 }
-
 #noPage div {
   width: 30%;
   min-width: 175px;
@@ -518,13 +451,11 @@ footer {
   background-color: rgb(43, 43, 43);
   color: rgb(245, 245, 245);
 }
-
 footer div {
   display: flex;
   width: 80%;
 }
-
-.footer-left {
+footer div.footer-left {
   margin: auto;
   flex-direction: column;
   align-items: start;
@@ -532,22 +463,24 @@ footer div {
   pointer-events: none;
   cursor: default;
 }
-
-.footer-right {
+footer div.footer-left a {
+  text-decoration: none;
+  color: white;
+}
+footer div.footer-right {
   margin: auto;
   flex-direction: column;
   align-items: end;
   width: 50%;
 }
-
-.footer-right a, .footer-left a {
+footer div.footer-right a {
   text-decoration: none;
   color: white;
 }
 
 @media only screen and (max-width: 950px) {
   .item {
-    width: 33.3333333333%;
+    width: 33.3333%;
   }
   #loginRegister {
     width: 50%;
@@ -556,6 +489,9 @@ footer div {
 @media only screen and (max-width: 600px) {
   .item {
     width: 50%;
+  }
+  .item img {
+    height: 100%;
   }
   .filter, .filter option {
     font-size: 10px;
@@ -574,16 +510,10 @@ footer div {
   }
   #nav-right {
     width: 100%;
-    margin-right: 0;
-    margin-left: 20px;
+    margin: 0 0 0 20px;
   }
   #search {
     width: 100%;
-  }
-}
-@media only screen and (max-width: 599px) {
-  .item img {
-    height: 100%;
   }
   #loginRegister {
     width: 70%;
