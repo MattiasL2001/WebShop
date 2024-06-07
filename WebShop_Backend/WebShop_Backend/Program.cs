@@ -53,7 +53,7 @@ try
 
     if (!context.Products.Any())
     {
-        FakeData.InitializeData(100);
+        FakeData.InitializeData(10);
     }
 }
 catch (Exception ex)
