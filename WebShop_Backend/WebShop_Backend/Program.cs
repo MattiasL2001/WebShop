@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebShop_Backend.Helpers;
+using WebShop_Backend.Services;
 using WebShop_Backend.Infrastructure;
 using WebShop_Backend.Infrastructure.Repositorys;
 
