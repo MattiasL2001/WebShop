@@ -1,4 +1,4 @@
-﻿namespace WebShop_Backend.Dtos
+﻿namespace WebShop_Backend.Dtos.User
 {
     public class UserDto
     {
