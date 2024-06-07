@@ -13,9 +13,19 @@ namespace WebShop_Backend.Entity
 
         public decimal Price { get; set; }
 
-        public decimal PriceTotal { get; set;}
-
         public int ProductAmount { get; set; }
+
+        public Type ProductType { get; set; }
+
+        public Color ProductColor { get; set; }
+
+        public Gender ProductGender { get; set; }
+
+        public enum Type { Clothing, Accessories }
+
+        public enum Color { White, Gray, Black, Red, Green, Yellow, Orange, Blue, Pink, Purpel, Brown }
+
+        public enum Gender { Men, Woman }
 
     }
 }
