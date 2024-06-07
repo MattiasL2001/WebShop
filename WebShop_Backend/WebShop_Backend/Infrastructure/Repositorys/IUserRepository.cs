@@ -8,7 +8,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public Task<User> GetUser(int id);
         public Task<User> UserLogin(User user);
         public Task<List<int>> GetBasket(int userId);
-        public Task<List<int>> AddToBasket(int userId, int productId);
+        public Task<HashSet<int>> AddToBasket(int userId, int productId);
         public Task<bool> RemoveFromBasket(int userId, int productId);
 
 
