@@ -6,7 +6,6 @@ import charIcon from '../images/char.png';
 import menuIcon from '../images/menu-icon.png';
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { GetProducts } from '../services/webShopServices';
-import { ProductList } from './models/Products';
 
 const Header: React.FC = () => {
   const [isCartMenuOpen, setCartMenuOpen] = useState(false);
@@ -110,7 +109,9 @@ const Header: React.FC = () => {
           </div>
           <div>
             <div>
-              <input type="button" value="To Checkout" id="basketButton" />
+              <Link to="/checkout">
+                <button id="basketButton">To Checkout</button>
+              </Link>
             </div>
           </div>
         </div>
