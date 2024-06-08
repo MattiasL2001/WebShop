@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
 using WebShop_Backend.Dtos.User;
+using System.Net;
 
 namespace WebShop_Backend.Controllers
 {
@@ -14,6 +14,7 @@ namespace WebShop_Backend.Controllers
 
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+
 
         public UserController(IUserRepository userRepository, IMapper mapper)
         {
@@ -30,6 +31,11 @@ namespace WebShop_Backend.Controllers
 
             var registerdUser = await _userRepository.CreateUser(user);
 
+            if (registerdUser == null)
+            {
+                return Unauthorized();
+            }
+
             registerUserDto = _mapper.Map<RegisterUserDto>(registerdUser);
 
             return CreatedAtAction("GetUser", new { firstName = registerUserDto.Firstname }, registerUserDto);
@@ -42,14 +48,20 @@ namespace WebShop_Backend.Controllers
 
             var user = _mapper.Map<User>(userLoginDto);
 
-            var existingUser = await _userRepository.UserLogin(user);
+            var loginStatus = await _userRepository.UserLogin(user);
 
-            if (existingUser == null)
+            if (loginStatus == HttpStatusCode.NotFound)
             {
                 return NotFound();
             }
 
-            return Redirect("https://localhost:7180/swagger/index.html");
+            else if (loginStatus == HttpStatusCode.Unauthorized)
+            {
+                return Unauthorized();
+            }
+
+            //return Redirect("https://localhost:7180/swagger/index.html");
+            return Ok();
         }
 
         [HttpGet]
