@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using WebShop_Backend.Entity;
-using WebShop_Backend.Helpers;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {

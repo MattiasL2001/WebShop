@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
 using WebShop_Backend.Dtos.User;
-using WebShop_Backend.Helpers;
 using System.Net;
 
 namespace WebShop_Backend.Controllers
