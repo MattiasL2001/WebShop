@@ -379,9 +379,10 @@ select {
 
 #registerForm {
   margin: auto;
+  margin-top: 25px;
   width: 400px;
   margin-bottom: 17px;
-  padding: 20px;
+  padding: 10px;
 }
 #registerForm div {
   flex-direction: column;
@@ -421,6 +422,83 @@ select {
 #registerForm #registerText {
   font-size: 12px;
   margin-top: 10px;
+}
+
+#checkoutArticles {
+  border-right: 2px solid coral;
+}
+
+#checkoutForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 50px;
+  width: 80%;
+  padding: 20px;
+}
+
+#checkoutForm div {
+  display: flex;
+  width: 48%;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#checkoutForm div img {
+  height: 64px;
+  width: 64px;
+}
+
+#checkoutForm h2 {
+  color: coral;
+  margin-bottom: 20px;
+}
+
+#checkoutForm input {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  outline: none;
+  font-family: MuseoModerno, sans-serif;
+  font-size: 14px;
+}
+
+#checkoutForm input[type=text],
+#checkoutForm input[type=date] {
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+#shippingInfo, #paymentInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#shippingInfo input, #paymentInfo input {
+  width: 100%;
+}
+
+#placeOrderButton {
+  width: 100%;
+  background-color: coral;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#placeOrderButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+
+#placeOrderButton:active {
+  background-color: rgb(216, 107, 68);
 }
 
 #passwordLogin, #name2 {
@@ -466,6 +544,10 @@ footer div.footer-left {
 footer div.footer-left a {
   text-decoration: none;
   color: white;
+}
+footer div.footer-middle {
+  height: 64px;
+  width: 64px;
 }
 footer div.footer-right {
   margin: auto;

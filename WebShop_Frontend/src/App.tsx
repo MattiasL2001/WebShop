@@ -4,6 +4,7 @@ import Home from './views/Home';
 import Register from './views/Register';
 import Login from './views/Login';
 import Support from './views/Support';
+import Checkout from './views/Checkout';
 import NoPage from './views/NoPage';
 import './styles/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path='*' element={<NoPage />} />
           </Routes>

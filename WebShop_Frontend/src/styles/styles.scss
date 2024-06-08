@@ -428,9 +428,10 @@ select {
 
 #registerForm {
   margin: auto;
+  margin-top: 25px;
   width: 400px;
   margin-bottom: 17px;
-  padding: 20px;
+  padding: 10px;
 
   div {
     flex-direction: column;
@@ -479,6 +480,83 @@ select {
   }
 }
 
+#checkoutArticles {
+  border-right: 2px solid $coral;
+}
+
+#checkoutForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 50px;
+  width: 80%;
+  padding: 20px;
+}
+
+#checkoutForm div {
+  display: flex;
+  width: 48%;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#checkoutForm div img {
+  height: 64px;
+  width:  64px;
+}
+
+#checkoutForm h2 {
+  color: $coral;
+  margin-bottom: 20px;
+}
+
+#checkoutForm input {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  outline: none;
+  font-family: $font-family;
+  font-size: 14px;
+}
+
+#checkoutForm input[type=text],
+#checkoutForm input[type=date] {
+  border-radius: 5px;
+  border: 1px solid $gray;
+}
+
+#shippingInfo, #paymentInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#shippingInfo input, #paymentInfo input {
+  width: 100%;
+}
+
+#placeOrderButton {
+  width: 100%;
+  background-color: $coral;
+  color: $white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#placeOrderButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+
+#placeOrderButton:active {
+  background-color: rgb(216, 107, 68);
+}
+
 #passwordLogin, #name2 {
   padding-top: 10px;
 }
@@ -508,7 +586,6 @@ footer {
   background-color: rgb(43, 43, 43);
   color: rgb(245, 245, 245);
 
-
   div {
     display: flex;
     width: 80%;
@@ -525,6 +602,11 @@ footer {
         text-decoration: none;
         color: $white;
       }
+    }
+
+    &.footer-middle {
+      height: 64px;
+      width: 64px;
     }
 
     &.footer-right {

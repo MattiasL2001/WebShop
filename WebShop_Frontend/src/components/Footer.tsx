@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import shoppingCartIcon from '../images/WebShop Bag Logo Coral.png';
 import '../styles/styles.css';
 
 export default function Footer() {
@@ -10,6 +11,10 @@ export default function Footer() {
           <Link to="">Created by:</Link>
           <Link to="">Mattias Lindblad</Link>
           <Link to="">Marcus Karlsson</Link>
+        </div>
+
+        <div className="footer-middle">
+          <img src={shoppingCartIcon} alt="Cart" />
         </div>
         
         <div className="footer-right">
