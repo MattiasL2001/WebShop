@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using WebShop_Backend.Entity;
+using WebShop_Backend.Helpers;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
@@ -8,7 +10,6 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     {
 
         private WebShopContext _dbContext;
-
 
         public UserRepository(WebShopContext context)
         {
@@ -18,23 +19,33 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public async Task<User> CreateUser(User user)
         {
 
+            if (_dbContext.Users.Any(dbUser => dbUser.Email == user.Email))
+            {
+                return null;
+            }
+
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
             return user;
         }
 
-        public async Task<User> UserLogin(User user)
+        public async Task<HttpStatusCode> UserLogin(User user)
         {
 
-            var validUser = await _dbContext.Users.Where(dbUser => dbUser.Password == user.Password).FirstOrDefaultAsync();
+            var validUser = await _dbContext.Users.Where(dbUser =>dbUser.Email == user.Email).FirstOrDefaultAsync();
 
             if (validUser == null)
             {
-                return null;
+                return HttpStatusCode.NotFound;
             }
 
-            return validUser;
+            if (validUser.Email == user.Email && validUser.Password != user.Password)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            return HttpStatusCode.OK;
         }
 
         public async Task<User> GetUser(int id)

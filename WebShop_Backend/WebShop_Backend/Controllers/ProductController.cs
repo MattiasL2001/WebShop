@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebShop_Backend.Dtos.Product;
 using WebShop_Backend.Entity;
+using WebShop_Backend.Helpers;
 using WebShop_Backend.Infrastructure.Repositorys;
 
 namespace WebShop_Backend.Controllers
