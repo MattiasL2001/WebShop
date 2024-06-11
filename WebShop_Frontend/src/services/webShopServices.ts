@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ProductList } from "../components/models/Products";
 
 const BASE_URL = "https://localhost:7180/"
 

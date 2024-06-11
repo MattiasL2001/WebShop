@@ -177,7 +177,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin: 150px auto 50px;
+  margin: 50px auto 50px;
   width: 80%;
   height: 100px;
   background-color: white;
@@ -257,10 +257,40 @@ select {
 }
 
 #articles {
-  flex-direction: column;
-  margin: auto;
-  min-height: calc(100vh - 60px - 150px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 20px;
+  margin: 50px auto;
   width: 80%;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 75%;
+  height: 250px;
+  padding: 20px;
+  border-radius: 2px;
+  background-color: white;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+.product:hover {
+  border: 1px solid coral;
+}
+.product h2 {
+  font-size: 18px;
+  color: coral;
+  margin-bottom: 10px;
+}
+.product p {
+  margin-bottom: 10px;
+}
+.product p:last-of-type {
+  font-weight: bold;
 }
 
 #supportText {
@@ -467,7 +497,8 @@ select {
 }
 
 #checkoutForm input[type=text],
-#checkoutForm input[type=date] {
+#checkoutForm input[type=date],
+#checkoutForm input[type=month] {
   border-radius: 5px;
   border: 1px solid gray;
 }
@@ -515,6 +546,7 @@ select {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   width: 100%;
 }
 #noPage div {
@@ -546,8 +578,14 @@ footer div.footer-left a {
   color: white;
 }
 footer div.footer-middle {
-  height: 64px;
-  width: 64px;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+footer div.footer-middle img {
+  height: 48px;
+  width: 48px;
+  margin-bottom: 10px;
 }
 footer div.footer-right {
   margin: auto;
@@ -558,6 +596,25 @@ footer div.footer-right {
 footer div.footer-right a {
   text-decoration: none;
   color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+  #articles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (max-width: 900px) {
+  #articles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 600px) {
+  #articles {
+    grid-template-columns: 1fr;
+  }
+}
+a.product {
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 950px) {

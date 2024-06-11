@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import Page from '../components/Page';
+import { GetProducts } from '../services/webShopServices';
+import { Link } from 'react-router-dom';
 import '../styles/styles.css';
 
 const Webstore: React.FC = () => {
+  const { data: products, isLoading, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: GetProducts,
+  });
 
   return (
-    <>
-      <Header></Header>
-
+    <Page>
       <div id="searchArticles">
         <select name="gender" className="filter" id="filterGender">
           <option value="gender">Filter By Gender</option>
@@ -45,10 +49,16 @@ const Webstore: React.FC = () => {
         </select>
       </div>
 
-      <section id="articles"></section>
-
-      <Footer></Footer>
-    </>
+      <section id="articles">
+        {products?.map((product: any) => (
+          <Link to={`/product/${product.id}`} key={product.id} className="product">
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <p>Price: ${product.price}</p>
+          </Link>
+    ))}
+  </section>
+    </Page>
   );
 };
 
