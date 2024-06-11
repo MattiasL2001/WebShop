@@ -67,7 +67,7 @@ try
 
     if (!context.Products.Any())
     {
-        FakeData.InitializeData(10);
+        FakeData.InitializeData(30);
     }
 }
 catch (Exception ex)

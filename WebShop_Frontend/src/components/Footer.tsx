@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import shoppingCartIcon from '../images/WebShop Bag Logo Coral.png';
+import globeIcon from '../images/Globe.png';
 import '../styles/styles.css';
 
 export default function Footer() {
@@ -14,7 +14,8 @@ export default function Footer() {
         </div>
 
         <div className="footer-middle">
-          <img src={shoppingCartIcon} alt="Cart" />
+          <img src={globeIcon} alt="Cart" />
+          <p>ENG | SWE</p>
         </div>
         
         <div className="footer-right">

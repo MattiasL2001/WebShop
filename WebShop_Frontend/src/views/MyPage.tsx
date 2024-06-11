@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import Page from '../components/Page';
 import '../styles/styles.css';
+import Page from '../components/Page';
 
 const Webstore: React.FC = () => {
 
-
   return (
     <>
+
       <Page>
-        <div id="supportText">
+        <article id="registerForm">
           <h2>
-              There is currently no support available. What did you expect?
+            Welcome User!
           </h2>
-        </div>
+        </article>
       </Page>
+
     </>
   );
 };

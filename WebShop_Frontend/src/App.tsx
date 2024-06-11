@@ -6,6 +6,7 @@ import Login from './views/Login';
 import Support from './views/Support';
 import Checkout from './views/Checkout';
 import NoPage from './views/NoPage';
+import MyPage from './views/MyPage';
 import './styles/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -24,6 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/support" element={<Support />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/mypage" element={<MyPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path='*' element={<NoPage />} />
           </Routes>
