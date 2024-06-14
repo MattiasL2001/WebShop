@@ -4,6 +4,7 @@ using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
 using WebShop_Backend.Dtos.User;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebShop_Backend.Controllers
 {
@@ -41,8 +42,10 @@ namespace WebShop_Backend.Controllers
             return CreatedAtAction("GetUser", new { firstName = registerUserDto.Firstname }, registerUserDto);
         }
 
+        
         [HttpPost]
         [Route("login")]
+        [Authorize]
         public async Task<ActionResult> LoginUser(UserLoginDto userLoginDto)
         {
 
@@ -60,7 +63,23 @@ namespace WebShop_Backend.Controllers
                 return Unauthorized();
             }
 
-            //return Redirect("https://localhost:7180/swagger/index.html");
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public async Task<ActionResult> LogoutUser(UserLoginDto userLoginDto)
+        {
+
+            var user = _mapper.Map<User>(userLoginDto);
+
+            var loginStatus = await _userRepository.UserLogin(user);
+
+            if (loginStatus == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
             return Ok();
         }
 
