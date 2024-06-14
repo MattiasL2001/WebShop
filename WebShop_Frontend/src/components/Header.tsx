@@ -11,8 +11,6 @@ const Header: React.FC = () => {
   const [isCartMenuOpen, setCartMenuOpen] = useState(false);
   const [isLoginMenuOpen, setLoginMenuOpen] = useState(false);
   
-  const queryClient = useQueryClient();
-
   const toggleCartMenu = () => {
     setCartMenuOpen(!isCartMenuOpen);
     if (!isCartMenuOpen) {
