@@ -5,6 +5,7 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { GetProducts } from '../services/webShopServices';
 import LoginMenu from '../components/partial components/LoginMenu';
 import CartMenu from '../components/partial components/CartMenu';
+import "../styles/header.scss"
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

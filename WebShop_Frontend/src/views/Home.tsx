@@ -4,6 +4,7 @@ import Page from '../components/Page';
 import { GetProducts } from '../services/webShopServices';
 import { Link } from 'react-router-dom';
 import '../styles/styles.css';
+import '../styles/home.scss';
 
 const Webstore: React.FC = () => {
   const { data: products, isLoading, error } = useQuery({
