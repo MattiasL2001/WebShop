@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/styles.css';
+import "../styles/register.scss"
 import Page from '../components/Page';
 
 const Webstore: React.FC = () => {
@@ -23,6 +23,9 @@ const Webstore: React.FC = () => {
           </div>
           <div id="passwordLogin">
             <input type="password" placeholder="Password" />
+          </div>
+          <div id="passwordLogin">
+            <input type="password" placeholder="Verify Password" />
           </div>
           <div>
             <h2>Birthdate</h2>

@@ -1,0 +1,38 @@
+#userForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    input[type="text"],
+    input[type="password"],
+    input[type="button"] {
+      width: 300px;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    input[type="button"] {
+        background-color: coral;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    
+        &:hover {
+            background-color: rgb(232, 116, 74);
+          }
+        
+          &:active {
+            background-color: rgb(216, 107, 68);
+          }
+    }
+}

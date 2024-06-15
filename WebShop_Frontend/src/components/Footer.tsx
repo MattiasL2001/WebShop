@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import globeIcon from '../images/Globe.png';
-import '../styles/styles.css';
+import "../styles/footer.scss"
 
 export default function Footer() {
   return (

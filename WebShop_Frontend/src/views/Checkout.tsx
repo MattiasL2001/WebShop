@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import shoppingCartIcon from '../images/WebShop Bag Logo Coral.png';
-import '../styles/styles.css';
+import shoppingBagIcon from '../images/WebShop Bag Logo Coral.png';
+import shoppingCartIcon from '../images/shopping-cart-coral.png';
+import '../styles/checkout.css';
 import Page from '../components/Page';
 
 const Webstore: React.FC = () => {
@@ -20,7 +21,7 @@ const Webstore: React.FC = () => {
           <div id='checkoutPayment'>
 
             <div>
-              <img src={shoppingCartIcon} alt="Basket" />
+              <img src={shoppingBagIcon} alt="Basket" />
               <h2>Checkout</h2>
             </div>
             <div id="shippingInfo">

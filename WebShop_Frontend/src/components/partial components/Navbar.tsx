@@ -22,7 +22,6 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, toggleCar
         <button onClick={toggleCartMenu}>
           <img src={shoppingCartIcon} alt="Cart" id="cart" />
         </button>
-        <div style={{ width: "20px" }}></div>
         <button onClick={toggleLoginMenu}>
           <img src={charIcon} alt="User" id="char" />
         </button>

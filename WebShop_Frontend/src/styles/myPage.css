@@ -1,0 +1,35 @@
+#userForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+#userForm h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+#userForm input[type=text],
+#userForm input[type=password],
+#userForm input[type=button] {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#userForm input[type=button] {
+  background-color: coral;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#userForm input[type=button]:hover {
+  background-color: rgb(232, 116, 74);
+}
+#userForm input[type=button]:active {
+  background-color: rgb(216, 107, 68);
+}
+
+/*# sourceMappingURL=myPage.css.map */
