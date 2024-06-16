@@ -2,8 +2,22 @@ import React from 'react';
 import '../styles/product.scss';
 import image from '../images/1.png';
 import Page from '../components/Page';
+import { useCart } from '../components/Cart';
+import { CartItem } from '../components/models/props/cartItem';
 
 const ProductPage: React.FC = () => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    const newItem: CartItem = {
+      id: 1,
+      name: 'Product Name',
+      price: 89.99,
+      quantity: 1
+    };
+    addToCart(newItem);
+  };
+
   return (
     <Page>
       <article className="product-page">
@@ -13,8 +27,10 @@ const ProductPage: React.FC = () => {
         <div className="separator"></div>
         <div className="product-details">
           <h1>Product Name</h1>
-          <p>Price: $Product Price</p>
-          <button className="add-to-cart-button">Add to Cart</button>
+          <p>Price: $99.99</p>
+          <button className="add-to-cart-button" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
         </div>
       </article>
       <article className="product-description">
