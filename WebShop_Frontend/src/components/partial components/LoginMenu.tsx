@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { LoginUser } from '../models/LoginUser';
 import { Login } from '../../services/webShopServices';
-
-interface LoginMenuProps {
-  isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-}
+import { LoginMenuProps } from "../models/props/login";
 
 const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn }) => {
   

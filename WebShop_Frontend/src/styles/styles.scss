@@ -166,16 +166,6 @@ nav {
   width: 60%;
 }
 
-#nav-right button {
-  border: none;
-  padding: 10px 20px;
-  font-size: 1em;
-  color: $white;
-  background-color: $coral;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .admin-main {
   width: 80%;
   margin: 20px auto;
@@ -304,6 +294,11 @@ nav {
   div div p {
     color: $coral;
   }
+}
+
+#cartContent div a {
+  text-decoration: none;
+  color: $black;
 }
 
 #basketButton, #loginButton {

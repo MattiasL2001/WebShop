@@ -167,6 +167,9 @@ nav #nav-right #search #input-logo:hover {
 nav #nav-right #search #input-logo:active {
   outline: none;
 }
+nav #nav-right #cartButton {
+  margin-right: 15px;
+}
 nav #nav-right img {
   height: 40px;
   width: 40px;
