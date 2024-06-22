@@ -12,11 +12,6 @@ export default function Footer() {
           <Link to="">Mattias Lindblad</Link>
           <Link to="">Marcus Karlsson</Link>
         </div>
-
-        <div className="footer-middle">
-          <img src={globeIcon} alt="Cart" />
-          <p>ENG | SWE</p>
-        </div>
         
         <div className="footer-right">
           <Link to="/home">Home</Link>

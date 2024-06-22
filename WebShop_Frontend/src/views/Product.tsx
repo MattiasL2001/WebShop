@@ -10,8 +10,9 @@ const ProductPage: React.FC = () => {
 
   const handleAddToCart = () => {
     const newItem: CartItem = {
-      id: 1,
+      id: 17,
       name: 'Product Name',
+      image: null,
       price: 89.99,
       quantity: 1
     };
