@@ -7,9 +7,9 @@ import charIcon from '../../images/char.png';
 import menuIcon from '../../images/menu-icon.png';
 import { useCart } from "../Cart";
 
-const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, toggleCartMenu, toggleLoginMenu }) => {
-  const { cart } = useCart(); // Use the cart context to get the cart items
-  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0); // Calculate total quantity
+const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, IsSidebarMenuOpen, toggleCartMenu, toggleLoginMenu, toggleSidebarMenu }) => {
+  const { cart } = useCart();
+  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   return (
     <nav>
@@ -26,7 +26,7 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, toggleCar
         <button id="cartButton" onClick={toggleCartMenu} style={{ position: 'relative' }}>
           <img src={shoppingCartIcon} alt="Cart" id="cart" />
           {cartItemCount > 0 && (
-            <span style={bubbleStyle}>{cartItemCount}</span>
+            <span id='cartAmountBubble'>{cartItemCount}</span>
           )}
         </button>
         <button onClick={toggleLoginMenu}>
@@ -36,23 +36,6 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, toggleCar
       </div>
     </nav>
   );
-};
-
-const bubbleStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: '-5px',
-  right: '-5px',
-  backgroundColor: 'red',
-  color: 'white',
-  borderRadius: '50%',
-  padding: '0',
-  width: '20px',
-  height: '20px',
-  fontSize: '12px',
-  fontWeight: 'bold',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 };
 
 export default Navbar;

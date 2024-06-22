@@ -57,3 +57,17 @@
     }
   }
   
+  @media only screen and (max-width: 550px) {
+    .product-page {
+      flex-direction: column;
+    }
+    .separator {
+      height: 0 !important;
+    }
+    .product-image {
+      margin-right: 0 !important;
+    }
+    .product-description {
+      width: 80%;
+    }
+  }

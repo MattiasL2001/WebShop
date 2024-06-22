@@ -5,12 +5,14 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { GetProducts } from '../services/webShopServices';
 import LoginMenu from '../components/partial components/LoginMenu';
 import CartMenu from '../components/partial components/CartMenu';
+import SidebarMenu from '../components/partial components/SidebarMenu';
 import "../styles/header.scss"
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isCartMenuOpen, setCartMenuOpen] = useState(false);
   const [isLoginMenuOpen, setLoginMenuOpen] = useState(false);
+  const [isSidebarMenuOpen, setSidebarMenuOpen] = useState(false);
   
   const toggleCartMenu = () => {
     setCartMenuOpen(!isCartMenuOpen);
@@ -23,6 +25,13 @@ const Header: React.FC = () => {
     setLoginMenuOpen(!isLoginMenuOpen);
     if (!isLoginMenuOpen) {
       setCartMenuOpen(false);
+    }
+  };
+
+  const toggleSidebarMenu = () => {
+    setSidebarMenuOpen(!isSidebarMenuOpen);
+    if (!isSidebarMenuOpen) {
+      setSidebarMenuOpen(false);
     }
   };
 
@@ -50,12 +59,15 @@ const Header: React.FC = () => {
       <Navbar
         IsCartMenuOpen={isCartMenuOpen}
         IsLoginMenuOpen={isLoginMenuOpen}
+        IsSidebarMenuOpen={isSidebarMenuOpen}
         toggleCartMenu={toggleCartMenu}
         toggleLoginMenu={toggleLoginMenu}
+        toggleSidebarMenu={toggleSidebarMenu}
       />
 
       {isCartMenuOpen && <CartMenu toggleCartMenu={toggleCartMenu} />}
-      {isLoginMenuOpen && <LoginMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+      {isSidebarMenuOpen && <SidebarMenu toggleSidebarMenu={toggleSidebarMenu} />}
+      {isLoginMenuOpen && <LoginMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} toggleLoginMenu={toggleLoginMenu} />}
 
       <div id="sidebar">
         <div>

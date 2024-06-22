@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../Cart';
-import { CartMenuProps } from '../models/props/cart';
+import { SidebarMenuProps } from '../models/props/sidebar';
 import shirt from '../../images/1.png';
 
-const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
+const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleSidebarMenu }) => {
   const { cart, addToCart, removeFromCart } = useCart();
   const [isCartMenuOpen, setIsCartMenuOpen] = useState(true);
 
@@ -32,7 +32,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
     const handleClickOutside = (event: MouseEvent) => {
       const cartMenu = document.querySelector('.cartMenu');
       if (cartMenu && !cartMenu.contains(event.target as Node)) {
-        toggleCartMenu();
+        toggleSidebarMenu();
       }
     };
 
@@ -41,15 +41,11 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [toggleCartMenu]);
+  }, [toggleSidebarMenu]);
 
   const handleToggleCartMenu = () => {
-    toggleCartMenu();
+    toggleSidebarMenu();
     setIsCartMenuOpen(!isCartMenuOpen);
-  };
-
-  const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   return (
@@ -59,8 +55,8 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
           <button onClick={handleToggleCartMenu}>×</button>
         </div>
         <div id="cartContent">
-          <h2>Basket:</h2>
-          <div id='cartContentItems'>
+          <div>
+            <h2>Basket:</h2>
             {cart.length === 0 ? (
               <p>Your cart is empty</p>
             ) : (
@@ -74,12 +70,12 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
                       <Link to={`/product/${item.id}`} className="cartItemLink">
                         <p className="cartItemName">{item.name}</p>
                       </Link>
-                      <p className="cartItemPrice">Price: ${item.price}</p>
                       <p className="cartItemQuantity">Quantity: {item.quantity}</p>
+                      <p className="cartItemQuantity">Price: {item.price}</p>
                       <div className="cartItemButtons">
                         <button onClick={() => handleIncrement(item.id)}>➕</button>
                         <button onClick={() => handleDecrement(item.id)}>➖</button>
-                        {/* <button onClick={() => handleRemove(item.id)}>🗑️</button> */}
+                        <button onClick={() => handleRemove(item.id)}>🗑️</button>
                       </div>
                     </div>
                   </li>
@@ -87,20 +83,15 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
               </ul>
             )}
           </div>
-          {cart.length > 0 && (
-            <div className="totalPrice">
-              <h3>Total Price: ${calculateTotalPrice().toFixed(2)}</h3>
-            </div>
-          )}
-          <div className="checkoutButtonContainer">
-            <Link to="/checkout">
-              <button className="checkoutButton">To Checkout</button>
-            </Link>
-          </div>
+        </div>
+        <div className="checkoutButtonContainer">
+          <Link to="/checkout">
+            <button className="checkoutButton">To Checkout</button>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default CartMenu;
+export default SidebarMenu;

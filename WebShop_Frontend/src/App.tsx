@@ -29,7 +29,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/product/*" element={<Product />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin*" element={<Admin />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path='*' element={<NoPage />} />
           </Routes>

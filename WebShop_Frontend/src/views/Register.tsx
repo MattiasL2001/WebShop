@@ -28,9 +28,6 @@ const Webstore: React.FC = () => {
             <input type="password" placeholder="Verify Password" />
           </div>
           <div>
-            <h2>Birthdate</h2>
-          </div>
-          <div>
             <input type="date" min="1900-01-01" id="birthDate" />
           </div>
           <div>

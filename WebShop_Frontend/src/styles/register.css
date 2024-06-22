@@ -10,11 +10,10 @@
   color: coral;
 }
 #registerForm div input[type=text], #registerForm div input[type=password], #registerForm div input[type=date] {
-  width: 50%;
+  width: 250px;
   padding: 10px;
-  margin: 8px 0;
-  border-radius: 5px;
-  border-width: 2px;
+  border-radius: 3px;
+  border-width: 1px;
   border-style: solid;
   border-color: gray;
   outline: none;
@@ -22,8 +21,9 @@
   font-size: 14px;
 }
 #registerForm #registerButton {
-  margin-top: 25px;
+  margin: 25px 0;
   width: 175px;
+  height: 35px;
   background-color: coral;
   color: white;
   border: none;
@@ -41,6 +41,20 @@
 #registerForm #registerText {
   font-size: 12px;
   margin-top: 10px;
+}
+
+#registerForm div {
+  margin-bottom: 5px;
+}
+
+#registerForm div input {
+  height: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  #registerForm {
+    width: auto;
+  }
 }
 
 /*# sourceMappingURL=register.css.map */
