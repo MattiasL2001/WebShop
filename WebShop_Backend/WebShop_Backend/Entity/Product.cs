@@ -15,6 +15,8 @@ namespace WebShop_Backend.Entity
 
         public int ProductAmount { get; set; }
 
+        public string Image {  get; set; }
+
         public Type ProductType { get; set; }
 
         public Color ProductColor { get; set; }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../Cart';
 import { CartMenuProps } from '../models/props/cart';
-import shirt from '../../images/1.png';
+import shirt from "../../images/products/1.png";
 
 const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
   const { cart, addToCart, removeFromCart } = useCart();

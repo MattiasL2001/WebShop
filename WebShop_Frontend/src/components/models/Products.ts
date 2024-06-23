@@ -1,3 +1,3 @@
 import { Product } from "./Product";
 
-export type ProductList = {Products: Product[]}
+export type Products = {Products: Product[]}

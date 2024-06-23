@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../styles/register.scss"
 import Page from '../components/Page';
 

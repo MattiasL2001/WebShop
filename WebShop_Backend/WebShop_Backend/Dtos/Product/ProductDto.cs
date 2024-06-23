@@ -15,6 +15,8 @@ namespace WebShop_Backend.Dtos.Product
 
         public int ProductAmount { get; set; }
 
+        public string Image { get; set; }
+
         public Entity.Product.Type ProductType { get; set; }
 
         public Color ProductColor { get; set; }
