@@ -36,6 +36,7 @@ namespace WebShop_Backend.Services
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.Price, f => decimal.Parse(f.Random.Decimal(1, 1000).ToString("0.00")))
                 .RuleFor(p => p.ProductAmount, f => f.Random.Number(1, 100))
+                .RuleFor(p => p.Image, f => f.Random.Number(1, 4).ToString())
                 .RuleFor(p => p.ProductType, f => f.PickRandom<Product.Type>())
                 .RuleFor(p => p.ProductColor, f => f.PickRandom<Product.Color>())
                 .RuleFor(p => p.ProductGender, f => f.PickRandom<Product.Gender>());

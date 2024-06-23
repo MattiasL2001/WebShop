@@ -4,12 +4,14 @@ import { Filter } from '../components/models/Filter';
 import '../styles/styles.css';
 import '../styles/home.scss';
 import SelectFilter from '../components/partial components/SelectFilter';
-import ProductItems from '../components/partial components/PorductItems';
+import ProductItems from '../components/partial components/ProductItems';
+import { Product } from '../components/models/Product';
+import { Outlet } from 'react-router-dom';
 
-const Webstore: React.FC = () => {
+const Products: React.FC<{products: Product[]}> = ({products}) => {
 
   return (
-    <Page>
+    <>
       <div id="searchArticles">
         
       <SelectFilter filterItems={Filter.Gender}/>
@@ -22,10 +24,9 @@ const Webstore: React.FC = () => {
 
       </div>
 
-      <ProductItems/>
-
-    </Page>
+      <ProductItems products={products}/>
+    </>
   );
 };
 
-export default Webstore;
+export default Products;

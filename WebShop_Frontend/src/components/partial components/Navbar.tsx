@@ -10,7 +10,7 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, toggleCar
   return (
     <nav>
       <div id="nav-left">
-        <Link to="/" id="shop">SHOP</Link>
+        <Link to="/products" id="shop">SHOP</Link>
         <Link to="/support" id="support">SUPPORT</Link>
       </div>
 
