@@ -11,14 +11,14 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
   const handleIncrement = (itemId: number) => {
     const item = cart.find(item => item.id === itemId);
     if (item) {
-      addToCart({ ...item, quantity: item.quantity + 1 });
+      addToCart({ ...item, quantity: + 1 });
     }
   };
 
   const handleDecrement = (itemId: number) => {
     const item = cart.find(item => item.id === itemId);
     if (item && item.quantity > 1) {
-      addToCart({ ...item, quantity: item.quantity - 1 });
+      addToCart({ ...item, quantity: - 1 });
     } else {
       handleRemove(itemId);
     }

@@ -15,9 +15,9 @@ export default function Footer() {
         
         <div className="footer-right">
           <Link to="/home">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/services">Services</Link>
+          <Link to="/register">Register</Link>
+          <Link to="/support">Support</Link>
+          <Link to="/admin">Admin Panel</Link>
         </div>
       </div>
 

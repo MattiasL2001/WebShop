@@ -3,8 +3,8 @@ import Page from '../components/Page';
 import { Filter } from '../components/models/Filter';
 import '../styles/styles.css';
 import '../styles/home.scss';
-import SelectFilter from '../components/partial components/SelectFilter';
-import ProductItems from '../components/partial components/PorductItems';
+import SelectFilter from '../components/partialComponents/SelectFilter';
+import ProductItems from '../components/partialComponents/PorductItems';
 
 const Webstore: React.FC = () => {
 

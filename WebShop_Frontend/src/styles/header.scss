@@ -23,13 +23,13 @@ header, nav {
   animation: anim 0.2s;
 }
 
-#logo, nav {
+#logo, #logo-admin, nav {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
-#logo {
+#logo, #logo-admin {
   justify-content: center;
 
   a {
@@ -135,7 +135,7 @@ header, nav {
 }
 
 nav {
-  #nav-left {
+  #nav-left, #nav-left-logout {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -156,7 +156,7 @@ nav {
     }
   }
 
-  #nav-right {
+  #nav-right, #nav-right-logout {
     display: flex;
     align-items: center;
     justify-content: right;
@@ -169,8 +169,10 @@ nav {
 
     #search {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+      background-color: $white;
+      border-radius: 15px;
       height: 40px;
       width: 40%;
       margin-right: 20px;
@@ -188,15 +190,13 @@ nav {
       }
 
       #input-box {
+        position: absolute !important;
+        left: 15px;
         display: flex;
         outline: none;
         border: none;
-        border-radius: 10px;
-        height: 100%;
-        width: 100%;
-        background-color: $white;
-        background-position: 98% center;
-        padding-left: 5px;
+        height: 80%;
+        width: calc(100% - 60px);
       }
 
       #input-logo {
@@ -227,6 +227,10 @@ nav {
       width: 40px;
     }
   }
+}
+
+#logoutButton {
+  color: $white;
 }
 
 .loginBackdrop, .cartBackdrop {
@@ -523,11 +527,24 @@ nav {
     display: none !important;
   }
 
+  #nav-right-logout button {
+    display: block !important;
+  }
+
   #search {
     display: none;
   }
 
   #menu-icon {
     display: flex;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  #nav-left-logout a {
+    font-size: 16px !important;
+  }
+  #nav-right-logout {
+    margin-right: 5% !important;
   }
 }
