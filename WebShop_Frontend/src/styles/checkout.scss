@@ -11,6 +11,16 @@ $white: white;
   fill: $coral;
 }
 
+.cart-item {
+  justify-content: center;
+  flex-direction: row !important;
+}
+
+#shippingInfo,
+#paymentInfo {
+  width: 75% !important;
+}
+
 #checkoutForm {
   display: flex;
   flex-direction: row;
@@ -28,14 +38,9 @@ $white: white;
   margin-bottom: 20px;
 }
 
-.cart-item {
-  justify-content: center;
-  flex-direction: row !important;
-}
-
-#shippingInfo,
-#paymentInfo {
-  width: 75% !important;
+#placeOrderButton {
+  height: 40px;
+  width: 300px !important;
 }
 
 #checkoutForm div img {
@@ -50,7 +55,6 @@ $white: white;
 
 #checkoutForm input {
   width: calc(100% - 40px);
-  padding: 10px;
   margin: 8px 0;
   border: none;
   outline: none;
@@ -65,13 +69,8 @@ $white: white;
   border: 1px solid $gray;
 }
 
-#shippingInfo, #paymentInfo {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 #shippingInfo input, #paymentInfo input {
+  padding: 10px;
   width: 100%;
 }
 
@@ -85,7 +84,6 @@ $white: white;
   color: $white;
   border: none;
   border-radius: 5px;
-  padding: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -113,6 +111,12 @@ $white: white;
 
 .collapsed {
   display: none;
+}
+
+@media (max-width: 900px) {
+  #placeOrderButton {
+    width: 250px !important;
+  }
 }
 
 @media (max-width: 750px) {

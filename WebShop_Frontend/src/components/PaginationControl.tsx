@@ -7,20 +7,25 @@ interface PaginationControlProps {
 }
 
 const PaginationControl: React.FC<PaginationControlProps> = ({ currentPage, totalPages, onPageChange }) => {
+  const handlePageChange = (page: number) => {
+    onPageChange(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      onPageChange(currentPage - 1);
+      handlePageChange(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
+      handlePageChange(currentPage + 1);
     }
   };
 
   const handlePageClick = (page: number) => {
-    onPageChange(page);
+    handlePageChange(page);
   };
 
   const renderPageNumbers = () => {

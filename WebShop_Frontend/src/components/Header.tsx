@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Navbar from './partial components/Navbar';
+import Navbar from './partialComponents/Navbar';
 import { Link } from 'react-router-dom';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { GetProducts } from '../services/webShopServices';
-import LoginMenu from '../components/partial components/LoginMenu';
-import CartMenu from '../components/partial components/CartMenu';
-import SidebarMenu from '../components/partial components/SidebarMenu';
+import LoginMenu from './partialComponents/LoginMenu';
+import CartMenu from './partialComponents/CartMenu';
+import SidebarMenu from './partialComponents/SidebarMenu';
 import "../styles/header.scss"
 
 const Header: React.FC = () => {
@@ -79,7 +79,7 @@ const Header: React.FC = () => {
           </div>
           <br />
           <div>
-            <Link to="#">Cart</Link>
+            <Link to="">Cart</Link>
             <input type="image" src="img/shopping-cart_3_white.png" alt="Cart" />
           </div>
           <br />

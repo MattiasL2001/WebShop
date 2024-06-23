@@ -21,7 +21,7 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, IsSidebar
       <div id="nav-right">
         <div id="search" style={{ position: 'relative' }}>
           <input type="search" placeholder=" SEARCH" id="input-box" />
-          <a href="#"><img src={searchIcon} alt="Search" /></a>
+          <a href=""><img src={searchIcon} alt="Search" /></a>
         </div>
         <button id="cartButton" onClick={toggleCartMenu} style={{ position: 'relative' }}>
           <img src={shoppingCartIcon} alt="Cart" id="cart" />

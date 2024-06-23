@@ -12,6 +12,13 @@ $purple: purple;
   margin: 0;
   padding: 0;
   font-family: $font-family;
+
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
 }
 
 button {
@@ -95,118 +102,6 @@ body {
   }
 }
 
-.admin-page {
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(245, 245, 245);
-}
-
-.admin-header {
-  position: relative;
-  width: 100%;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  background-color: $coral;
-  border-bottom: 2px solid $border-color;
-}
-
-#logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-#logo a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: $white;
-  font-weight: 500;
-  font-size: 20pt;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-#nav-left {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  margin-left: 10%;
-  width: 40%;
-}
-
-#nav-left a {
-  height: 100%;
-  color: $white;
-  text-decoration: none;
-  margin: 0 10px 0 20px;
-  font-weight: 500;
-  font-size: 20pt;
-
-  &:hover {
-    border-bottom: 5px solid $white;
-  }
-}
-
-#nav-right {
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  margin-right: 10%;
-  width: 60%;
-}
-
-.admin-main {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: $white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.admin-section {
-  margin-bottom: 40px;
-}
-
-.admin-section h1,
-.admin-section h2 {
-  margin-bottom: 20px;
-}
-
-.admin-section p {
-  margin-bottom: 20px;
-  font-size: 1.2em;
-}
-
-.add-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  color: $white;
-  background-color: $coral;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgb(232, 116, 74);
-  }
-
-  &:active {
-    background-color: rgb(216, 107, 68);
-  }
-}
-
 .add-to-cart-button:hover {
   background-color: rgb(232, 116, 74);
 }
@@ -263,36 +158,6 @@ nav {
 
   &:active {
     background-color: rgb(216, 107, 68);
-  }
-}
-
-#cartMenu, #loginMenu {
-  flex-direction: column;
-  position: absolute;
-  top: 184px;
-  right: 10%;
-  width: 250px;
-  padding: 20px;
-  border: 3px solid $coral;
-  border-top: none;
-  background-color: $white;
-  z-index: 999;
-  opacity: 1;
-  transform: translateY(0px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-
-  &.open {
-    opacity: 1;
-    transform: translateY(50px);
-  }
-
-  p {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-
-  div div p {
-    color: $coral;
   }
 }
 

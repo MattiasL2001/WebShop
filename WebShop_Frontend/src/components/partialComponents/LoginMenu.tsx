@@ -62,6 +62,11 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
                 <input type="submit" value="Login" className="form-button" />
               </div>
               <div className="form-group">
+                <Link to="/forgotpassword" className="register-link">
+                  Forgot Password
+                </Link>
+              </div>
+              <div className="form-group">
                 <Link to="/register" className="register-link">
                   New? Register
                 </Link>
