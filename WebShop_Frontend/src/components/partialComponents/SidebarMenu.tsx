@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../Cart';
 import { SidebarMenuProps } from '../models/props/sidebar';
-import shirt from '../../images/1.png';
+import shirt from "../../images/products/1.png";
 
 const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleSidebarMenu }) => {
   const { cart, addToCart, removeFromCart } = useCart();

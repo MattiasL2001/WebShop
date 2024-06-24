@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './partialComponents/Navbar';
 import { Link } from 'react-router-dom';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { GetProducts } from '../services/webShopServices';
 import LoginMenu from './partialComponents/LoginMenu';
 import CartMenu from './partialComponents/CartMenu';
