@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import AdminPage from '../components/AdminPage';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 
 export type Product = {
@@ -15,9 +15,25 @@ export type Product = {
 };
 
 const Admin: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'users' | 'products'>('users');
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState<any>(null);
+
+  const isUserAdmin: boolean = true; // Set to true to test admin access
+
+  useEffect(() => {
+    if (!isUserAdmin) {
+      navigate('/home');
+    }
+    else {
+      window.scrollTo(0, 0);
+    }
+  }, [isUserAdmin, navigate]);
+
+  if (!isUserAdmin) {
+    return null;
+  }
 
   const handleTabChange = (tab: 'users' | 'products') => {
     setActiveTab(tab);
@@ -64,7 +80,7 @@ const Admin: React.FC = () => {
   ];
 
   return (
-    <AdminPage>
+    <>
       <div className="admin-page">
         <main className="admin-main">
           <section className="admin-section">
@@ -72,14 +88,24 @@ const Admin: React.FC = () => {
             <p>Welcome to the admin dashboard. Use the navigation above to manage the webshop.</p>
           </section>
           <div className="tabs">
-            <button className={activeTab === 'users' ? 'tab active' : 'tab'} onClick={() => handleTabChange('users')}>Users</button>
-            <button className={activeTab === 'products' ? 'tab active' : 'tab'} onClick={() => handleTabChange('products')}>Products</button>
+            <button
+              className={activeTab === 'users' ? 'tab active' : 'tab'}
+              onClick={() => handleTabChange('users')}
+            >
+              Users
+            </button>
+            <button
+              className={activeTab === 'products' ? 'tab active' : 'tab'}
+              onClick={() => handleTabChange('products')}
+            >
+              Products
+            </button>
           </div>
           {activeTab === 'users' && (
             <section className="admin-section">
               <h2>Users</h2>
               <ul className="item-list">
-                {users.map(user => (
+                {users.map((user) => (
                   <li key={user.id} className="item">
                     <span>{user.name}</span>
                     <button className="edit-button" onClick={() => handleEdit(user)}>Edit</button>
@@ -93,7 +119,7 @@ const Admin: React.FC = () => {
             <section className="admin-section">
               <h2>Products</h2>
               <ul className="item-list">
-                {products.map(product => (
+                {products.map((product) => (
                   <li key={product.Id} className="item">
                     <div className="product-details">
                       <h3>{product.Name}</h3>
@@ -121,7 +147,7 @@ const Admin: React.FC = () => {
             {Object.keys(editItem).map((key) => (
               <div key={key} className="form-group">
                 <label>{key}</label>
-                <input type="text" value={editItem[key]} readOnly />
+                <input type="text" value={editItem[key] ?? ''} readOnly />
               </div>
             ))}
             <div className="form-actions">
@@ -131,7 +157,7 @@ const Admin: React.FC = () => {
           </form>
         </Modal>
       )}
-    </AdminPage>
+    </>
   );
 };
 
