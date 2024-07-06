@@ -271,6 +271,10 @@ nav {
   height: 100%;
 }
 
+#forgotPasswordForm {
+  width: 50%;
+}
+
 .loginMenu form, #cartContent {
   margin-top: 75px;
 }
@@ -325,6 +329,7 @@ nav {
 
 .register-link {
   color: $coral;
+  border: none;
   text-decoration: none;
   font-family: $font-family;
 
@@ -476,6 +481,23 @@ nav {
 
 .closeButton:hover {
   color: darkorange;
+}
+
+#welcome-container {
+  margin-top: 75px;
+
+  p {
+    color: $coral;
+
+    a {
+      color: deepskyblue;
+      text-decoration: none;
+    }
+  }
+
+  button {
+    margin-top: 30px;
+  }
 }
 
 @media only screen and (max-width: 1250px) {

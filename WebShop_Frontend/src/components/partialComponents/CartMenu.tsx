@@ -93,7 +93,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
             </div>
           )}
           <div className="checkoutButtonContainer">
-            <Link to="/checkout">
+            <Link to="/checkout" onClick={toggleCartMenu}>
               <button className="checkoutButton">To Checkout</button>
             </Link>
           </div>

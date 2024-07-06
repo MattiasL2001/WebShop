@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import shoppingBagIcon from '../images/WebShop Bag Logo Coral.png';
 import shoppingCartIcon from '../images/shopping-cart-coral.png';
-import defaultProductImage from "../images/1.png";
+import defaultProductImage from "../images/products/1.png";
 import '../styles/checkout.css';
-import Page from '../components/Page';
 import { CartItem } from '../components/models/props/cartItem';
 
 const Webstore: React.FC = () => {
@@ -37,69 +36,67 @@ const Webstore: React.FC = () => {
   );
 
   return (
-    <Page>
-      <article id="checkoutForm">
-        <div id='checkoutArticles' className={isArticlesVisible ? '' : 'collapsed'}>
-          <div 
-            onClick={isSmallScreen ? () => setIsArticlesVisible(!isArticlesVisible) : undefined} 
-            className="toggleSection"
-          >
-            <img src={shoppingCartIcon} alt="Basket" />
-            <h2>Articles</h2>
-            {isSmallScreen && <ArrowIcon isVisible={isArticlesVisible} />}
-          </div>
-          {isArticlesVisible && (
-            <div>
-              {cartItems.length > 0 ? (
-                cartItems.map((item) => (
-                  <div key={item.id} className="cart-item">
-                    <img 
-                      src={item.image || defaultProductImage} 
-                      alt={item.name} 
-                      className="cart-item-image"
-                    />
-                    <p>{item.name} - ${item.price} x {item.quantity}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No items in the cart</p>
-              )}
-            </div>
-          )}
+    <article id="checkoutForm">
+      <div id='checkoutArticles' className={isArticlesVisible ? '' : 'collapsed'}>
+        <div 
+          onClick={isSmallScreen ? () => setIsArticlesVisible(!isArticlesVisible) : undefined} 
+          className="toggleSection"
+        >
+          <img src={shoppingCartIcon} alt="Basket" />
+          <h2>Articles</h2>
+          {isSmallScreen && <ArrowIcon isVisible={isArticlesVisible} />}
         </div>
+        {isArticlesVisible && (
+          <div>
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <img 
+                    src={item.image || defaultProductImage} 
+                    alt={item.name} 
+                    className="cart-item-image"
+                  />
+                  <p>{item.name} - ${item.price} x {item.quantity}</p>
+                </div>
+              ))
+            ) : (
+              <p>No items in the cart</p>
+            )}
+          </div>
+        )}
+      </div>
 
-        <div id='checkoutPayment' className={isCheckoutVisible ? '' : 'collapsed'}>
-          <div 
-            onClick={isSmallScreen ? () => setIsCheckoutVisible(!isCheckoutVisible) : undefined} 
-            className="toggleSection"
-          >
-            <img src={shoppingBagIcon} alt="Basket" />
-            <h2>Checkout</h2>
-            {isSmallScreen && <ArrowIcon isVisible={isCheckoutVisible} />}
-          </div>
-          {isCheckoutVisible && (
-            <>
-              <div id="shippingInfo">
-                <input type="text" placeholder="Shipping Address" />
-                <input type="text" placeholder="City" />
-                <input type="text" placeholder="ZIP Code" />
-                <input type="text" placeholder="Country" />
-              </div>
-              <div id="paymentInfo">
-                <h2>Payment Information</h2>
-                <input type="text" value="1234 5678 9012 3456" readOnly placeholder="Card Number" />
-                <input type="text" value="User Name" readOnly placeholder="Name on Card" />
-                <input type="month" value="2024-12" readOnly placeholder="Expiry Date" />
-                <input type="text" value="123" readOnly placeholder="CVV" />
-              </div>
-              <div>
-                <input type="button" value="Place Order" id="placeOrderButton" />
-              </div>
-            </>
-          )}
+      <div id='checkoutPayment' className={isCheckoutVisible ? '' : 'collapsed'}>
+        <div 
+          onClick={isSmallScreen ? () => setIsCheckoutVisible(!isCheckoutVisible) : undefined} 
+          className="toggleSection"
+        >
+          <img src={shoppingBagIcon} alt="Basket" />
+          <h2>Checkout</h2>
+          {isSmallScreen && <ArrowIcon isVisible={isCheckoutVisible} />}
         </div>
-      </article>
-    </Page>
+        {isCheckoutVisible && (
+          <>
+            <div id="shippingInfo">
+              <input type="text" placeholder="Shipping Address" />
+              <input type="text" placeholder="City" />
+              <input type="text" placeholder="ZIP Code" />
+              <input type="text" placeholder="Country" />
+            </div>
+            <div id="paymentInfo">
+              <h2>Payment Information</h2>
+              <input type="text" value="1234 5678 9012 3456" readOnly placeholder="Card Number" />
+              <input type="text" value="User Name" readOnly placeholder="Name on Card" />
+              <input type="month" value="2024-12" readOnly placeholder="Expiry Date" />
+              <input type="text" value="123" readOnly placeholder="CVV" />
+            </div>
+            <div>
+              <input type="button" value="Place Order" id="placeOrderButton" />
+            </div>
+          </>
+        )}
+      </div>
+    </article>
   );
 };
 

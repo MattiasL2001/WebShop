@@ -71,11 +71,15 @@ select {
   color: coral;
   margin-bottom: 10px;
 }
-.product p {
-  margin-bottom: 10px;
-}
 .product p:last-of-type {
   font-weight: bold;
+}
+.product .name-container {
+  margin-top: 50px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 60px;
 }
 .product .image-container {
   width: 100%;
@@ -137,12 +141,10 @@ select {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
   #articles {
     grid-template-columns: 1fr;
   }
-}
-@media only screen and (max-width: 500px) {
   #searchArticles {
     flex-direction: column;
     width: 80%;

@@ -238,6 +238,10 @@ nav #nav-right img, nav #nav-right-logout img {
   height: 100%;
 }
 
+#forgotPasswordForm {
+  width: 50%;
+}
+
 .loginMenu form, #cartContent {
   margin-top: 75px;
 }
@@ -290,6 +294,7 @@ nav #nav-right img, nav #nav-right-logout img {
 
 .register-link {
   color: coral;
+  border: none;
   text-decoration: none;
   font-family: "MuseoModerno", sans-serif;
 }
@@ -427,6 +432,20 @@ nav #nav-right img, nav #nav-right-logout img {
 
 .closeButton:hover {
   color: darkorange;
+}
+
+#welcome-container {
+  margin-top: 75px;
+}
+#welcome-container p {
+  color: coral;
+}
+#welcome-container p a {
+  color: deepskyblue;
+  text-decoration: none;
+}
+#welcome-container button {
+  margin-top: 30px;
 }
 
 @media only screen and (max-width: 1250px) {
