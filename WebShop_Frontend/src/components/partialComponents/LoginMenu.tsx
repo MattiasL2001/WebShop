@@ -21,7 +21,6 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
     onSuccess: (response) => {
       console.log(response);
       setIsLoggedIn(true);
-      toggleLoginMenu();
       if (location.pathname === '/register') {
         navigate('/home');
       }
@@ -51,7 +50,6 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    toggleLoginMenu();
     if (location.pathname === '/mypage') {
       navigate('/home');
     }

@@ -25,8 +25,7 @@ const Admin: React.FC = () => {
   useEffect(() => {
     if (!isUserAdmin) {
       navigate('/home');
-    }
-    else {
+    } else {
       window.scrollTo(0, 0);
     }
   }, [isUserAdmin, navigate]);
@@ -47,6 +46,10 @@ const Admin: React.FC = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setEditItem(null);
+  };
+
+  const handleCreate = () => {
+    // Handle create new user or product
   };
 
   const users = [
@@ -89,13 +92,13 @@ const Admin: React.FC = () => {
           </section>
           <div className="tabs">
             <button
-              className={activeTab === 'users' ? 'tab active' : 'tab'}
+              className={activeTab === 'users' ? 'adminTab active' : 'adminTab'}
               onClick={() => handleTabChange('users')}
             >
               Users
             </button>
             <button
-              className={activeTab === 'products' ? 'tab active' : 'tab'}
+              className={activeTab === 'products' ? 'adminTab active' : 'adminTab'}
               onClick={() => handleTabChange('products')}
             >
               Products
@@ -104,6 +107,7 @@ const Admin: React.FC = () => {
           {activeTab === 'users' && (
             <section className="admin-section">
               <h2>Users</h2>
+              <button className="create-button" onClick={handleCreate}>Create New User</button>
               <ul className="item-list">
                 {users.map((user) => (
                   <li key={user.id} className="item">
@@ -118,6 +122,7 @@ const Admin: React.FC = () => {
           {activeTab === 'products' && (
             <section className="admin-section">
               <h2>Products</h2>
+              <button className="create-button" onClick={handleCreate}>Create New Product</button>
               <ul className="item-list">
                 {products.map((product) => (
                   <li key={product.Id} className="item">
