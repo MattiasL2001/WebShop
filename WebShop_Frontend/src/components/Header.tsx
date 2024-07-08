@@ -18,6 +18,7 @@ const Header: React.FC = () => {
     setCartMenuOpen(!isCartMenuOpen);
     if (!isCartMenuOpen) {
       setLoginMenuOpen(false);
+      setSidebarMenuOpen(false);
     }
   };
 
@@ -25,13 +26,15 @@ const Header: React.FC = () => {
     setLoginMenuOpen(!isLoginMenuOpen);
     if (!isLoginMenuOpen) {
       setCartMenuOpen(false);
+      setSidebarMenuOpen(false);
     }
   };
 
   const toggleSidebarMenu = () => {
     setSidebarMenuOpen(!isSidebarMenuOpen);
     if (!isSidebarMenuOpen) {
-      setSidebarMenuOpen(false);
+      setLoginMenuOpen(false);
+      setCartMenuOpen(false);
     }
   };
 
@@ -68,32 +71,6 @@ const Header: React.FC = () => {
       {isCartMenuOpen && <CartMenu toggleCartMenu={toggleCartMenu} />}
       {isSidebarMenuOpen && <SidebarMenu toggleSidebarMenu={toggleSidebarMenu} />}
       {isLoginMenuOpen && <LoginMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} toggleLoginMenu={toggleLoginMenu} />}
-
-      <div id="sidebar">
-        <div>
-          <br />
-          <br />
-          <div>
-            <Link to="/">Shop</Link>
-            <input type="image" src="img/shopping-cart_3_white.png" alt="Shop" />
-          </div>
-          <br />
-          <div>
-            <Link to="">Cart</Link>
-            <input type="image" src="img/shopping-cart_3_white.png" alt="Cart" />
-          </div>
-          <br />
-          <div id="sidebarLogin"></div>
-          <br />
-          <div id="sidebarCart"></div>
-          <div id="basketDiv"></div>
-          <br />
-          <div>
-            <Link to="/support">Support</Link>
-            <input type="image" src="img/char.png" alt="Support" />
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

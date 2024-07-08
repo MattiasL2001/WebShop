@@ -43,11 +43,6 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
     };
   }, [toggleCartMenu]);
 
-  const handleToggleCartMenu = () => {
-    toggleCartMenu();
-    setIsCartMenuOpen(!isCartMenuOpen);
-  };
-
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
@@ -56,7 +51,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
     <div className={`cartBackdrop ${isCartMenuOpen ? 'open' : ''}`}>
       <div className={`cartMenu ${isCartMenuOpen ? 'open' : 'closed'}`}>
         <div className='closeButton'>
-          <button onClick={handleToggleCartMenu}>×</button>
+          <button onClick={toggleCartMenu}>×</button>
         </div>
         <div id="cartContent">
           <h2>Basket:</h2>

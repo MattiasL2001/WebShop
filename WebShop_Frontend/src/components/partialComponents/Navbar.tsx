@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NavProps } from '../models/props/nav';
 import searchIcon from '../../images/search_black.png';
@@ -10,9 +10,23 @@ import { useCart } from "../Cart";
 const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, IsSidebarMenuOpen, toggleCartMenu, toggleLoginMenu, toggleSidebarMenu }) => {
   const { cart } = useCart();
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 92) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav>
+    <nav className={isScrolled ? 'navbar scrolled' : 'navbar'}>
       <div id="nav-left">
         <Link to="/products" id="shop">SHOP</Link>
         <Link to="/support" id="support">SUPPORT</Link>
@@ -32,7 +46,10 @@ const Navbar: React.FC<NavProps> = ({ IsCartMenuOpen, IsLoginMenuOpen, IsSidebar
         <button onClick={toggleLoginMenu}>
           <img src={charIcon} alt="User" id="char" />
         </button>
-        <img src={menuIcon} alt="Menu" id="menu-icon" />
+        <button id='sidebarButton' onClick={toggleSidebarMenu} style={{ position: 'relative' }}>
+          <img src={menuIcon} alt="Menu" id="menu-icon" />
+        </button>
+        {/* <img src={menuIcon} alt="Menu" id="menu-icon" /> */}
       </div>
     </nav>
   );
