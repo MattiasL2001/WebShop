@@ -43,22 +43,39 @@ namespace WebShop_Backend.Controllers
                 return NotFound();
             }
 
-            return Ok(product);
+            var productDto = _mapper.Map<ProductDto>(product);
+
+            return Ok(productDto);
 
         }
 
         [HttpGet]
-        [Route("all")]
-        public async Task<ActionResult<List<Product>>> GetAllProducts()
+        [Route("products")]
+        public async Task<ActionResult<List<Product>>> GetProducts(int numberPerPage, int page, int? type, int? color, int? gender, string? sortBy, string? search)
         {
-            var products = await _productRepository.GetAllProducts();
+            var filterDto = new FilterDto() { Type = type, Color = color, Gender = gender, SortBy = sortBy, Search = search };
+
+            var products = await _productRepository.GetProducts(numberPerPage,page,filterDto);
 
             if (products == null)
             {
                 return NotFound();
             }
 
-            return Ok(products);
+            var productsDto = _mapper.Map<List<ProductDto>>(products);
+
+            return Ok(productsDto);
+
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public async Task<ActionResult<int>> GetNumberOfProducts()
+        {
+
+            var numberOfProducts = await _productRepository.GetNumberOfProducts();
+
+            return Ok(numberOfProducts);
 
         }
 
