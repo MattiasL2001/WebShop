@@ -6,12 +6,38 @@ body {
 header, nav {
   position: relative;
   width: 100%;
-  height: 90px;
+  height: 75px;
   display: flex;
   align-items: center;
   background-color: coral;
   border-bottom: 2px solid rgb(250, 118, 70);
   animation: anim 0.2s;
+}
+
+.admin-header {
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.admin-header.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar.scrolled {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #logo, #logo-admin, nav {
@@ -92,36 +118,13 @@ header, nav {
   text-decoration: underline;
 }
 
-#sidebar {
-  display: none;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: calc(100vh - 60px - 90px);
-  background-color: rgba(255, 100, 70, 0.9);
-}
-#sidebar div {
-  display: flex;
-  flex-direction: column;
-}
-#sidebar div div {
-  flex-direction: row;
-  justify-content: center;
-}
-#sidebar div div input {
-  width: 30px;
-}
-#sidebar div div a {
-  color: black;
-}
-
 nav #nav-left, nav #nav-left-logout {
   display: flex;
   align-items: center;
   justify-content: left;
   margin-left: 10%;
   width: 40%;
+  z-index: 3;
 }
 nav #nav-left a, nav #nav-left-logout a {
   height: 100%;
@@ -144,7 +147,18 @@ nav #nav-right, nav #nav-right-logout {
 nav #nav-right button, nav #nav-right-logout button {
   border: none;
 }
-nav #nav-right #search, nav #nav-right-logout #search {
+nav #nav-right #sidebarButton, nav #nav-right-logout #sidebarButton {
+  display: none;
+}
+nav #nav-right #cartButton, nav #nav-right-logout #cartButton {
+  margin-right: 15px;
+}
+nav #nav-right img, nav #nav-right-logout img {
+  height: 40px;
+  width: 40px;
+}
+
+#search, #searchMobile {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -154,17 +168,17 @@ nav #nav-right #search, nav #nav-right-logout #search {
   width: 40%;
   margin-right: 20px;
 }
-nav #nav-right #search a, nav #nav-right-logout #search a {
+#search a, #searchMobile a {
   display: flex;
   position: absolute;
   right: 0;
   margin-right: 10px;
 }
-nav #nav-right #search a img, nav #nav-right-logout #search a img {
+#search a img, #searchMobile a img {
   height: 30px;
   width: 30px;
 }
-nav #nav-right #search #input-box, nav #nav-right-logout #search #input-box {
+#search #input-box, #searchMobile #input-box {
   position: absolute !important;
   left: 15px;
   display: flex;
@@ -173,7 +187,7 @@ nav #nav-right #search #input-box, nav #nav-right-logout #search #input-box {
   height: 80%;
   width: calc(100% - 60px);
 }
-nav #nav-right #search #input-logo, nav #nav-right-logout #search #input-logo {
+#search #input-logo, #searchMobile #input-logo {
   width: 25px;
   height: 25px;
   background: transparent no-repeat;
@@ -182,18 +196,11 @@ nav #nav-right #search #input-logo, nav #nav-right-logout #search #input-logo {
   border: none;
   outline: none;
 }
-nav #nav-right #search #input-logo:hover, nav #nav-right-logout #search #input-logo:hover {
+#search #input-logo:hover, #searchMobile #input-logo:hover {
   cursor: pointer;
 }
-nav #nav-right #search #input-logo:active, nav #nav-right-logout #search #input-logo:active {
+#search #input-logo:active, #searchMobile #input-logo:active {
   outline: none;
-}
-nav #nav-right #cartButton, nav #nav-right-logout #cartButton {
-  margin-right: 15px;
-}
-nav #nav-right img, nav #nav-right-logout img {
-  height: 40px;
-  width: 40px;
 }
 
 #logoutButton {
@@ -209,7 +216,7 @@ nav #nav-right img, nav #nav-right-logout img {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   opacity: 0;
   visibility: hidden;
@@ -227,15 +234,120 @@ nav #nav-right img, nav #nav-right-logout img {
   align-items: center;
   background-color: white;
   padding: 20px;
-  border-radius: 10px 0 0 10px;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 101;
   max-width: 500px;
   width: 100%;
   position: fixed;
-  right: -500px;
+  right: 0;
   top: 0;
   height: 100%;
+}
+
+.sidebarMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: white;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+.sidebarMenu.open {
+  transform: translateX(0);
+}
+.sidebarMenu .closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.sidebarMenu .closeButton button {
+  font-size: 1.5rem;
+}
+.sidebarMenu .closeButton img {
+  top: 10px;
+  right: 10px;
+  width: 30px;
+}
+.sidebarMenu #menuContent {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.sidebarMenu #menuContent #loginMobileMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sidebarMenu #menuContent .loginMenu,
+.sidebarMenu #menuContent #cartContent {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.sidebarMenu #menuContent .form-group {
+  margin-bottom: 1rem;
+}
+.sidebarMenu #menuContent .form-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.sidebarMenu #menuContent .form-button {
+  width: 100%;
+  padding: 0.5rem;
+}
+.sidebarMenu #menuContent .register-link {
+  margin-top: 0.5rem;
+  display: block;
+}
+.sidebarMenu #menuContent #forgotPasswordForm {
+  text-align: center;
+}
+.sidebarMenu #menuContent #welcome-container {
+  text-align: center;
+}
+.sidebarMenu #menuContent #cartContentItems ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemImageContainer {
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemImageContainer .cartItemImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemLink {
+  text-decoration: none;
+  color: inherit;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons button {
+  padding: 0.25rem 0.5rem;
+}
+.sidebarMenu #menuContent .totalPrice {
+  margin-top: 1rem;
+}
+.sidebarMenu #menuContent .checkoutButtonContainer {
+  margin-top: 1rem;
+}
+
+#forgotPasswordForm {
+  width: 50%;
 }
 
 .loginMenu form, #cartContent {
@@ -290,6 +402,7 @@ nav #nav-right img, nav #nav-right-logout img {
 
 .register-link {
   color: coral;
+  border: none;
   text-decoration: none;
   font-family: "MuseoModerno", sans-serif;
 }
@@ -429,6 +542,20 @@ nav #nav-right img, nav #nav-right-logout img {
   color: darkorange;
 }
 
+#welcome-container {
+  margin-top: 75px;
+}
+#welcome-container p {
+  color: coral;
+}
+#welcome-container p a {
+  color: deepskyblue;
+  text-decoration: none;
+}
+#welcome-container button {
+  margin-top: 30px;
+}
+
 @media only screen and (max-width: 1250px) {
   #cartContent {
     width: 100%;
@@ -454,9 +581,11 @@ nav #nav-right img, nav #nav-right-logout img {
   }
   #nav-left {
     margin-left: 5% !important;
+    width: 50% !important;
   }
   #nav-right {
     margin-right: 5% !important;
+    width: 50% !important;
   }
   #nav-left a {
     font-size: 20px !important;
@@ -465,26 +594,134 @@ nav #nav-right img, nav #nav-right-logout img {
     width: 35px !important;
     height: 35px !important;
   }
-  #nav-right button,
-  #search {
-    display: none !important;
+  #sidebarButton {
+    display: block !important;
+  }
+  #nav-right button {
+    display: none;
   }
   #nav-right-logout button {
     display: block !important;
   }
   #search {
-    display: none;
+    display: none !important;
+  }
+  #searchMobile {
+    display: flex;
+    border: 2px solid coral;
+    width: 100% !important;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    margin-right: 0 !important;
   }
   #menu-icon {
     display: flex;
   }
-}
-@media only screen and (max-width: 750px) {
   #nav-left-logout a {
     font-size: 16px !important;
   }
   #nav-right-logout {
     margin-right: 5% !important;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .sidebarMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  .sidebarMenu.open {
+    transform: translateX(0);
+  }
+  .sidebarMenu .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .sidebarMenu #menuContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 250px;
+    margin-top: 50px;
+    padding: 1rem;
+    overflow-y: scroll;
+  }
+  .sidebarMenu .loginMenu,
+  .sidebarMenu #cartContent,
+  #forgotPasswordForm {
+    width: 100%;
+  }
+  .loginMenu form, #cartContent {
+    margin-top: 0 !important;
+  }
+  .sidebarMenu .form-group {
+    display: flex;
+    justify-content: center;
+  }
+  .sidebarMenu .form-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .sidebarMenu .form-button {
+    width: 100%;
+    padding: 0.5rem;
+  }
+  .sidebarMenu .register-link {
+    margin-top: 0.5rem;
+    display: block;
+  }
+  .sidebarMenu #forgotPasswordForm {
+    text-align: center;
+  }
+  .sidebarMenu #welcome-container {
+    text-align: center;
+  }
+  .sidebarMenu #cartContentItems ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem .cartItemImageContainer {
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem .cartItemImageContainer .cartItemImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem .cartItemDetails .cartItemLink {
+    text-decoration: none;
+    color: inherit;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .sidebarMenu #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons button {
+    padding: 0.25rem 0.5rem;
+  }
+  .sidebarMenu .totalPrice {
+    margin-top: 1rem;
+  }
+  .sidebarMenu .checkoutButtonContainer {
+    margin-top: 1rem;
   }
 }
 

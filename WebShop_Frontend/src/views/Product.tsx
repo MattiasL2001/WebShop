@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/product.scss';
 import image from '../images/1.png';
-import Page from '../components/Page';
 import { useCart } from '../components/Cart';
 import { CartItem } from '../components/models/props/cartItem';
 
@@ -20,7 +19,7 @@ const ProductPage: React.FC = () => {
   };
 
   return (
-    <Page>
+    <>
       <article className="product-page">
         <div className="product-image">
           <img src={image} alt="Product image" />
@@ -43,7 +42,7 @@ const ProductPage: React.FC = () => {
           Please buy this product so I get money :)
         </p>
       </article>
-    </Page>
+    </>
   );
 };
 

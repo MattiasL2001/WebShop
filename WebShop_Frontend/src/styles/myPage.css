@@ -1,35 +1,120 @@
-#userForm {
+.page-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.tabs {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+@media only screen and (max-width: 500px) {
+  .tabs {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+}
+
+.tabs button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+  width: 100%;
+  text-align: left;
+}
+.tabs button.active {
+  background-color: coral;
+  color: #fff;
+}
+.tabs button:hover:not(.active) {
+  background-color: #ddd;
+}
+.tabs button:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.content {
+  width: 75%;
+}
+
+#userForm, #purchaseHistory {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
 }
-#userForm h2 {
+#userForm h2, #purchaseHistory h2 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 #userForm input[type=text],
 #userForm input[type=password],
-#userForm input[type=button] {
-  width: 300px;
+#userForm input[type=button], #purchaseHistory input[type=text],
+#purchaseHistory input[type=password],
+#purchaseHistory input[type=button] {
+  width: 100%;
+  max-width: 400px;
   padding: 10px;
   margin-bottom: 15px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
 }
-#userForm input[type=button] {
+#userForm input[type=text][readonly], #purchaseHistory input[type=text][readonly] {
+  background-color: #f0f0f0;
+  color: #333;
+}
+#userForm input[type=button], #purchaseHistory input[type=button] {
   background-color: coral;
   color: #fff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-#userForm input[type=button]:hover {
+#userForm input[type=button]:hover, #purchaseHistory input[type=button]:hover {
   background-color: rgb(232, 116, 74);
 }
-#userForm input[type=button]:active {
+#userForm input[type=button]:active, #purchaseHistory input[type=button]:active {
   background-color: rgb(216, 107, 68);
+}
+#userForm .delete-button, #purchaseHistory .delete-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 25px;
+}
+#userForm .delete-button:hover, #purchaseHistory .delete-button:hover {
+  background-color: #d32f2f;
+}
+#userForm .delete-button:active, #purchaseHistory .delete-button:active {
+  background-color: #b71c1c;
+}
+
+@media only screen and (max-width: 500px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .tabs {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .content {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=myPage.css.map */

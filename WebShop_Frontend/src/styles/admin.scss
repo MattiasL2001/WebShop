@@ -19,6 +19,14 @@ $dark-grey: #333;
   margin-bottom: 40px;
 }
 
+.create-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 40px;
+}
+
 .admin-section h1,
 .admin-section h2 {
   margin-bottom: 20px;
@@ -32,8 +40,10 @@ $dark-grey: #333;
 .tabs {
   display: flex;
   margin-bottom: 20px;
+  height: fit-content;
+  max-width: 150px;
 
-  .tab {
+  .adminTab {
     padding: 10px 20px;
     font-size: 1em;
     background-color: $grey;
@@ -44,6 +54,7 @@ $dark-grey: #333;
 
     &.active {
       background-color: $white;
+      color: $coral;
       border-bottom: 2px solid $coral;
     }
   }
@@ -155,7 +166,7 @@ $dark-grey: #333;
       }
 
       input {
-        width: 100%;
+        width: 95%;
         padding: 10px;
         border: 1px solid $grey;
         border-radius: 5px;
@@ -201,5 +212,21 @@ $dark-grey: #333;
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .admin-section {
+    width: 75%;
+  }
+
+  .item-list {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .admin-section {
+    width: 90%;
   }
 }

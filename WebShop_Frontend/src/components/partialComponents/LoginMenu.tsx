@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { LoginUser } from '../models/LoginUser';
 import { Login } from '../../services/webShopServices';
@@ -7,6 +7,13 @@ import { LoginMenuProps } from '../models/props/login';
 
 const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggleLoginMenu }) => {
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
+  const [email, setEmail] = useState('');
+  const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const loginMutation = useMutation({
     mutationFn: (loginUser: LoginUser) => {
       return Login(loginUser);
@@ -14,7 +21,9 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
     onSuccess: (response) => {
       console.log(response);
       setIsLoggedIn(true);
-      toggleLoginMenu();
+      if (location.pathname === '/register') {
+        navigate('/home');
+      }
     }
   });
 
@@ -25,6 +34,25 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
     let password = (form.elements.namedItem("password") as HTMLInputElement).value;
     console.log(`${email} | ${password}`);
     loginMutation.mutate({ email: email, password: password });
+  };
+
+  const handleForgotPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(`Reset password link sent to: ${email}`);
+    setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.');
+    setEmail('');
+  };
+
+  const handleBackToLogin = () => {
+    setShowForgotPasswordForm(false);
+    setForgotPasswordMessage('');
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    if (location.pathname === '/mypage') {
+      navigate('/home');
+    }
   };
 
   useEffect(() => {
@@ -49,7 +77,7 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
           <div className='closeButton'>
             <button onClick={toggleLoginMenu}>×</button>
           </div>
-          {!isLoggedIn && (
+          {!isLoggedIn && !showForgotPasswordForm && (
             <form onSubmit={getFormData}>
               <h2>Login</h2>
               <div className="form-group">
@@ -62,20 +90,48 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
                 <input type="submit" value="Login" className="form-button" />
               </div>
               <div className="form-group">
-                <Link to="/forgotpassword" className="register-link">
+                <button type="button" onClick={() => setShowForgotPasswordForm(true)} className="register-link">
                   Forgot Password
-                </Link>
+                </button>
               </div>
               <div className="form-group">
-                <Link to="/register" className="register-link">
+                <Link to="/register" className="register-link" onClick={toggleLoginMenu}>
                   New? Register
                 </Link>
               </div>
             </form>
           )}
+          {showForgotPasswordForm && (
+            <form onSubmit={handleForgotPasswordSubmit} id='forgotPasswordForm'>
+              <h2>Forgot Password</h2>
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="form-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <input type="submit" value="Send Reset Link" className="form-button" />
+              </div>
+              <div className="form-group">
+                <button type="button" onClick={handleBackToLogin} className="register-link">
+                  Back to Login
+                </button>
+              </div>
+              {forgotPasswordMessage && (
+                <div className="form-group">
+                  <p className="forgot-password-message">{forgotPasswordMessage}</p>
+                </div>
+              )}
+            </form>
+          )}
           {isLoggedIn && (
-            <div className="welcome-container">
-              <Navigate to="/mypage" />
+            <div id="welcome-container">
+              <p>Welcome User! <Link to="/mypage" onClick={toggleLoginMenu}>Go to My Page</Link></p>
+              <button onClick={handleLogout} className="form-button">Logout</button>
             </div>
           )}
         </div>
