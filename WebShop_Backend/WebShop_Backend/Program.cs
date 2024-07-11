@@ -88,6 +88,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiler));
 

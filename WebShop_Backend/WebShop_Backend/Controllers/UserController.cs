@@ -14,12 +14,14 @@ namespace WebShop_Backend.Controllers
     {
 
         private readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserRepository userRepository, IOrderRepository orderRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _orderRepository = orderRepository;
             _mapper = mapper;
         }
 
@@ -83,6 +85,23 @@ namespace WebShop_Backend.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("order")]
+        public async Task<ActionResult> Order(OrderDto orderDto)
+        {
+
+            var order = _mapper.Map<Order>(orderDto);
+
+            var orderStatus = await _orderRepository.AddOrder(order);
+
+            if (orderStatus == HttpStatusCode.BadRequest)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetUser(int userId)
         {
@@ -100,18 +119,15 @@ namespace WebShop_Backend.Controllers
         }
 
         [HttpGet]
-        [Route("basket")]
-        public async Task<ActionResult<HashSet<int>>> GetBasket(int userId)
+        [Route("orders")]
+        public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
 
-            var userBasket = await _userRepository.GetBasket(userId);
+            var orders = await _orderRepository.GetOrders();
 
-            if (userBasket == null) 
-            {  
-                return NotFound(); 
-            }
+            var orderDtos = _mapper.Map<List<OrderDto>>(orders);
 
-            return Ok(userBasket);
+            return Ok(orderDtos);
         }
 
         [HttpPatch]
