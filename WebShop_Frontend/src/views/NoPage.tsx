@@ -15,7 +15,7 @@ const Webstore: React.FC = () => {
           <h3>Return back to the</h3>
           <Link to="/" id="homePageLink">Homepage</Link>
         </div>
-      </div>
+     </div>
 
     </>
   );

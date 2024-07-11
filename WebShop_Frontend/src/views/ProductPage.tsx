@@ -53,7 +53,7 @@ const ProductPage: React.FC = () => {
           </div>
         </article>
         <article className="product-description">
-          <p>Product Description</p>
+          <p>{product?.description}</p>
         </article>
       </>
   );
