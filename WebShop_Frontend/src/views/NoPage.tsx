@@ -8,7 +8,6 @@ const Webstore: React.FC = () => {
   return (
     <>
     
-    <Page>
       <div id='noPage'>
           <div>
             <br />
@@ -18,7 +17,6 @@ const Webstore: React.FC = () => {
             <Link to="/" id="homePageLink">Homepage</Link>
           </div>
         </div>
-    </Page>
 
     </>
   );
