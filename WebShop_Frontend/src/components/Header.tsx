@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './partialComponents/Navbar';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { GetProducts } from '../services/webShopServices';
 import LoginMenu from './partialComponents/LoginMenu';
 import CartMenu from './partialComponents/CartMenu';
 import SidebarMenu from './partialComponents/SidebarMenu';
@@ -13,6 +11,7 @@ const Header: React.FC = () => {
   const [isCartMenuOpen, setCartMenuOpen] = useState(false);
   const [isLoginMenuOpen, setLoginMenuOpen] = useState(false);
   const [isSidebarMenuOpen, setSidebarMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   
   const toggleCartMenu = () => {
     setCartMenuOpen(!isCartMenuOpen);
@@ -38,28 +37,37 @@ const Header: React.FC = () => {
     }
   };
 
-  const { data: products, isLoading, error } = useQuery({
-    queryKey: ['products', isLoggedIn],
-    queryFn: async () => {
-      return await GetProducts();
-    }
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY >= 77);
+    };
 
-  if (products) {
-    for (let i = 0; i < products.length; i++) {
-      console.log(products[i].name);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isCartMenuOpen || isLoginMenuOpen || isSidebarMenuOpen) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'auto';
     }
-  }
+
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, [isCartMenuOpen, isLoginMenuOpen, isSidebarMenuOpen]);
 
   return (
     <div>
-      <header>
+      <header className={isScrolled ? 'header scrolled' : ''}>
         <div id="logo">
           <Link to="/">Webstore.com</Link>
         </div>
       </header>
 
       <Navbar
+        IsScrolled={isScrolled}
         IsCartMenuOpen={isCartMenuOpen}
         IsLoginMenuOpen={isLoginMenuOpen}
         IsSidebarMenuOpen={isSidebarMenuOpen}
@@ -69,7 +77,7 @@ const Header: React.FC = () => {
       />
 
       {isCartMenuOpen && <CartMenu toggleCartMenu={toggleCartMenu} />}
-      {isSidebarMenuOpen && <SidebarMenu toggleSidebarMenu={toggleSidebarMenu} />}
+      {isSidebarMenuOpen && <SidebarMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} toggleSidebarMenu={toggleSidebarMenu} />}
       {isLoginMenuOpen && <LoginMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} toggleLoginMenu={toggleLoginMenu} />}
     </div>
   );

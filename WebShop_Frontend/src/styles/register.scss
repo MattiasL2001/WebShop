@@ -25,6 +25,9 @@ $white: white;
         outline: none;
         font-family: $font-family;
         font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
       }
     }
 

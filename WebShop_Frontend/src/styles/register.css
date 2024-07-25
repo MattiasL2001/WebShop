@@ -19,6 +19,9 @@
   outline: none;
   font-family: MuseoModerno, sans-serif;
   font-size: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 #registerForm #registerButton {
   margin: 25px 0;

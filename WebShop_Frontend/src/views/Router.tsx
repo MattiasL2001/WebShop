@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Products from './Products';
 import Register from './Register';
-import Login from './Login';
 import Support from './Support';
 import Checkout from './Checkout';
 import NoPage from './NoPage';
@@ -16,55 +15,57 @@ import Page from '../components/Page';
 import AdminPage from '../components/AdminPage';
 
 const Router: React.FC = () => {
-    const location = useLocation();
-    const fakeProduct: Product[] = [{id: 999, name: "No Product", description: "No Description", price: 0, image: "", productAmount: 0, productColor: 999, productGender: 999, productType: 999}];
-    const [products, setProducts] = useState(fakeProduct);
+  const location = useLocation();
+  const fakeProduct: Product[] = 
+    [{id: 999, name: "No Product", description: "No Description", price: 0, image: "", productAmount: 0, productColor: 999, productGender: 999, productType: 999}];
+  const [products, setProducts] = useState(fakeProduct);
+  const [page, setPage] = useState(1);
+  const [numberPerPage] = useState(15);
 
-    const productsQuery = useQuery({
-        queryKey: ['products', products],
-        queryFn: async () => {
-            let products = await GetProducts();
-            setProducts(products);
-        }
-    });
+  useQuery({
+    queryKey: ['products', page, numberPerPage],
+    queryFn: async () => {
+      let fetchedProducts = await GetProducts(numberPerPage, page);
+      setProducts(fetchedProducts);
+    }
+  });
 
-    const isAdminPath = location.pathname.startsWith('/admin');
+  const isAdminPath = location.pathname.startsWith('/admin');
 
-    return (
-        <>
-            {!isAdminPath && (
-                <Page>
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/products" replace />} />
-                        <Route path="/home" element={<Navigate to="/products" replace />} />
-                        <Route path='/products'>
-                            <Route index element={<Products products={products} />} />
-                            <Route path=':id' element={<ProductPage />} />
-                        </Route>
-                        <Route path='register' element={<Register />} />
-                        <Route path="login" element={<Login />} />
-                        <Route path="support" element={<Support />} />
-                        <Route path="checkout" element={<Checkout />} />
-                        <Route path="mypage" element={<MyPage />} />
-                        <Route path="unauthorized" element={<UnauthorizedPage />} />
-                        <Route path='*' element={<NoPage />} />
-                    </Routes>
-                </Page>
-            )}
+  return (
+    <>
+      {!isAdminPath && (
+        <Page>
+          <Routes>
+            <Route path="/" element={<Navigate to="/products" replace />} />
+            <Route path="/home" element={<Navigate to="/products" replace />} />
+            <Route path='/products'>
+              <Route index element={<Products products={products} pageProps={{ page, numberPerPage, setPage }} />} />
+              <Route path=':id' element={<ProductPage />} />
+            </Route>
+            <Route path='register' element={<Register />} />
+            <Route path="support" element={<Support />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="mypage" element={<MyPage />} />
+            <Route path="unauthorized" element={<UnauthorizedPage />} />
+            <Route path='*' element={<NoPage />} />
+          </Routes>
+        </Page>
+      )}
 
-            {isAdminPath && (
-                <AdminPage>
-                    <Routes>
-                        <Route path="admin" element={<Admin />} />
-                    </Routes>
-                </AdminPage>
-            )}
-        </>
-    );
+      {isAdminPath && (
+        <AdminPage>
+          <Routes>
+            <Route path="admin" element={<Admin />} />
+          </Routes>
+        </AdminPage>
+      )}
+    </>
+  );
 };
 
 const UnauthorizedPage: React.FC = () => {
-    return <div>Unauthorized access! Please log in to view this page.</div>;
+  return <div>Unauthorized access! Please log in to view this page.</div>;
 };
 
 export default Router;

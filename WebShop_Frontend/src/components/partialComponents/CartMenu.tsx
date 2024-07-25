@@ -47,6 +47,8 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const isCheckoutPage = window.location.pathname === '/checkout';
+
   return (
     <div className={`cartBackdrop ${isCartMenuOpen ? 'open' : ''}`}>
       <div className={`cartMenu ${isCartMenuOpen ? 'open' : 'closed'}`}>
@@ -55,42 +57,50 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
         </div>
         <div id="cartContent">
           <h2>Basket:</h2>
-          <div id='cartContentItems'>
-            {cart.length === 0 ? (
-              <p>Your cart is empty</p>
-            ) : (
-              <ul>
-                {cart.map((item) => (
-                  <li key={item.id} className="cartItem">
-                    <div className="cartItemImageContainer">
-                      <img src={shirt} alt={item.name} className="cartItemImage" />
-                    </div>
-                    <div className="cartItemDetails">
-                      <Link to={`/product/${item.id}`} className="cartItemLink">
-                        <p className="cartItemName">{item.name}</p>
-                      </Link>
-                      <p className="cartItemPrice">Price: ${item.price}</p>
-                      <p className="cartItemQuantity">Quantity: {item.quantity}</p>
-                      <div className="cartItemButtons">
-                        <button onClick={() => handleIncrement(item.id)}>➕</button>
-                        <button onClick={() => handleDecrement(item.id)}>➖</button>
-                        {/* <button onClick={() => handleRemove(item.id)}>🗑️</button> */}
+          {!isCheckoutPage && (
+            <div id='cartContentItems'>
+              {cart.length === 0 ? (
+                <p>Your cart is empty</p>
+              ) : (
+                <ul>
+                  {cart.map((item) => (
+                    <li key={item.id} className="cartItem">
+                      <div className="cartItemImageContainer">
+                        <img src={shirt} alt={item.name} className="cartItemImage" />
                       </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          {cart.length > 0 && (
+                      <div className="cartItemDetails">
+                        <Link to={`/products/${item.id}`} state={item} className="cartItemLink">
+                          <p className="cartItemName">{item.name}</p>
+                        </Link>
+                        <p className="cartItemPrice">Price: ${item.price}</p>
+                        <p className="cartItemQuantity">Quantity: {item.quantity}</p>
+                        <div className="cartItemButtons">
+                          <button onClick={() => handleIncrement(item.id)}>➕</button>
+                          <button onClick={() => handleDecrement(item.id)}>➖</button>
+                          {/* <button onClick={() => handleRemove(item.id)}>🗑️</button> */}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+          {cart.length > 0 && !isCheckoutPage && (
             <div className="totalPrice">
               <h3>Total Price: ${calculateTotalPrice().toFixed(2)}</h3>
             </div>
           )}
           <div className="checkoutButtonContainer">
-            <Link to="/checkout" onClick={toggleCartMenu}>
-              <button className="checkoutButton">To Checkout</button>
-            </Link>
+            {isCheckoutPage ? (
+              <Link to="/home" onClick={toggleCartMenu}>
+                <button className="checkoutButton">Continue Shopping</button>
+              </Link>
+            ) : (
+              <Link to="/checkout" onClick={toggleCartMenu}>
+                <button className="checkoutButton">To Checkout</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

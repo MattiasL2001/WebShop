@@ -9,21 +9,28 @@ const Webstore: React.FC = () => {
         <div>
           <h2>Register</h2>
         </div>
+        <br></br>
+        <p>First Name</p>
         <div>
-          <input type="text" placeholder="Firstname" autoComplete="off" />
+          <input type="text" autoComplete="off" />
         </div>
+        <p>Last Name</p>
         <div id="name2">
-          <input type="text" placeholder="Surname" autoComplete="off" />
+          <input type="text" autoComplete="off" />
         </div>
+        <p>Email Adress</p>
         <div>
-          <input type="text" placeholder="E-Mail" autoComplete="off" />
+          <input type="text" autoComplete="off" />
         </div>
+        <p>Password</p>
         <div id="passwordLogin">
-          <input type="password" placeholder="Password" autoComplete="new-password" />
+          <input type="password" autoComplete="new-password" />
         </div>
+        <p>Confirm Password</p>
         <div id="passwordLogin">
-          <input type="password" placeholder="Verify Password" autoComplete="new-password" />
+          <input type="password" autoComplete="new-password" />
         </div>
+        <p>Birth Date</p>
         <div>
           <input type="date" min="1900-01-01" id="birthDate" autoComplete="off" />
         </div>

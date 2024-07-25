@@ -16,6 +16,33 @@ $white: white;
   flex-direction: row !important;
 }
 
+.cart-item-buttons {
+  flex-direction: row !important;
+  gap: 10px;
+}
+
+.cart-item-buttons button {
+  color: $white;
+  border: solid;
+  border-width: 1px;
+  border-color: $coral;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item-buttons button:hover {
+  box-shadow: 0 0 3px $coral;
+}
+
+.cart-item-buttons button:active {
+  box-shadow: 0 0 5px $coral;
+}
+
+
 #shippingInfo,
 #paymentInfo {
   width: 75% !important;
@@ -35,7 +62,12 @@ $white: white;
   width: 100%;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   margin-bottom: 20px;
+}
+
+#checkoutForm div p {
+  width: 75%;
 }
 
 #placeOrderButton {
@@ -43,7 +75,8 @@ $white: white;
   width: 300px !important;
 }
 
-#checkoutForm div img {
+#checkoutForm div img,
+#checkoutForm div svg {
   height: 64px;
   width: 64px;
 }
@@ -127,6 +160,7 @@ $white: white;
 
   #checkoutForm div {
     width: 100%;
+    justify-content: center;
     border-right: none;
   }
 
