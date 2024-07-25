@@ -8,8 +8,8 @@ interface PaginationControlProps {
 
 const PaginationControl: React.FC<PaginationControlProps> = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageChange = (page: number) => {
+    window.scrollTo({ top: 0 });
     onPageChange(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePreviousPage = () => {
@@ -24,38 +24,27 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ currentPage, tota
     }
   };
 
-  const handlePageClick = (page: number) => {
-    handlePageChange(page);
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          className={`page-number ${currentPage === i ? 'active' : ''}`}
-          onClick={() => handlePageClick(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-    return pageNumbers;
-  };
-
   return (
     <div className="pagination-control">
-      <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+      <button
+        className="pagination-arrow"
+        onClick={handlePreviousPage}
+        disabled={currentPage === 1}
+      >
         &lt;
       </button>
-      {renderPageNumbers()}
-      <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+      <div className="pagination-info">
+        <span className="pagination-text">
+          Page {currentPage} of {totalPages}
+        </span>
+      </div>
+      <button
+        className="pagination-arrow"
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+      >
         &gt;
       </button>
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 export interface NavProps {
+    IsScrolled: boolean;
     IsCartMenuOpen: boolean;
     IsLoginMenuOpen: boolean;
     IsSidebarMenuOpen: boolean;

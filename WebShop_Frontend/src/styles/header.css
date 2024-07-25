@@ -35,9 +35,15 @@ header, nav {
 
 .navbar.scrolled {
   z-index: 1;
+  transition: all 0.3s ease-in-out;
   position: fixed;
   top: 0;
+  bottom: 77px;
   left: 0;
+}
+
+.header.scrolled {
+  margin-top: 77px;
 }
 
 #logo, #logo-admin, nav {
@@ -153,7 +159,7 @@ nav #nav-right #sidebarButton, nav #nav-right-logout #sidebarButton {
 nav #nav-right #cartButton, nav #nav-right-logout #cartButton {
   margin-right: 15px;
 }
-nav #nav-right img, nav #nav-right-logout img {
+nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-right-logout svg {
   height: 40px;
   width: 40px;
 }
@@ -174,7 +180,7 @@ nav #nav-right img, nav #nav-right-logout img {
   right: 0;
   margin-right: 10px;
 }
-#search a img, #searchMobile a img {
+#search a svg, #searchMobile a svg {
   height: 30px;
   width: 30px;
 }
@@ -201,6 +207,15 @@ nav #nav-right img, nav #nav-right-logout img {
 }
 #search #input-logo:active, #searchMobile #input-logo:active {
   outline: none;
+}
+#search input, #searchMobile input {
+  border: none;
+  background: none;
+  color: inherit;
+  box-shadow: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
 }
 
 #logoutButton {
@@ -275,7 +290,6 @@ nav #nav-right img, nav #nav-right-logout img {
 .sidebarMenu #menuContent {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 .sidebarMenu #menuContent #loginMobileMenu {
   display: flex;
@@ -288,9 +302,6 @@ nav #nav-right img, nav #nav-right-logout img {
   width: 100%;
   margin-bottom: 1rem;
 }
-.sidebarMenu #menuContent .form-group {
-  margin-bottom: 1rem;
-}
 .sidebarMenu #menuContent .form-input {
   width: 100%;
   padding: 0.5rem;
@@ -299,10 +310,6 @@ nav #nav-right img, nav #nav-right-logout img {
 .sidebarMenu #menuContent .form-button {
   width: 100%;
   padding: 0.5rem;
-}
-.sidebarMenu #menuContent .register-link {
-  margin-top: 0.5rem;
-  display: block;
 }
 .sidebarMenu #menuContent #forgotPasswordForm {
   text-align: center;
@@ -339,12 +346,6 @@ nav #nav-right img, nav #nav-right-logout img {
 .sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons button {
   padding: 0.25rem 0.5rem;
 }
-.sidebarMenu #menuContent .totalPrice {
-  margin-top: 1rem;
-}
-.sidebarMenu #menuContent .checkoutButtonContainer {
-  margin-top: 1rem;
-}
 
 #forgotPasswordForm {
   width: 50%;
@@ -352,6 +353,10 @@ nav #nav-right img, nav #nav-right-logout img {
 
 .loginMenu form, #cartContent {
   margin-top: 75px;
+}
+
+.loginMenu form {
+  max-width: 200px;
 }
 
 .loginBackdrop.open .loginMenu, .cartBackdrop.open .cartMenu {
@@ -364,7 +369,7 @@ nav #nav-right img, nav #nav-right-logout img {
 }
 
 .form-group, .cartContent {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .form-input {
@@ -411,11 +416,12 @@ nav #nav-right img, nav #nav-right-logout img {
 }
 
 #cartContent {
+  height: 100%;
   width: 80%;
 }
 
 #cartContentItems {
-  height: 50%;
+  height: 60%;
   overflow-y: auto;
   overflow-x: clip;
 }
@@ -502,12 +508,6 @@ nav #nav-right img, nav #nav-right-logout img {
   margin-top: 25px;
 }
 
-.checkoutButtonContainer {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
 .checkoutButton {
   background-color: coral;
   color: white;
@@ -571,9 +571,6 @@ nav #nav-right img, nav #nav-right-logout img {
   .cartItemDetails {
     flex-direction: column;
   }
-  #cartContentItems {
-    height: 40%;
-  }
 }
 @media only screen and (max-width: 750px) {
   .loginMenu, .cartMenu, .loginBackdrop.open, .cartBackdrop.open {
@@ -610,8 +607,7 @@ nav #nav-right img, nav #nav-right-logout img {
     display: flex;
     border: 2px solid coral;
     width: 100% !important;
-    margin-top: 50px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     margin-right: 0 !important;
   }
   #menu-icon {
@@ -623,6 +619,9 @@ nav #nav-right img, nav #nav-right-logout img {
   #nav-right-logout {
     margin-right: 5% !important;
   }
+  .checkoutButton {
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 750px) {
   .sidebarMenu {
@@ -632,7 +631,6 @@ nav #nav-right img, nav #nav-right-logout img {
     justify-content: center;
     background-color: white;
     width: 100%;
-    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -645,17 +643,15 @@ nav #nav-right img, nav #nav-right-logout img {
   }
   .sidebarMenu .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
   }
   .sidebarMenu #menuContent {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 250px;
     margin-top: 50px;
-    padding: 1rem;
-    overflow-y: scroll;
+    max-width: 250px;
   }
   .sidebarMenu .loginMenu,
   .sidebarMenu #cartContent,
@@ -677,10 +673,6 @@ nav #nav-right img, nav #nav-right-logout img {
   .sidebarMenu .form-button {
     width: 100%;
     padding: 0.5rem;
-  }
-  .sidebarMenu .register-link {
-    margin-top: 0.5rem;
-    display: block;
   }
   .sidebarMenu #forgotPasswordForm {
     text-align: center;
@@ -717,11 +709,10 @@ nav #nav-right img, nav #nav-right-logout img {
   .sidebarMenu #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons button {
     padding: 0.25rem 0.5rem;
   }
-  .sidebarMenu .totalPrice {
-    margin-top: 1rem;
-  }
-  .sidebarMenu .checkoutButtonContainer {
-    margin-top: 1rem;
+}
+@media only screen and (min-height: 500px) {
+  #menuContent {
+    margin-top: 20px !important;
   }
 }
 

@@ -63,16 +63,10 @@ select {
   margin-bottom: 50px !important;
   height: auto;
   padding: 20px;
-  border-radius: 2px;
   background-color: $white;
   cursor: pointer;
   text-decoration: none;
   color: $black;
-  border: 1px solid $white;
-
-  &:hover {
-    border: 1px solid $coral;
-  }
 
   h2 {
     font-size: 18px;
@@ -81,7 +75,6 @@ select {
   }
 
   p {
-
     &:last-of-type {
       font-weight: bold;
     }
@@ -111,11 +104,40 @@ select {
 
 .pagination-control {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin: 20px 0;
 
-  button {
+  .pagination-arrow {
+    border: none;
+    color: coral;
+    font-family: MuseoModerno, sans-serif;
+    font-size: 36px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:disabled {
+      cursor: default;
+      color: $gray;
+    }
+  }
+
+  .pagination-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-family;
+    font-size: 20px;
+    margin: 0 10px;
+    color: $black;
+  }
+
+  .page-number {
     background-color: $white;
     border: 1px solid $coral;
     color: $coral;
@@ -132,22 +154,16 @@ select {
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 
-    &:hover {
-      background-color: $coral;
-      color: $white;
-    }
-
     &.active {
       background-color: $coral;
       color: $white;
+      border-color: $coral;
     }
-  }
 
-  span {
-    font-family: $font-family;
-    font-size: 16px;
-    margin: 0 10px;
-    color: $black;
+    &:hover {
+      background-color: rgba($coral, 0.1);
+      color: $coral;
+    }
   }
 }
 

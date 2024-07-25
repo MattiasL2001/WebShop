@@ -12,6 +12,7 @@ const ProductPage: React.FC = () => {
       id: 21,
       name: 'Product Name',
       image: null,
+      description: "",
       price: 89.99,
       quantity: 1
     };

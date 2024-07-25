@@ -1,15 +1,25 @@
 import React from 'react';
 
-const SelectFilter: React.FC<{filterItems: string[]}> = (filter) => {
-
-return (
-<select name="gender" className="filter" id="filterGender">
-    {filter.filterItems.map((item) => (
-        <option key={filter.filterItems.indexOf(item)} value={item.toLowerCase().replaceAll(" ","-").replaceAll(",","")}>{item}</option>)
-    )}
-</select>
-)
-
+interface SelectFilterProps {
+  filterItems: string[];
+  onChange: (value: string) => void;
 }
 
-export default SelectFilter
+const SelectFilter: React.FC<SelectFilterProps> = ({ filterItems, onChange }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    onChange(selectedValue);
+  };
+
+  return (
+    <select className='filter' onChange={handleChange}>
+      {filterItems.map((item, index) => (
+        <option key={index} value={item}>
+          {item}
+        </option>
+      ))}
+    </select>
+  );
+};
+
+export default SelectFilter;

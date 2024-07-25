@@ -10,6 +10,7 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
   const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
   const [email, setEmail] = useState('');
   const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,11 +20,13 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
       return Login(loginUser);
     },
     onSuccess: (response) => {
-      console.log(response);
       setIsLoggedIn(true);
       if (location.pathname === '/register') {
         navigate('/home');
       }
+    },
+    onError: (error: any) => {
+      setErrorMessage('Login failed. Please check your credentials and try again.');
     }
   });
 
@@ -32,13 +35,11 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
     let form = formEvent.currentTarget;
     let email = (form.elements.namedItem("email") as HTMLInputElement).value;
     let password = (form.elements.namedItem("password") as HTMLInputElement).value;
-    console.log(`${email} | ${password}`);
     loginMutation.mutate({ email: email, password: password });
   };
 
   const handleForgotPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(`Reset password link sent to: ${email}`);
     setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.');
     setEmail('');
   };
@@ -86,6 +87,11 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
               <div className="form-group">
                 <input name='password' type="password" placeholder="Password" className="form-input" />
               </div>
+              {errorMessage && (
+                <div className="form-group error-message">
+                  <p>{errorMessage}</p>
+                </div>
+              )}
               <div className="form-group">
                 <input type="submit" value="Login" className="form-button" />
               </div>

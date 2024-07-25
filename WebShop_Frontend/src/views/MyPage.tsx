@@ -15,7 +15,6 @@ const Webstore: React.FC = () => {
   };
 
   const handleDeleteAccount = () => {
-    // Implement delete account functionality here
     alert('Are you sure you want to delete your account? This action cannot be undone.');
   };
 
