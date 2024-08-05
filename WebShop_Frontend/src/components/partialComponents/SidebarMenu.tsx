@@ -51,7 +51,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ isLoggedIn, setIsLoggedIn, to
   const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = useState(true);
+  const [isSidebarMenuOpen] = useState(true);
 
   const { searchTerm, handleSearchChange, handleKeyDown, handleSearchClick } = useSearch();
 

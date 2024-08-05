@@ -1,49 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import PaginationControl from '../PaginationControl';
 import { Product } from '../models/Product';
 import defaultImage from "../../images/products/1.png";
-import { GetNumberOfProducts, GetProducts } from '../../services/webShopServices';
+import { GetNumberOfProducts } from '../../services/webShopServices';
 import { PageProps } from '../models/props/pageProps';
 
 interface ProductItemsProps {
   products: Product[];
   pageProps: PageProps;
-  filters: {
-    gender?: number;
-    productProperty?: number;
-    color?: number;
-    sortBy?: string;
-    search?: string;
-  };
 }
 
-const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page, numberPerPage, setPage }, filters }) => {
+const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page, numberPerPage, setPage } }) => {
   const { data: numberOfProducts = 0 } = useQuery<number>({
     queryKey: ['numberOfProducts'],
     queryFn: GetNumberOfProducts,
   });
 
-  const { data: getProducts = [] } = useQuery<Product[]>({
-    queryKey: ['getProducts', page, numberPerPage, filters],
-    queryFn: () => GetProducts(numberPerPage, page, filters.productProperty, filters.color, filters.gender, filters.sortBy, filters.search),
-  });
+  let totalPages: number
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const products = await GetProducts(15, 1, undefined, undefined, undefined, undefined, "intelligent");
-        console.log(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  const totalPages = Math.ceil(numberOfProducts / numberPerPage);
+  if (products.length < numberPerPage && page === 1) { totalPages = 1; }
+  else { totalPages = Math.ceil(numberOfProducts / numberPerPage); }
 
   const handleChangePage = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -61,7 +39,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page
   return (
     <section>
       <div id="articles">
-        {getProducts.map((product: Product) => (
+        {products.map((product: Product) => (
           <Link to={`/products/${product.id}`} key={product.id} className="product" state={product}>
             <div className="image-container">
               <img

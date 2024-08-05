@@ -40,8 +40,6 @@ const ProductPage: React.FC = () => {
     }
   };
 
-  console.log(product)
-
   if (image === "") {
 
   switch (product?.image) {

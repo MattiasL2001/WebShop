@@ -6,7 +6,7 @@ import shirt from "../../images/products/1.png";
 
 const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
   const { cart, addToCart, removeFromCart } = useCart();
-  const [isCartMenuOpen, setIsCartMenuOpen] = useState(true);
+  const [isCartMenuOpen] = useState(true);
 
   const handleIncrement = (itemId: number) => {
     const item = cart.find(item => item.id === itemId);
@@ -77,7 +77,6 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
                         <div className="cartItemButtons">
                           <button onClick={() => handleIncrement(item.id)}>➕</button>
                           <button onClick={() => handleDecrement(item.id)}>➖</button>
-                          {/* <button onClick={() => handleRemove(item.id)}>🗑️</button> */}
                         </div>
                       </div>
                     </li>

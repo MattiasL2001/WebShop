@@ -6,7 +6,7 @@ import { Login } from '../../services/webShopServices';
 import { LoginMenuProps } from '../models/props/login';
 
 const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggleLoginMenu }) => {
-  const [showLoginForm, setShowLoginForm] = useState(true);
+  const [showLoginForm] = useState(true);
   const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
   const [email, setEmail] = useState('');
   const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
@@ -38,9 +38,15 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
     loginMutation.mutate({ email: email, password: password });
   };
 
+  const handleForgotPasswordLink = () => {
+    setShowForgotPasswordForm(true);
+    setErrorMessage("");
+  }
+
   const handleForgotPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.');
+    if (email != "") { setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.'); }
+    else { setForgotPasswordMessage('Input field can not be empty!'); }
     setEmail('');
   };
 
@@ -96,7 +102,7 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
                 <input type="submit" value="Login" className="form-button" />
               </div>
               <div className="form-group">
-                <button type="button" onClick={() => setShowForgotPasswordForm(true)} className="register-link">
+                <button type="button" onClick={handleForgotPasswordLink} className="register-link">
                   Forgot Password
                 </button>
               </div>

@@ -20,13 +20,11 @@ const Admin: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState<any>(null);
 
-  const isUserAdmin: boolean = true; // Set to true to test admin access
+  const isUserAdmin: boolean = true;
 
   useEffect(() => {
     if (!isUserAdmin) {
       navigate('/home');
-    } else {
-      window.scrollTo(0, 0);
     }
   }, [isUserAdmin, navigate]);
 
@@ -46,10 +44,6 @@ const Admin: React.FC = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setEditItem(null);
-  };
-
-  const handleCreate = () => {
-    // Handle create new user or product
   };
 
   const users = [
@@ -107,7 +101,7 @@ const Admin: React.FC = () => {
           {activeTab === 'users' && (
             <section className="admin-section">
               <h2>Users</h2>
-              <button className="create-button" onClick={handleCreate}>Create New User</button>
+              <button className="create-button">Create New User</button>
               <ul className="item-list">
                 {users.map((user) => (
                   <li key={user.id} className="item">
@@ -122,7 +116,7 @@ const Admin: React.FC = () => {
           {activeTab === 'products' && (
             <section className="admin-section">
               <h2>Products</h2>
-              <button className="create-button" onClick={handleCreate}>Create New Product</button>
+              <button className="create-button">Create New Product</button>
               <ul className="item-list">
                 {products.map((product) => (
                   <li key={product.Id} className="item">
