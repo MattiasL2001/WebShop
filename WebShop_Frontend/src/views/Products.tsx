@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import SelectFilter from '../components/partialComponents/SelectFilter';
 import ProductItems from '../components/partialComponents/ProductItems';
 import { Product } from '../components/models/Product';
-import { PageProps } from "../components/models/props/pageProps";
 import { Filter } from '../components/models/Filter';
+import { GetProducts } from '../services/webShopServices';
 import '../styles/styles.css';
 import '../styles/home.scss';
 
@@ -37,94 +38,61 @@ const SortMapping: { [key: string]: string } = {
   "Price, highest first": "price-highest-first"
 };
 
-const Products: React.FC<{ products: Product[], pageProps: PageProps }> = ({ products, pageProps }) => {
+const Products: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [genderFilter, setGenderFilter] = useState<number | undefined>(undefined);
-  const [productPropertyFilter, setProductPropertyFilter] = useState<number | undefined>(undefined);
-  const [colorFilter, setColorFilter] = useState<number | undefined>(undefined);
-  const [sortFilter, setSortFilter] = useState<string | undefined>(undefined);
-  const [searchFilter, setSearchFilter] = useState<string | undefined>(undefined);
 
-  const [page, setPage] = useState<number>(1);
-  const [numberPerPage, setNumberPerPage] = useState<number>(24);
+  const genderFilter = searchParams.get('gender') ? Number(searchParams.get('gender')) : undefined;
+  const productTypeFilter = searchParams.get('productType') ? Number(searchParams.get('productType')) : undefined;
+  const colorFilter = searchParams.get('color') ? Number(searchParams.get('color')) : undefined;
+  const sortFilter = searchParams.get('sortBy') || undefined;
+  const searchFilter = searchParams.get('search') || "";
+  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+  const numberPerPage = searchParams.get('numberPerPage') ? Number(searchParams.get('numberPerPage')) : 24;
 
-  useEffect(() => {
-    const gender = searchParams.get('gender');
-    const color = searchParams.get('color');
-    const productType = searchParams.get('productType');
-    const sortBy = searchParams.get('sortBy');
-    const search = searchParams.get('search');
-    const page = searchParams.get('page');
-    const numberPerPage = searchParams.get('numberPerPage');
-
-    if (gender) {
-      setGenderFilter(parseInt(gender));
-    }
-    if (color) {
-      setColorFilter(parseInt(color));
-    }
-    if (productType) {
-      setProductPropertyFilter(parseInt(productType));
-    }
-    if (sortBy) {
-      setSortFilter(sortBy);
-    }
-    if (search) {
-      setSearchFilter(search);
-    }
-    else {setSearchFilter("")}
-    if (page) {
-      setPage(parseInt(page));
-    }
-    if (numberPerPage) {
-      setNumberPerPage(parseInt(numberPerPage));
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
+  const updateSearchParams = useCallback(() => {
     setSearchParams({
       gender: genderFilter !== undefined ? genderFilter.toString() : '',
       color: colorFilter !== undefined ? colorFilter.toString() : '',
-      productType: productPropertyFilter !== undefined ? productPropertyFilter.toString() : '',
+      productType: productTypeFilter !== undefined ? productTypeFilter.toString() : '',
       sortBy: sortFilter || '',
       search: searchFilter || '',
       page: page.toString(),
       numberPerPage: numberPerPage.toString()
     });
-  }, [genderFilter, colorFilter, productPropertyFilter, sortFilter, searchFilter, page, numberPerPage]);
+  }, [genderFilter, colorFilter, productTypeFilter, sortFilter, searchFilter, page, numberPerPage, setSearchParams]);
 
-  const handleFilterChange = (
-    mapping: { [key: string]: number | undefined },
-    setFilter: React.Dispatch<React.SetStateAction<number | undefined>>,
-    value: string
-  ) => {
+  useEffect(() => {
+    updateSearchParams();
+  }, [updateSearchParams]);
+
+  const handleFilterChange = useCallback((mapping: { [key: string]: number | undefined }, paramName: string, value: string) => {
     const mappedValue = mapping[value];
-    if (typeof mappedValue === 'number') {
-      setFilter(mappedValue);
-    } else {
-      setFilter(undefined);
-    }
-  };
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      if (typeof mappedValue === 'number') {
+        newParams.set(paramName, mappedValue.toString());
+      } else {
+        newParams.delete(paramName);
+      }
+      return newParams;
+    });
+  }, [setSearchParams]);
 
-  const handleGenderChange = (value: string) => {
-    handleFilterChange(GenderMapping, setGenderFilter, value);
-  };
-
-  const handleProductPropertyChange = (value: string) => {
-    handleFilterChange(ProductPropertyMapping, setProductPropertyFilter, value);
-  };
-
-  const handleColorChange = (value: string) => {
-    handleFilterChange(ColorsMapping, setColorFilter, value);
-  };
-
+  const handleGenderChange = (value: string) => handleFilterChange(GenderMapping, 'gender', value);
+  const handleProductPropertyChange = (value: string) => handleFilterChange(ProductPropertyMapping, 'productType', value);
+  const handleColorChange = (value: string) => handleFilterChange(ColorsMapping, 'color', value);
   const handleSortChange = (value: string) => {
-    if (SortMapping[value]) {
-      setSortFilter(SortMapping[value]);
-    } else {
-      setSortFilter(undefined);
-    }
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set('sortBy', SortMapping[value] || '');
+      return newParams;
+    });
   };
+
+  const { data: filteredProducts = [] } = useQuery<Product[]>({
+    queryKey: ['getProducts', page, numberPerPage, genderFilter, productTypeFilter, colorFilter, sortFilter, searchFilter],
+    queryFn: () => GetProducts(numberPerPage, page, productTypeFilter, colorFilter, genderFilter, sortFilter, searchFilter)
+  });
 
   return (
     <>
@@ -136,15 +104,12 @@ const Products: React.FC<{ products: Product[], pageProps: PageProps }> = ({ pro
       </div>
 
       <ProductItems 
-        products={products} 
-        pageProps={{ page, numberPerPage, setPage }}
-        filters={{
-          gender: genderFilter,
-          productProperty: productPropertyFilter,
-          color: colorFilter,
-          sortBy: sortFilter,
-          search: searchFilter
-        }}
+        products={filteredProducts} 
+        pageProps={{ page, numberPerPage, setPage: (newPage) => setSearchParams((prevParams) => {
+          const newParams = new URLSearchParams(prevParams);
+          newParams.set('page', newPage.toString());
+          return newParams;
+        }) }}
       />
     </>
   );

@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Search = (initialValue: string = '') => {
+const useSearch = (initialValue: string = '') => {
   const [searchTerm, setSearchTerm] = useState(initialValue);
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
-    if (searchTerm.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
-    } else {
-      navigate(`/products?`);
-    }
+    navigate(`/products?gender=&color=&productType=&sortBy=&search=${searchTerm.trim().toString()}&page=1&numberPerPage=24`);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,4 +27,4 @@ const Search = (initialValue: string = '') => {
   };
 };
 
-export default Search;
+export default useSearch;

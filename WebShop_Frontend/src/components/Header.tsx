@@ -68,9 +68,6 @@ const Header: React.FC = () => {
 
       <Navbar
         IsScrolled={isScrolled}
-        IsCartMenuOpen={isCartMenuOpen}
-        IsLoginMenuOpen={isLoginMenuOpen}
-        IsSidebarMenuOpen={isSidebarMenuOpen}
         toggleCartMenu={toggleCartMenu}
         toggleLoginMenu={toggleLoginMenu}
         toggleSidebarMenu={toggleSidebarMenu}

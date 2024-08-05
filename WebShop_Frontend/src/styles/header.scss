@@ -193,7 +193,7 @@ nav {
   justify-content: flex-start;
   align-items: center;
   background-color: $white;
-  border-radius: 15px;
+  border-radius: 10px;
   height: 40px;
   width: 40%;
   margin-right: 20px;
@@ -211,8 +211,10 @@ nav {
   }
 
   #input-box {
+    background-clip: text;
     position: absolute !important;
     left: 15px;
+    font-size: 16px;
     display: flex;
     outline: none;
     border: none;

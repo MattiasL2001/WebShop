@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import ScrollToTop from '../components/partialComponents/ScrollToTop';
 import Products from './Products';
 import Register from './Register';
 import Support from './Support';
@@ -8,27 +9,11 @@ import NoPage from './NoPage';
 import MyPage from './MyPage';
 import Admin from "./Admin";
 import ProductPage from './ProductPage';
-import { GetProducts } from '../services/webShopServices';
-import { Product } from '../components/models/Product';
-import { useQuery } from '@tanstack/react-query';
 import Page from '../components/Page';
 import AdminPage from '../components/AdminPage';
 
 const Router: React.FC = () => {
   const location = useLocation();
-  const fakeProduct: Product[] = 
-    [{id: 999, name: "No Product", description: "No Description", price: 0, image: "", productAmount: 0, productColor: 999, productGender: 999, productType: 999}];
-  const [products, setProducts] = useState(fakeProduct);
-  const [page, setPage] = useState(1);
-  const [numberPerPage] = useState(15);
-
-  useQuery({
-    queryKey: ['products', page, numberPerPage],
-    queryFn: async () => {
-      let fetchedProducts = await GetProducts(numberPerPage, page);
-      setProducts(fetchedProducts);
-    }
-  });
 
   const isAdminPath = location.pathname.startsWith('/admin');
 
@@ -36,11 +21,12 @@ const Router: React.FC = () => {
     <>
       {!isAdminPath && (
         <Page>
+          <ScrollToTop/>
           <Routes>
             <Route path="/" element={<Navigate to="/products" replace />} />
             <Route path="/home" element={<Navigate to="/products" replace />} />
             <Route path='/products'>
-              <Route index element={<Products products={products} pageProps={{ page, numberPerPage, setPage }} />} />
+              <Route index element={<Products />} />
               <Route path=':id' element={<ProductPage />} />
             </Route>
             <Route path='register' element={<Register />} />
@@ -55,6 +41,7 @@ const Router: React.FC = () => {
 
       {isAdminPath && (
         <AdminPage>
+          <ScrollToTop/>
           <Routes>
             <Route path="admin" element={<Admin />} />
           </Routes>

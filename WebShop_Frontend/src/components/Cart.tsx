@@ -41,7 +41,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         newCart = [...prevCart, item];
       }
       newCart.forEach((cartItem) => {
-        console.log(`Item: ${cartItem.name}, Quantity: ${cartItem.quantity}`);
       });
       return newCart;
     });
