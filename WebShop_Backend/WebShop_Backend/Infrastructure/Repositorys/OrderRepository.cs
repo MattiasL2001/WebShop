@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Net;
 using WebShop_Backend.Entity;
+using WebShop_Backend.Services;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
@@ -8,10 +9,12 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     {
 
         private WebShopContext _dbContext;
+        private MailService _mailService;
 
         public OrderRepository(WebShopContext dbContext) { 
         
             _dbContext = dbContext;
+            _mailService = new MailService();
         }
         
         public async Task<HttpStatusCode> AddOrder(Order order)
@@ -29,6 +32,10 @@ namespace WebShop_Backend.Infrastructure.Repositorys
 
             await _dbContext.AddAsync(order);
             await _dbContext.SaveChangesAsync();
+
+            var orderdProducts = string.Join("\n",_dbContext.Products.Where(product => product.Id == order.Id));
+
+            _mailService.ConfirmeOrder(order.Email, "testname", orderdProducts);
 
             return HttpStatusCode.OK;
         }
