@@ -23,6 +23,9 @@
   -moz-appearance: none;
   appearance: none;
 }
+#registerForm div input[type=text].registerError, #registerForm div input[type=password].registerError, #registerForm div input[type=date].registerError {
+  border-color: red;
+}
 #registerForm #registerButton {
   margin: 25px 0;
   width: 175px;

@@ -1,21 +1,55 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import { deleteUser, ChangePassword } from '../services/webShopServices';
 import '../styles/myPage.scss';
 
 const Webstore: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('details');
-  const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewEmail(e.target.value);
-  };
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
   };
 
-  const handleDeleteAccount = () => {
-    alert('Are you sure you want to delete your account? This action cannot be undone.');
+  const handleSaveSettings = async () => {
+    if (!newPassword.trim()) {
+      setPasswordError('New password cannot be empty.');
+      alert('New password cannot be empty.');
+      return;
+    }
+
+    if (user?.email) {
+      try {
+        await ChangePassword(user.email, newPassword);
+        alert('Password updated successfully.');
+        setNewPassword('');
+        setPasswordError(null);
+      } catch (error) {
+        alert('Failed to update password. Please try again.');
+        console.error('Error updating password:', error);
+      }
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
+
+    if (confirmed && user?.email) {
+      try {
+        await deleteUser(user.email);
+        alert('Your account has been deleted.');
+        localStorage.removeItem("jwtToken");
+        navigate("/home");
+        window.location.reload();
+      } catch (error) {
+        alert('Failed to delete the account. Please try again.');
+        console.error('Error deleting account:', error);
+      }
+    }
   };
 
   return (
@@ -38,22 +72,14 @@ const Webstore: React.FC = () => {
         {activeTab === 'details' && (
           <article id="userForm">
             <div>
-              <h2>User Page</h2>
+              <h2>{user?.name}</h2>
             </div>
             <div>
               <input
                 type="text"
                 placeholder="Current E-Mail"
-                value="mattias-lindblad@hotmail.se"
+                value={user?.email || ''}
                 readOnly
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="New E-Mail"
-                value={newEmail}
-                onChange={handleEmailChange}
               />
             </div>
             <div>
@@ -63,9 +89,15 @@ const Webstore: React.FC = () => {
                 value={newPassword}
                 onChange={handlePasswordChange}
               />
+              {passwordError && <p className="error">{passwordError}</p>}
             </div>
             <div>
-              <input type="button" value="Save Settings" id="registerButton" />
+              <input
+                type="button"
+                value="Save Settings"
+                id="registerButton"
+                onClick={handleSaveSettings}
+              />
             </div>
             <div>
               <button className="delete-button" onClick={handleDeleteAccount}>

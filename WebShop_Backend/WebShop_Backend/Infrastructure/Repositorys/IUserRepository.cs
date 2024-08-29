@@ -1,17 +1,13 @@
-﻿using System.Net;
-using WebShop_Backend.Entity;
+﻿using WebShop_Backend.Entity;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
     public interface IUserRepository
     {
-        public Task<User> CreateUser(User user);
-        public Task<User> GetUser(int id);
-        public Task<HttpStatusCode> UserLogin(User user);
-        public Task<List<int>> GetBasket(int userId);
-        public Task<HashSet<int>> AddToBasket(int userId, int productId);
-        public Task<bool> RemoveFromBasket(int userId, int productId);
-
-
+        Task<User> CreateUser(User user);
+        Task<User> GetUser(string email);
+        Task ChangeUserPassword(string email, string newPasswordHash);
+        Task<bool> DeleteUser(string email);
+        Task<bool> IsEmailTaken(string username);
     }
 }
