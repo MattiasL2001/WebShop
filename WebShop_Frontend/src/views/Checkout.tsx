@@ -3,11 +3,13 @@ import defaultProductImage from "../images/products/1.png";
 import '../styles/checkout.css';
 import { CartItem } from '../components/models/props/cartItem';
 import { useCart } from '../components/Cart';
+import { useAuth } from '../AuthContext';
 import CartIcon from '../Icons/CartIcon';
 import BasketIcon from '../Icons/BasketIcon';
 import ArrowIcon from '../Icons/ArrowIcon';
 
 const Webstore: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
   const { addToCart, removeFromCart } = useCart();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isArticlesVisible, setIsArticlesVisible] = useState(true);
@@ -33,7 +35,7 @@ const Webstore: React.FC = () => {
   const handleIncrement = (itemId: number) => {
     const item = cartItems.find(item => item.id === itemId);
     if (item) {
-      addToCart({ ...item, quantity: + 1 });
+      addToCart({ ...item, quantity: +1 });
       setCartItems(cartItems.map(ci => ci.id === itemId ? { ...ci, quantity: ci.quantity + 1 } : ci));
     }
   };
@@ -41,7 +43,7 @@ const Webstore: React.FC = () => {
   const handleDecrement = (itemId: number) => {
     const item = cartItems.find(item => item.id === itemId);
     if (item && item.quantity > 1) {
-      addToCart({ ...item, quantity: - 1 });
+      addToCart({ ...item, quantity: -1 });
       setCartItems(cartItems.map(ci => ci.id === itemId ? { ...ci, quantity: ci.quantity - 1 } : ci));
     } else {
       handleRemove(itemId);
@@ -108,7 +110,12 @@ const Webstore: React.FC = () => {
             <div id="paymentInfo">
               <h2>Payment Information</h2>
               <input type="text" value="1234 5678 9012 3456" readOnly placeholder="Card Number" />
-              <input type="text" value="User Name" readOnly placeholder="Name on Card" />
+              <input 
+                type="text" 
+                value={isAuthenticated ? user?.name : "User Name"} 
+                readOnly 
+                placeholder="Name on Card" 
+              />
               <input type="month" value="2024-12" readOnly placeholder="Expiry Date" />
               <input type="text" value="123" readOnly placeholder="CVV" />
             </div>

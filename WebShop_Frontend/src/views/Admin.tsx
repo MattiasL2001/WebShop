@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
+import { useAuth } from '../AuthContext';
 
 export type Product = {
   Id: number;
@@ -15,20 +16,23 @@ export type Product = {
 };
 
 const Admin: React.FC = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'users' | 'products'>('users');
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState<any>(null);
 
-  const isUserAdmin: boolean = true;
-
   useEffect(() => {
-    if (!isUserAdmin) {
-      navigate('/home');
-    }
-  }, [isUserAdmin, navigate]);
+    const checkUserRole = async () => {
+      if (user?.role !== 'Admin') {
+        navigate('/home');
+      }
+    };
 
-  if (!isUserAdmin) {
+    checkUserRole();
+  }, [navigate]);
+
+  if (user?.role != 'Admin') {
     return null;
   }
 

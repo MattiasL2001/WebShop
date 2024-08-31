@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { LoginUser } from '../models/LoginUser';
-import { Login } from '../../services/webShopServices';
+import { useLogin } from "../useLogin";
+import { useLogout } from "../useLogout";
 import { LoginMenuProps } from '../models/props/login';
+import { useAuth } from '../../AuthContext';
+import { jwtDecode } from 'jwt-decode';
 
-const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggleLoginMenu }) => {
-  const [showLoginForm] = useState(true);
+const LoginMenu: React.FC<LoginMenuProps> = ({ toggleLoginMenu }) => {
+  const { isAuthenticated, user, setAuthenticated } = useAuth();
+  const logout = useLogout();
+  const [showLoginForm, setShowLoginForm] = useState(true);
   const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
   const [email, setEmail] = useState('');
   const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
@@ -15,27 +18,45 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
   const navigate = useNavigate();
   const location = useLocation();
 
-  const loginMutation = useMutation({
-    mutationFn: (loginUser: LoginUser) => {
-      return Login(loginUser);
-    },
-    onSuccess: (response) => {
-      setIsLoggedIn(true);
-      if (location.pathname === '/register') {
-        navigate('/home');
+  const { mutate: login } = useLogin({
+    onSuccess: async (response) => {
+      console.log(response);
+
+      if (response.token) {
+        const decodedToken: Record<string, any> = jwtDecode(response.token);
+        console.log("JWT Claims:", decodedToken);
+
+        const name = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+        const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        const email = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+        const birthDate = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata'];
+        console.log(name);
+        console.log(role);
+        console.log(email);
+        console.log(birthDate);
+
+        setAuthenticated(true, { name, role, email, birthDate });
+
+        console.log('Authenticated User from AuthContext:', user);
+
+        if (location.pathname === '/register') { 
+          navigate('/home'); 
+        }
+      } else {
+        console.log("no token");
       }
     },
-    onError: (error: any) => {
+    onError: (error) => {
       setErrorMessage('Login failed. Please check your credentials and try again.');
     }
   });
 
-  const getFormData = async (formEvent: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (formEvent: React.FormEvent<HTMLFormElement>) => {
     formEvent.preventDefault();
-    let form = formEvent.currentTarget;
-    let email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    let password = (form.elements.namedItem("password") as HTMLInputElement).value;
-    loginMutation.mutate({ email: email, password: password });
+    const form = formEvent.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    login({ email, password });
   };
 
   const handleForgotPasswordLink = () => {
@@ -45,21 +66,17 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
 
   const handleForgotPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (email != "") { setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.'); }
-    else { setForgotPasswordMessage('Input field can not be empty!'); }
+    if (email !== "") { 
+      setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.'); 
+    } else { 
+      setForgotPasswordMessage('Input field cannot be empty!'); 
+    }
     setEmail('');
   };
 
   const handleBackToLogin = () => {
     setShowForgotPasswordForm(false);
     setForgotPasswordMessage('');
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    if (location.pathname === '/mypage') {
-      navigate('/home');
-    }
   };
 
   useEffect(() => {
@@ -84,8 +101,8 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
           <div className='closeButton'>
             <button onClick={toggleLoginMenu}>×</button>
           </div>
-          {!isLoggedIn && !showForgotPasswordForm && (
-            <form onSubmit={getFormData}>
+          {!isAuthenticated && !showForgotPasswordForm && (
+            <form onSubmit={handleSubmit}>
               <h2>Login</h2>
               <div className="form-group">
                 <input name='email' type="text" placeholder="E-Mail" className="form-input" />
@@ -99,7 +116,7 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
                 </div>
               )}
               <div className="form-group">
-                <input type="submit" value="Login" className="form-button" />
+                <input type="submit" value="Login" className="form-button"/>
               </div>
               <div className="form-group">
                 <button type="button" onClick={handleForgotPasswordLink} className="register-link">
@@ -140,10 +157,10 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ isLoggedIn, setIsLoggedIn, toggle
               )}
             </form>
           )}
-          {isLoggedIn && (
+          {isAuthenticated && (
             <div id="welcome-container">
-              <p>Welcome User! <Link to="/mypage" onClick={toggleLoginMenu}>Go to My Page</Link></p>
-              <button onClick={handleLogout} className="form-button">Logout</button>
+              <p>Welcome {user?.name.split(" ")[0]}! <Link to="/mypage" onClick={toggleLoginMenu}>Go to My Page</Link></p>
+              <button onClick={logout} className="form-button">Logout</button>
             </div>
           )}
         </div>

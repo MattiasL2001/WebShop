@@ -28,7 +28,12 @@ $white: white;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-      }
+    
+        &.registerError {
+            border-color: red;
+        }
+    }
+    
     }
 
     #registerButton {
