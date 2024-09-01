@@ -8,7 +8,7 @@ using WebShop_Backend.Infrastructure.Repositorys;
 namespace WebShop_Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("product")]
     public class ProductController : ControllerBase
     {
 

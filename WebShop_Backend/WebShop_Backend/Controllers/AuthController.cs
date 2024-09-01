@@ -1,136 +1,87 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebShop_Backend.Dtos.User;
-using WebShop_Backend.Entity;
-using WebShop_Backend.Infrastructure.Repositorys;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+using WebShop_Backend.Authentication.Basic.Attributes;
+using WebShop_Backend.Authentication.JwtBearer;
+using WebShop_Backend.Entity;
+using WebShop_Backend.Infrastructure.Repositorys;
 
 namespace WebShop_Backend.Controllers
 {
-    [ApiController]
     [Route("auth")]
-    public class AuthController : ControllerBase
+    [ApiController]
+    public class OAuthController : ControllerBase
     {
-        private readonly IAuthenticationRepository _authenticationRepository;
+
+        private readonly JwtBearerSettings _jwtBearerSettings;
         private readonly IUserRepository _userRepository;
-        private readonly IConfiguration _configuration;
-        int tokenExpirationTimeMinutes = 15;
 
-        public AuthController(IAuthenticationRepository authenticationRepository, IUserRepository userRepository, IConfiguration configuration)
+        public OAuthController(IOptions<JwtBearerSettings> jwtBearerSettingsOptions, IUserRepository userRepository)
         {
-            _authenticationRepository = authenticationRepository;
+            _jwtBearerSettings = jwtBearerSettingsOptions.Value;
             _userRepository = userRepository;
-            _configuration = configuration;
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] RegisterUserDto registerUserDto)
+        [HttpPost("token"), BasicAuthorization, Consumes("application/x-www-form-urlencoded")]
+        public async Task<ActionResult> Token([FromForm(Name = "grant_type")] string grantType)
         {
-            if (await _userRepository.IsEmailTaken(registerUserDto.Email))
+
+            if (grantType != "client_credentials")
             {
-                return Conflict("Email is already taken.");
+                return BadRequest(new
+                {
+                    error = "invalid_grant",
+                    error_description = "The grant type must be set as client_credentials"
+                });
             }
-
-            var user = new User
-            {
-                FirstName = registerUserDto.Firstname,
-                LastName = registerUserDto.Lastname,
-                Email = registerUserDto.Email,
-                Password = _authenticationRepository.HashPassword(registerUserDto.Password),
-                BirthDate = registerUserDto.BirthDate,
-                Role = UserRole.Member
-            };
-
-            var registeredUser = await _userRepository.CreateUser(user);
-
-            if (registeredUser == null)
-            {
-                return StatusCode(500, "An error occurred while creating the user.");
-            }
-
-            return Ok("User registered successfully.");
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] UserLoginDto userLoginDto)
-        {
-            var user = await _authenticationRepository.AuthenticateUser(userLoginDto.Email, userLoginDto.Password);
-
-            if (user == null)
-            {
-                return Unauthorized("Invalid credentials.");
-            }
-
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.UserData, user.BirthDate.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            };
-
-            var identity = new ClaimsIdentity(claims, "jwtToken");
-            var principal = new ClaimsPrincipal(identity);
-
-            var token = _authenticationRepository.GenerateJwtToken(principal);
-
-            return Ok(new { Token = token });
-        }
-
-        [HttpPost("/refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody] string token)
-        {
-            var principal = GetPrincipalFromExpiredToken(token);
-            if (principal == null)
-            {
-                return Unauthorized("Invalid token");
-            }
-
-            var newToken = GenerateJwtToken(principal);
-            return Ok(new { Token = newToken });
-        }
-
-        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        {
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidAudience = _configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
-                ValidateLifetime = false
-            };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            try
+
+            var now = DateTime.UtcNow;
+            var expiry = now.Add(TimeSpan.FromHours(24));
+
+
+
+            var jwtBearerAuthenticatedClient = new AuthenticationClient
             {
-                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
-                return principal;
-            }
-            catch
+                IsAuthenticated = true,
+                AuthenticationType = JwtBearerDefaults.AuthenticationScheme,
+                Name = "WebShop"
+            };
+
+            var token = tokenHandler.WriteToken(tokenHandler.CreateToken(
+                new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
+                {
+                    Subject = new System.Security.Claims.ClaimsIdentity(jwtBearerAuthenticatedClient,
+                    new List<Claim>
+                    { new Claim(JwtRegisteredClaimNames.Name, "WebShop")
+                    }),
+                    Expires = expiry,
+                    Issuer = _jwtBearerSettings.Issuer,
+                    Audience = _jwtBearerSettings.Audience,
+                    SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
+                    (
+                        new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(_jwtBearerSettings.SigningKey)
+                        ),
+                        SecurityAlgorithms.HmacSha512Signature
+                    ),
+                    IssuedAt = now,
+                    NotBefore = now,
+                }));
+
+            return Ok(new
             {
-                return null;
-            }
-        }
-
-        private string GenerateJwtToken(ClaimsPrincipal principal)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                principal.Claims,
-                expires: DateTime.Now.AddMinutes(tokenExpirationTimeMinutes),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                access_token = token,
+                token_type = JwtBearerDefaults.AuthenticationScheme,
+                expires_in = expiry.Subtract(DateTime.UtcNow).TotalSeconds.ToString("0")
+            });
         }
     }
 }
