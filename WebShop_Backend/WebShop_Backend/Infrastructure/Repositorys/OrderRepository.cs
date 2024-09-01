@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Net;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Services;
@@ -11,10 +12,10 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         private WebShopContext _dbContext;
         private MailService _mailService;
 
-        public OrderRepository(WebShopContext dbContext) { 
+        public OrderRepository(WebShopContext dbContext, IConfiguration configuration) { 
         
             _dbContext = dbContext;
-            _mailService = new MailService();
+            _mailService = new MailService(configuration);
         }
         
         public async Task<HttpStatusCode> AddOrder(Order order)
@@ -33,9 +34,19 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             await _dbContext.AddAsync(order);
             await _dbContext.SaveChangesAsync();
 
-            var orderdProducts = string.Join("\n",_dbContext.Products.Where(product => product.Id == order.Id));
+            var orderName = _dbContext.Users.Where(user => user.Email == order.Email).First();
 
-            _mailService.ConfirmeOrder(order.Email, "testname", orderdProducts);
+            var orderProductStrings = order.ProductIds.Zip(order.ProductAmount, (productId,productAmount) =>
+            {
+                var product = _dbContext.Products.Find(productId);
+
+                return $"{product.Name} x{productAmount}";
+
+            });
+
+            var orderProductString = String.Join('\n',orderProductStrings);
+
+            //_mailService.ConfirmeOrder(order.Email, orderName.FirstName, orderProductString);
 
             return HttpStatusCode.OK;
         }
