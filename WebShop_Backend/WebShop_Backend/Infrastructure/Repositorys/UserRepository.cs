@@ -1,30 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 using WebShop_Backend.Entity;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
     public class UserRepository : IUserRepository
     {
-        private readonly WebShopContext _dbContext;
+
+        private WebShopContext _dbContext;
 
         public UserRepository(WebShopContext context)
         {
             _dbContext = context;
         }
 
-        public async Task<User> GetUser(string email)
-        {
-            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
-        }
-
-        public async Task<bool> IsEmailTaken(string email)
-        {
-            return await _dbContext.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower());
-        }
-
         public async Task<User> CreateUser(User user)
         {
-            if (await IsEmailTaken(user.Email))
+
+            if (_dbContext.Users.Any(dbUser => dbUser.Email == user.Email))
             {
                 return null;
             }
@@ -35,28 +29,59 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             return user;
         }
 
-        public async Task ChangeUserPassword(string email, string newPassword)
+        public async Task<HttpStatusCode> UserLogin(User user)
         {
-            var user = await GetUser(email);
-            if (user != null)
-            {
-                user.Password = newPassword;
-                _dbContext.Users.Update(user);
-                await _dbContext.SaveChangesAsync();
-            }
-        }
 
-        public async Task<bool> DeleteUser(string email)
-        {
-            var user = await GetUser(email);
-            if (user != null)
+            var validUser = await _dbContext.Users.Where(dbUser => dbUser.Email == user.Email).FirstOrDefaultAsync();
+
+            if (validUser == null)
             {
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
-                return true;
+                return HttpStatusCode.NotFound;
             }
 
-            return false;
+            if (validUser.Email == user.Email && validUser.Password != user.Password)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            return HttpStatusCode.OK;
         }
+
+        public async Task<User> GetUser(int id)
+        {
+
+            var user = await _dbContext.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+
+            var user = await _dbContext.Users.FindAsync();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public Task ChangeUserPassword(string email, string newPasswordHash)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteUser(string email)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

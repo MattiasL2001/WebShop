@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
 using WebShop_Backend.Dtos.User;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace WebShop_Backend.Controllers
 {
@@ -12,66 +12,125 @@ namespace WebShop_Backend.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
+
         private readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+
+        public UserController(IUserRepository userRepository, IOrderRepository orderRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _orderRepository = orderRepository;
             _mapper = mapper;
         }
 
-        [HttpGet("{email}")]
-        public async Task<ActionResult<UserDto>> GetUser(string email)
-        {
-            var registeredUser = await _userRepository.GetUser(email);
 
-            if (registeredUser == null)
+        [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult<RegisterUserDto>> RegisterUser(RegisterUserDto registerUserDto)
+        {
+
+            var user = _mapper.Map<User>(registerUserDto);
+
+            var registerdUser = await _userRepository.CreateUser(user);
+
+            if (registerdUser == null)
+            {
+                return Unauthorized();
+            }
+
+            registerUserDto = _mapper.Map<RegisterUserDto>(registerdUser);
+
+            return CreatedAtAction("GetUser", new { firstName = registerUserDto.Firstname }, registerUserDto);
+        }
+
+
+        [HttpPost]
+        [Route("login")]
+        [Authorize]
+        public async Task<ActionResult> LoginUser(UserLoginDto userLoginDto)
+        {
+
+            var user = _mapper.Map<User>(userLoginDto);
+
+            var loginStatus = await _userRepository.UserLogin(user);
+
+            if (loginStatus == HttpStatusCode.NotFound)
             {
                 return NotFound();
             }
 
-            var userDto = _mapper.Map<UserDto>(registeredUser);
+            else if (loginStatus == HttpStatusCode.Unauthorized)
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public async Task<ActionResult> LogoutUser(UserLoginDto userLoginDto)
+        {
+
+            var user = _mapper.Map<User>(userLoginDto);
+
+            var loginStatus = await _userRepository.UserLogin(user);
+
+            if (loginStatus == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("order")]
+        public async Task<ActionResult> Order(OrderDto orderDto)
+        {
+
+            var order = _mapper.Map<Order>(orderDto);
+
+            var orderStatus = await _orderRepository.AddOrder(order);
+
+            if (orderStatus == HttpStatusCode.BadRequest)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("user")]
+        public async Task<ActionResult<UserDto>> GetUser(int userId)
+        {
+
+            var registerdUser = await _userRepository.GetUser(userId);
+
+            if (registerdUser == null)
+            {
+                return NotFound();
+            }
+
+            var userDto = _mapper.Map<UserDto>(registerdUser);
 
             return Ok(userDto);
         }
 
-        [HttpPut("{email}/change-password")]
-        public async Task<ActionResult> ChangePassword(string email, [FromQuery] string newPassword)
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
-            var user = await _userRepository.GetUser(email);
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
 
-            string hashedPassword = HashPassword(newPassword);
-            await _userRepository.ChangeUserPassword(email, hashedPassword);
-            return Ok("Password updated successfully.");
+            var orders = await _orderRepository.GetOrders();
+
+            var orderDtos = _mapper.Map<List<OrderDto>>(orders);
+
+            return Ok(orderDtos);
         }
 
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
-
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
-        }
-
-        [Authorize]
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAccount(string email)
-        {
-            var result = await _userRepository.DeleteUser(email);
-            if (!result)
-            {
-                return BadRequest("Could not delete the user.");
-            }
-
-            return NoContent();
-        }
     }
 }
