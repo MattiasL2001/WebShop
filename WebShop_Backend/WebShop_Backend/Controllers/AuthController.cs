@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WebShop_Backend.Authentication.Basic.Attributes;
 using WebShop_Backend.Authentication.JwtBearer;
@@ -55,6 +56,9 @@ namespace WebShop_Backend.Controllers
                 Name = "WebShop"
             };
 
+            var rsa = RSA.Create();
+            rsa.ImportFromPem(_jwtBearerSettings.PrivateKey.ToCharArray());
+
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(
                 new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
                 {
@@ -67,10 +71,8 @@ namespace WebShop_Backend.Controllers
                     Audience = _jwtBearerSettings.Audience,
                     SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
                     (
-                        new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(_jwtBearerSettings.SigningKey)
-                        ),
-                        SecurityAlgorithms.HmacSha512Signature
+                        new RsaSecurityKey(rsa),
+                        SecurityAlgorithms.RsaSha256
                     ),
                     IssuedAt = now,
                     NotBefore = now,
