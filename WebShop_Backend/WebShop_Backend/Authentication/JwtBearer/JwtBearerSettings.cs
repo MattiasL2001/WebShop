@@ -6,6 +6,8 @@
 
         public string Audience { get; set; }
 
-        public string SigningKey { get; set; }
+        public string PrivateKey { get; set; }
+
+        public string PublicKey { get; set; }
     }
 }

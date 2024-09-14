@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using WebShop_Backend.Authentication.Basic;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -107,16 +108,21 @@ builder.Services.AddAuthentication(options =>
           throw new NullReferenceException();
       }
 
+      var rsa = RSA.Create();
+      rsa.ImportFromPem(jwtBearerSettings.PublicKey.ToCharArray());
+
       options.SaveToken = true;
       options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
       {
           ValidIssuer = jwtBearerSettings.Issuer,
           ValidAudience = jwtBearerSettings.Audience,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtBearerSettings.SigningKey)),
+          //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtBearerSettings.SigningKey)),
+          IssuerSigningKey = new RsaSecurityKey(rsa),
           ClockSkew = TimeSpan.Zero,
           ValidateIssuer = true,
           ValidateAudience = true,
           ValidateIssuerSigningKey = true,
+          
       };
   });
 
