@@ -10,6 +10,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         Task ChangeUserPassword(string email, string newPasswordHash);
         Task<bool> DeleteUser(string email);
         Task<User> GetUserByEmail(string email);
-        public Task<HttpStatusCode> UserLogin(User user);
+        Task<Entity.Claim> GetClaims(string email);
+        Task<HttpStatusCode> UserLogin(User user);
     }
 }

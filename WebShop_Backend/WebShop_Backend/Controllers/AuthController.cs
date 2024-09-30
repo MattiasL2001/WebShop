@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -42,29 +43,41 @@ namespace WebShop_Backend.Controllers
                 });
             }
 
+            string header = Request.Headers.Authorization;
+
+            Console.WriteLine(header);
+
+            var authBase64Decoded = Encoding.UTF8.GetString(Convert.FromBase64String(header.Replace("Basic ", "", StringComparison.OrdinalIgnoreCase)));
+            var authSplit = authBase64Decoded.Split(new[] { ':' }, 2);
+            string email = authSplit.First();
+
+            WebShop_Backend.Entity.Claim claim = await _userRepository.GetClaims(email);
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var now = DateTime.UtcNow;
             var expiry = now.Add(TimeSpan.FromHours(24));
 
-
-
             var jwtBearerAuthenticatedClient = new AuthenticationClient
             {
                 IsAuthenticated = true,
                 AuthenticationType = JwtBearerDefaults.AuthenticationScheme,
-                Name = "WebShop"
+                Name = claim.name,
             };
 
             var rsa = RSA.Create();
             rsa.ImportFromPem(_jwtBearerSettings.PrivateKey.ToCharArray());
 
+
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(
                 new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
                 {
                     Subject = new System.Security.Claims.ClaimsIdentity(jwtBearerAuthenticatedClient,
-                    new List<Claim>
-                    { new Claim(JwtRegisteredClaimNames.Name, "WebShop")
+                    new List<System.Security.Claims.Claim>
+                    {
+                        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Name, claim.name),
+                        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email, claim.email),
+                        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Birthdate, claim.birthDate.ToString()),
                     }),
                     Expires = expiry,
                     Issuer = _jwtBearerSettings.Issuer,

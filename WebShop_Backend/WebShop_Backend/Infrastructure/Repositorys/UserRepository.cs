@@ -63,7 +63,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public async Task<User> GetUserByEmail(string email)
         {
 
-            var user = await _dbContext.Users.FindAsync();
+            var user = _dbContext.Users.Where(u => u.Email == email).First();
 
             if (user == null)
             {
@@ -71,6 +71,22 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             }
 
             return user;
+        }
+
+        public async Task<Entity.Claim> GetClaims(string email)
+        {
+
+            User user = await GetUserByEmail(email);
+
+            if (user == null) 
+            {
+                return null;
+            }
+
+            Claim claim = new Claim { name=user.FirstName, email=user.Email, birthDate=user.BirthDate };
+
+            return claim;
+
         }
 
         public Task ChangeUserPassword(string email, string newPasswordHash)
