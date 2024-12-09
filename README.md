@@ -1,4 +1,4 @@
-# 🛒 My Webshop Project
+# 🛒 Webstore Project
 
 Welcome to **Webstore**, a modern and simple e-commerce application built to showcase full-stack web development using modern technologies. This project demonstrates clean design, robust functionality, and seamless interaction between the frontend and backend.
 
