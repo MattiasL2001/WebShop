@@ -1,302 +1,182 @@
-.container,
-.registerContainerStyle,
-.user-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.input-style {
-  margin: 10px 0;
-  padding: 10px;
-}
-
-.button-style,
-.button-style-small {
-  background: #4caf50;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button-style-small {
-  padding: 5px 10px;
-}
-
-.page-style {
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-}
-
-.footer-style {
-  font-size: 36px;
-  height: 100px;
-  background-color: #d9d9d9;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  margin-top: auto;
-}
-
-.footer-style p {
-  height: 15px;
-  margin-left: 25px;
-}
-
-.header-style {
-  background: #06437c;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
-
-.ul-style {
-  list-style: none;
-  display: flex;
-  justify-content: space-around;
-  padding: 0;
-}
-
-.li-style {
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap");
+* {
   margin: 0;
+  padding: 0;
+  font-family: MuseoModerno, sans-serif;
 }
-
-.link-style {
-  font-size: 20px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.button-style-header {
-  font-size: 20px;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.todo-container {
-  width: 200px;
-  height: 200px;
-  background-color: rgb(224, 224, 140);
-  padding: 16px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  transition: box-shadow 0.2s ease-in-out;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  position: relative;
-  transform: rotate(-2deg);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-.todo-container::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 10px;
-  background-color: rgb(224, 224, 140);
-  z-index: -1;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  transform: rotate(2deg);
-  border-radius: 8px;
-}
-
-.todo-container .pin {
-  width: 20px;
-  height: 20px;
-  border: rgb(225, 0, 0);
-  border-style: solid;
-  border-width: 5px;
-  background-color: red;
-  border-radius: 50%;
-  top: 0px;
-  margin-bottom: 20px;
-  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
-}
-
-.todo-container h3 {
-  height: 15px;
-  margin-top: 0;
-}
-
-.todo-container p {
-  height: 10px;
-}
-
-.todo-button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.todo-button-container button {
-  margin: 0 5px;
-}
-
-.todo-container:hover,
-.todo-container.editing {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.todo-container.editing .pin {
+* input[type=search]::-webkit-search-decoration,
+* input[type=search]::-webkit-search-cancel-button,
+* input[type=search]::-webkit-search-results-button,
+* input[type=search]::-webkit-search-results-decoration {
   display: none;
 }
 
-.edit-todo-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+button {
+  background: none;
+  cursor: pointer;
+}
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  background-color: rgb(245, 245, 245);
+}
+
+#articleForm, #descriptionText, #article, #description, #buyDiv, #articles,
+#supportText, .row, .item, .buyButton, #cartMenu, #loginMenu, #loginRegister, footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
-.edit-todo-message {
+#articleForm {
+  margin: 100px auto 0;
+  width: 50%;
+}
+
+#descriptionText {
+  border: 1px solid gray;
+  background-color: white;
+  margin: 25px auto;
+  width: 50%;
+}
+
+#article {
+  flex-direction: column;
+  background-color: white;
+  margin: auto;
+  width: 20%;
+}
+#article img {
+  justify-content: center;
+  width: 100%;
+}
+
+#description {
+  flex-direction: column;
+}
+#description div {
+  flex-direction: row;
+  justify-content: center;
+  height: 30px;
+}
+#description div select {
+  margin-top: 25px;
+  width: 120px;
+  height: 30px;
+}
+#description #colorDiv div {
+  background-color: aqua;
+  width: 30px;
+  border-radius: 100%;
+}
+#description #quantity {
+  border: 1px solid coral;
+}
+#description h2 {
+  background-color: purple;
+}
+
+.add-to-cart-button:hover {
+  background-color: rgb(232, 116, 74);
+}
+
+.add-to-cart-button:active {
+  background-color: rgb(216, 107, 68);
+}
+
+#supportText {
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.row {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.item {
+  flex-direction: column;
+  margin: 20px 0;
+  text-decoration: none;
+  color: black;
+  background-color: rgb(245, 245, 245);
+  width: 25%;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: rgb(235, 235, 235);
+}
+.item img {
+  margin-top: 20px;
+  object-fit: cover;
+  height: auto;
+  aspect-ratio: 3/4;
+  width: 80%;
+  background-size: 100%;
+  background-position: center;
+}
+.item h1 {
+  width: 75%;
+}
+
+.buyButton {
+  background-color: coral;
+}
+.buyButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+.buyButton:active {
+  background-color: rgb(216, 107, 68);
+}
+
+#cartContent div a {
+  text-decoration: none;
+  color: black;
+}
+
+#basketButton, #loginButton {
+  background-color: coral;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#basketButton:hover, #loginButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+#basketButton:active, #loginButton:active {
+  background-color: rgb(216, 107, 68);
+}
+
+#homePageLink {
+  color: black;
+  size: 24px;
+}
+
+#noPage {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  height: auto;
-  background-color: rgb(224, 224, 140);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  width: 100%;
+}
+#noPage div {
+  width: 30%;
+  min-width: 175px;
 }
 
-.edit-todo-div {
-  height: 10px;
-}
-
-.error-message {
-  background-color: #f44336;
-  color: white;
-  border-radius: 2px;
-  z-index: 999;
-}
-
-.error-message-edit-todo {
-  background-color: #f44336;
-  color: white;
-}
-
-.todo-grid {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(4, minmax(250px, 1fr));
-  gap: 25px;
-  width: 90%;
-  margin: 0 auto;
-}
-
-
-.todo-box {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.todo-box:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.add-todo-button {
-  margin-bottom: 16px;
-}
-
-.add-todo-form * {
-  margin-right: 10px;
-}
-
-@media screen and (max-width: 1250px) {
-  .todo-grid {
-    width: 100%;
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
-    gap: 25px;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .todo-grid {
-    grid-template-columns: repeat(2, minmax(250px, 1fr));
-    gap: 10px;
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .footer-style {
-    font-size: 24px;
-  }
-}
-
-@media screen and (max-width: 590px) {
-  .todo-grid {
-    grid-template-columns: repeat(1, minmax(250px, 1fr));
-    gap: 25px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .container,
-  .registerContainerStyle,
-  .user-container {
-    padding: 10px;
-  }
-
-  .button-style,
-  .button-style-small {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .button-style-small {
-    padding: 4px 8px;
-  }
-
-  .footer-style {
-    font-size: 18px;
-  }
-
-  .header-style {
-    padding: 8px;
-  }
-
-  .link-style {
-    font-size: 16px;
-  }
-
-  .button-style-header {
-    font-size: 16px;
-  }
-
-  .edit-todo-message {
-    width: 250px;
-    height: 225px;
-  }
-
-  .edit-todo-message h3 {
-    height: 12px;
-  }
-
-  .edit-todo-div {
-    height: 8px;
-  }
-
-  .error-message {
-    font-size: 14px;
-  }
-}
+/*# sourceMappingURL=styles.css.map */

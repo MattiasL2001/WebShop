@@ -1,0 +1,199 @@
+#searchArticles {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 50px auto 50px;
+  width: 80%;
+  height: 100px;
+  background-color: white;
+}
+
+select {
+  border: none;
+  outline: none;
+}
+
+.filter, #sort {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20%;
+  height: 35px;
+  background-color: rgb(245, 245, 245);
+}
+.filter:hover, #sort:hover {
+  cursor: pointer;
+  border: 1px solid coral;
+}
+
+.loading,
+.error,
+.no-products {
+  text-align: center;
+  font-family: MuseoModerno, sans-serif;
+  color: gray;
+  padding: 20px;
+}
+
+.loading {
+  color: coral;
+}
+
+.error {
+  color: red;
+}
+
+#articles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  justify-items: center;
+  margin: auto;
+  width: 75%;
+}
+
+.product {
+  margin-bottom: 50px !important;
+  height: auto;
+  padding: 20px;
+  background-color: white;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+.product h2 {
+  font-size: 18px;
+  color: coral;
+  margin-bottom: 10px;
+}
+.product p:last-of-type {
+  font-weight: bold;
+}
+.product .name-container {
+  margin-top: 50px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 60px;
+}
+.product .image-container {
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.product img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+.pagination-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+.pagination-control .pagination-arrow {
+  border: none;
+  color: coral;
+  font-family: MuseoModerno, sans-serif;
+  font-size: 36px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.pagination-control .pagination-arrow:disabled {
+  cursor: default;
+  color: gray;
+}
+.pagination-control .pagination-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: MuseoModerno, sans-serif;
+  font-size: 20px;
+  margin: 0 10px;
+  color: black;
+}
+.pagination-control .page-number {
+  background-color: white;
+  border: 1px solid coral;
+  color: coral;
+  font-family: MuseoModerno, sans-serif;
+  font-size: 16px;
+  padding: 10px;
+  margin: 0 5px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.pagination-control .page-number.active {
+  background-color: coral;
+  color: white;
+  border-color: coral;
+}
+.pagination-control .page-number:hover {
+  background-color: rgba(255, 127, 80, 0.1);
+  color: coral;
+}
+
+@media only screen and (max-width: 1200px) {
+  #articles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (max-width: 900px) {
+  #articles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 500px) {
+  #articles {
+    grid-template-columns: 1fr;
+  }
+  #searchArticles {
+    flex-direction: column;
+    width: 80%;
+    height: 200px;
+  }
+  select {
+    outline: none;
+    font-family: MuseoModerno, sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+  }
+  select:focus {
+    outline: none;
+    border-color: rgb(255, 89.6971428571, 29);
+  }
+  option {
+    color: black;
+  }
+  .filter, #sort {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    height: 35px;
+    background-color: rgb(245, 245, 245);
+  }
+  .filter:hover, #sort:hover {
+    cursor: pointer;
+    border: 1px solid coral;
+  }
+}
+
+/*# sourceMappingURL=home.css.map */

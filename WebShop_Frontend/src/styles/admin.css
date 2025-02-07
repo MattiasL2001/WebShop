@@ -1,0 +1,206 @@
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section {
+  width: 50%;
+  margin-bottom: 40px;
+}
+
+.create-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 40px;
+}
+
+.admin-section h1,
+.admin-section h2 {
+  margin-bottom: 20px;
+}
+
+.admin-section p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  height: fit-content;
+  max-width: 150px;
+}
+.tabs .adminTab {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+}
+.tabs .adminTab.active {
+  background-color: white;
+  color: coral;
+  border-bottom: 2px solid coral;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  list-style-type: none;
+  padding: 0;
+}
+.item-list .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.item-list .item span {
+  flex-grow: 1;
+}
+.item-list .item .edit-button,
+.item-list .item .delete-button {
+  padding: 5px 10px;
+  font-size: 0.9em;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.item-list .item .edit-button {
+  background-color: coral;
+  color: white;
+}
+.item-list .item .edit-button:hover {
+  background-color: rgb(232, 116, 74);
+}
+.item-list .item .edit-button:active {
+  background-color: rgb(216, 107, 68);
+}
+.item-list .item .delete-button {
+  background-color: red;
+  color: white;
+}
+.item-list .item .delete-button:hover {
+  background-color: #cc0000;
+}
+.item-list .item .delete-button:active {
+  background-color: #990000;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+.modal-content .modal-close {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.modal-content .edit-form {
+  overflow-y: auto;
+  max-height: 500px;
+}
+.modal-content .edit-form .form-group {
+  margin-bottom: 20px;
+}
+.modal-content .edit-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+.modal-content .edit-form .form-group input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #f5f5f5;
+  border-radius: 5px;
+}
+.modal-content .form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.modal-content .form-actions .save-button,
+.modal-content .form-actions .cancel-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-content .form-actions .save-button {
+  background-color: coral;
+  color: white;
+}
+.modal-content .form-actions .save-button:hover {
+  background-color: rgb(232, 116, 74);
+}
+.modal-content .form-actions .save-button:active {
+  background-color: rgb(216, 107, 68);
+}
+.modal-content .form-actions .cancel-button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+.modal-content .form-actions .cancel-button:hover {
+  background-color: rgb(219.5, 219.5, 219.5);
+}
+.modal-content .form-actions .cancel-button:active {
+  background-color: #c2c2c2;
+}
+
+@media only screen and (max-width: 750px) {
+  .admin-section {
+    width: 75%;
+  }
+  .item-list {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .admin-section {
+    width: 90%;
+  }
+}
+
+/*# sourceMappingURL=admin.css.map */

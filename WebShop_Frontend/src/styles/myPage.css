@@ -1,0 +1,148 @@
+.page-container {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+@media only screen and (max-width: 1200px) {
+  .page-container {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .page-container {
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .page-container {
+    width: 90%;
+  }
+}
+
+.tabs {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+@media only screen and (max-width: 500px) {
+  .tabs {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+}
+
+.tabs button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+  width: 100%;
+  text-align: left;
+}
+.tabs button.active {
+  background-color: coral;
+  color: #fff;
+}
+.tabs button:hover:not(.active) {
+  background-color: #ddd;
+}
+.tabs button:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.content {
+  width: 50%;
+}
+
+#userForm, #purchaseHistory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#userForm h2, #purchaseHistory h2 {
+  color: coral;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+#userForm input[type=text],
+#userForm input[type=password],
+#userForm input[type=button], #purchaseHistory input[type=text],
+#purchaseHistory input[type=password],
+#purchaseHistory input[type=button] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+#userForm input[type=text][readonly], #purchaseHistory input[type=text][readonly] {
+  background-color: #f0f0f0;
+  color: #333;
+}
+#userForm input[type=button], #purchaseHistory input[type=button] {
+  background-color: coral;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#userForm input[type=button]:hover, #purchaseHistory input[type=button]:hover {
+  background-color: rgb(232, 116, 74);
+}
+#userForm input[type=button]:active, #purchaseHistory input[type=button]:active {
+  background-color: rgb(216, 107, 68);
+}
+#userForm .delete-button, #purchaseHistory .delete-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 25px;
+}
+#userForm .delete-button:hover, #purchaseHistory .delete-button:hover {
+  background-color: #d32f2f;
+}
+#userForm .delete-button:active, #purchaseHistory .delete-button:active {
+  background-color: #b71c1c;
+}
+#userForm .order, #purchaseHistory .order {
+  list-style: none;
+  border-bottom: 2px solid coral;
+  padding: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order ul, .order li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .tabs {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .content {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=myPage.css.map */

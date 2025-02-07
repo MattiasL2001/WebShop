@@ -1,0 +1,155 @@
+.page-container {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+
+  @media only screen and (max-width: 1200px) {
+    width: 60%;
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 75%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 90%;
+  }
+}
+
+.tabs {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ccc;
+
+  @media only screen and (max-width: 500px) {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+}
+
+.tabs button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+  width: 100%;
+  text-align: left;
+
+  &.active {
+    background-color: coral;
+    color: #fff;
+  }
+
+  &:hover:not(.active) {
+    background-color: #ddd;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.content {
+  width: 50%;
+}
+
+#userForm, #purchaseHistory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    color: coral;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="button"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  input[type="text"][readonly] {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  input[type="button"] {
+    background-color: coral;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgb(232, 116, 74);
+    }
+    
+    &:active {
+      background-color: rgb(216, 107, 68);
+    }
+  }
+
+  .delete-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 25px;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+    
+    &:active {
+      background-color: #b71c1c;
+    }
+  }
+
+  .order {
+    list-style: none;
+    border-bottom: 2px solid coral;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.order ul, .order li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tabs {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    width: 100%;
+  }
+}

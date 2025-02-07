@@ -1,0 +1,51 @@
+footer {
+  display: flex;
+  margin-top: auto;
+  height: 150px;
+  background-color: rgb(43, 43, 43);
+  color: rgb(245, 245, 245);
+}
+footer div {
+  display: flex;
+  width: 80%;
+}
+footer div.footer-left {
+  margin: auto;
+  flex-direction: column;
+  align-items: start;
+  width: 50%;
+  pointer-events: none;
+  cursor: default;
+}
+footer div.footer-left a {
+  text-decoration: none;
+  color: white;
+}
+footer div.footer-middle {
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  width: 100px;
+}
+footer div.footer-middle img {
+  height: 36px;
+  width: 36px;
+}
+footer div.footer-right {
+  margin: auto;
+  flex-direction: column;
+  align-items: end;
+  width: 50%;
+}
+footer div.footer-right a {
+  text-decoration: none;
+  color: white;
+}
+
+@media only screen and (max-width: 500px) {
+  .footer-left a, .footer-right a {
+    font-size: 12px;
+  }
+}
+
+/*# sourceMappingURL=footer.css.map */

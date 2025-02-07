@@ -1,0 +1,66 @@
+#registerForm {
+  margin: 25px auto 0;
+  width: 50%;
+}
+#registerForm div {
+  flex-direction: column;
+  align-items: center;
+}
+#registerForm div h2 {
+  color: coral;
+}
+#registerForm div input[type=text], #registerForm div input[type=password], #registerForm div input[type=date] {
+  width: 250px;
+  padding: 10px;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  outline: none;
+  font-family: MuseoModerno, sans-serif;
+  font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+#registerForm div input[type=text].registerError, #registerForm div input[type=password].registerError, #registerForm div input[type=date].registerError {
+  border-color: red;
+}
+#registerForm #registerButton {
+  margin: 25px 0;
+  width: 175px;
+  height: 35px;
+  background-color: coral;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#registerForm #registerButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+#registerForm #registerButton:active {
+  background-color: rgb(216, 107, 68);
+}
+#registerForm #registerText {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+#registerForm div {
+  margin-bottom: 5px;
+}
+
+#registerForm div input {
+  height: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  #registerForm {
+    width: auto;
+  }
+}
+
+/*# sourceMappingURL=register.css.map */

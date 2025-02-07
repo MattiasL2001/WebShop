@@ -1,0 +1,184 @@
+$font-family: MuseoModerno, sans-serif;
+$coral: coral;
+$gray: gray;
+$white: white;
+
+#checkoutArticles {
+  border-right: 2px solid $coral;
+}
+
+.arrowIcon {
+  fill: $coral;
+}
+
+.cart-item {
+  justify-content: center;
+  flex-direction: row !important;
+}
+
+.cart-item-buttons {
+  flex-direction: row !important;
+  gap: 10px;
+}
+
+.cart-item-buttons button {
+  color: $white;
+  border: solid;
+  border-width: 1px;
+  border-color: $coral;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item-buttons button:hover {
+  box-shadow: 0 0 3px $coral;
+}
+
+.cart-item-buttons button:active {
+  box-shadow: 0 0 5px $coral;
+}
+
+
+#shippingInfo,
+#paymentInfo {
+  width: 75% !important;
+}
+
+#checkoutForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 50px;
+  width: 80%;
+}
+
+#checkoutForm div {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  margin-bottom: 20px;
+}
+
+#checkoutForm div p {
+  width: 75%;
+}
+
+#placeOrderButton {
+  height: 40px;
+  width: 300px !important;
+}
+
+#checkoutForm div img,
+#checkoutForm div svg {
+  height: 64px;
+  width: 64px;
+}
+
+#checkoutForm h2 {
+  color: $coral;
+  margin-bottom: 20px;
+}
+
+#checkoutForm input {
+  width: calc(100% - 40px);
+  margin: 8px 0;
+  border: none;
+  outline: none;
+  font-family: $font-family;
+  font-size: 16px;
+}
+
+#checkoutForm input[type=text],
+#checkoutForm input[type=date],
+#checkoutForm input[type=month] {
+  border-radius: 5px;
+  border: 1px solid $gray;
+}
+
+#shippingInfo input, #paymentInfo input {
+  padding: 10px;
+  width: 100%;
+}
+
+#paymentInfo input {
+  cursor: default;
+}
+
+#placeOrderButton {
+  width: 100%;
+  background-color: $coral;
+  color: $white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#placeOrderButton:hover {
+  background-color: rgb(232, 116, 74);
+}
+
+#placeOrderButton:active {
+  background-color: rgb(216, 107, 68);
+}
+
+.toggleSection {
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggleSection .arrow {
+  margin-left: 10px;
+}
+
+.collapsed {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  #placeOrderButton {
+    width: 250px !important;
+  }
+}
+
+@media (max-width: 750px) {
+  #checkoutForm {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #checkoutForm div {
+    width: 100%;
+    justify-content: center;
+    border-right: none;
+  }
+
+  #placeOrderButton {
+    width: 40% !important;
+  }
+
+  #checkoutArticles, #checkoutPayment,
+  #shippingInfo input, #paymentInfo input {
+    width: 75%;
+  }
+}
+
+@media (min-width: 751px) {
+  .arrowIcon {
+    display: none;
+  }
+  .toggleSection {
+    cursor: default;
+  }
+}
