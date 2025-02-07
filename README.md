@@ -1,30 +1,35 @@
 # 🛒 Webstore Project
 
-Welcome to **Webstore**, a modern and simple e-commerce application built to showcase full-stack web development using modern technologies. This project demonstrates clean design, robust functionality, and seamless interaction between the frontend and backend.
+Welcome to **Webstore**, a modern and simple e-commerce application built to showcase full-stack web development using modern technologies.
 
 ## 🚀 Technologies Used
 
-- **Frontend:** React with TypeScript for a smooth and type-safe user experience.
-- **Backend:** ASP.NET Core Web API with C# for high-performance and secure server-side logic.
+- **Frontend:** React/TypeScript/SCSS
+- **Backend:** ASP.NET Core Web API with C#.
 - **Database:** SQLite, managed with Entity Framework ORM for database interactions.
+- **Authentication** Bearer, BasicAuth, OAuth, JWT.
 
 ## 🌟 Features
+- **User Registration**
+- **User Login**
+- **User See Previous Orders Linked With The Specific Account Email**
+- **User Change Password**
+- **User Delete Account**
 
-### 🛍️ Shop Features:
-- **Product Display:** Browse a collection of products with a clean and modern design.  
-- **Filters:** Easily filter products by categories, price range, and more.  
-- **Cart:** Add items to your cart and review them at any time.  
-- **Checkout Page:** Finalize your purchase with a seamless checkout experience.  
+- **See All Products Stored In The Database**
+- **Filter Products By Color, Gender And Product Type**
+- **Sort Products By Price**
+- **Search For Products By Name**
 
-### 👤 User Management:
-- **User Accounts:** Register as a new user or log in to access your personal account.  
-- **Authentication:** Secure login and account handling for a safe shopping experience.  
-- **Admin Panel:** Exclusive access for admin users to manage products and monitor orders.  
+- **Product Display Page:**
+- **Add Items To Cart**
+- **Checkout Your Order At The Checkout Page**
 
-### 🛠️ Additional Highlights:
-- **Responsive Design:** Fully optimized for desktops, tablets, and smartphones.  
-- **Entity Framework ORM:** Simplified database interactions with robust query capabilities.  
-- **Clean Codebase:** Designed for readability and easy maintenance.  
+- **Place Order Logged In Or Not**
+  
+- **Backend Password Hashing**
+
+- **Create/Edit/Delete Users And Products In the Admin Panel That Only Admin Role Users Have Access To**
 
 ## 🖼️ Screenshots and video
 
