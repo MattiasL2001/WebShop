@@ -21,7 +21,7 @@ Welcome to **Webstore**, a modern and simple e-commerce application built to sho
 - **Sort Products By Price**
 - **Search For Products By Name**
 
-- **Product Display Page:**
+- **Product Display Page**
 - **Add Items To Cart**
 - **Checkout Your Order At The Checkout Page**
 
