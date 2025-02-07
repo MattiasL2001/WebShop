@@ -55,5 +55,4 @@ Welcome to **Webstore**, a modern and simple e-commerce application built to sho
 ![Skärmbild 2025-02-07 154522](https://github.com/user-attachments/assets/beb8905b-0df9-4ab4-b9ee-f5771d5c8a9a)
 
 
-
-https://github.com/user-attachments/assets/c9e735df-5d02-4186-a03d-63f70368d759
+https://github.com/user-attachments/assets/7db6a546-5964-4af0-a6d2-76b29dde3a68
