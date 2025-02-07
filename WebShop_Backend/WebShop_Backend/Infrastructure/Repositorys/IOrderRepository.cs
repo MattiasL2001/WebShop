@@ -7,7 +7,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     public interface IOrderRepository
     {
         public Task<HttpStatusCode> AddOrder(Order order);
-
         public Task<List<Order>> GetOrders();
+        Task<List<Order>> GetOrdersByEmail(string email);
     }
 }

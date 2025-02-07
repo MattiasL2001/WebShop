@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication;
 using WebShop_Backend.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.OpenApi.Models;
 using WebShop_Backend.Authentication.Basic;
 using System.Security.Cryptography;
@@ -87,7 +86,9 @@ builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
@@ -141,11 +142,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("CorsPolicy");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -161,7 +162,7 @@ try
 
     if (!context.Products.Any())
     {
-        FakeData.InitializeData(30);
+        FakeData.InitializeData(60);
     }
 }
 catch (Exception ex)

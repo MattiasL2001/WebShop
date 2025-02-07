@@ -25,17 +25,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const token = localStorage.getItem('jwtToken');
     if (token && !isTokenExpired(token)) {
       const decodedToken = jwtDecode<JwtPayload & {
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string;
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': string;
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata': string;
+        'name': string;
+        'role': string;
+        'email': string;
+        'birthdate': string;
       }>(token);
       setIsAuthenticated(true);
       setUser({
-        name: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
-        role: decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-        email: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
-        birthDate: decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata']
+        name: decodedToken['name'],
+        role: decodedToken['role'],
+        email: decodedToken['email'],
+        birthDate: decodedToken['birthdate']
       });
     } else {
       localStorage.removeItem('jwtToken');

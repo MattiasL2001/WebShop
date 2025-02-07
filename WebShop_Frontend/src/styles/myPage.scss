@@ -122,6 +122,20 @@
       background-color: #b71c1c;
     }
   }
+
+  .order {
+    list-style: none;
+    border-bottom: 2px solid coral;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.order ul, .order li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media only screen and (max-width: 600px) {

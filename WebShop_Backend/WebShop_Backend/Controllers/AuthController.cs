@@ -68,8 +68,9 @@ namespace WebShop_Backend.Controllers
             var rsa = RSA.Create();
             rsa.ImportFromPem(_jwtBearerSettings.PrivateKey.ToCharArray());
 
+            var roleClaim = new System.Security.Claims.Claim(ClaimTypes.Role, claim.role.ToString());
 
-            var token = tokenHandler.WriteToken(tokenHandler.CreateToken(
+            var access_token = tokenHandler.WriteToken(tokenHandler.CreateToken(
                 new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
                 {
                     Subject = new System.Security.Claims.ClaimsIdentity(jwtBearerAuthenticatedClient,
@@ -78,6 +79,7 @@ namespace WebShop_Backend.Controllers
                         new System.Security.Claims.Claim(JwtRegisteredClaimNames.Name, claim.name),
                         new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email, claim.email),
                         new System.Security.Claims.Claim(JwtRegisteredClaimNames.Birthdate, claim.birthDate.ToString()),
+                        roleClaim
                     }),
                     Expires = expiry,
                     Issuer = _jwtBearerSettings.Issuer,
@@ -93,7 +95,7 @@ namespace WebShop_Backend.Controllers
 
             return Ok(new
             {
-                access_token = token,
+                token = access_token,
                 token_type = JwtBearerDefaults.AuthenticationScheme,
                 expires_in = expiry.Subtract(DateTime.UtcNow).TotalSeconds.ToString("0")
             });

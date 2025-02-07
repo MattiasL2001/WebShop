@@ -17,16 +17,9 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             _dbContext = dbContext;
             _mailService = new MailService(configuration);
         }
-        
         public async Task<HttpStatusCode> AddOrder(Order order)
         {
-
-            if (order.ProductIds.Count == 0)
-            {
-                return HttpStatusCode.BadRequest;
-            }
-
-            if (order.ProductAmount.Count == 0) 
+            if (order.Items.Count == 0) // Kollar om det finns några produkter i ordern
             {
                 return HttpStatusCode.BadRequest;
             }
@@ -34,19 +27,15 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             await _dbContext.AddAsync(order);
             await _dbContext.SaveChangesAsync();
 
-            var orderName = _dbContext.Users.Where(user => user.Email == order.Email).First();
-
-            var orderProductStrings = order.ProductIds.Zip(order.ProductAmount, (productId,productAmount) =>
+            var orderProductStrings = order.Items.Select(item =>
             {
-                var product = _dbContext.Products.Find(productId);
+                var product = _dbContext.Products.Find(item.ProductId);
+                return product != null ? $"{product.Name} x{item.Quantity}" : null;
+            }).Where(str => str != null); // Tar bort eventuella null-värden
 
-                return $"{product.Name} x{productAmount}";
+            var orderProductString = string.Join('\n', orderProductStrings);
 
-            });
-
-            var orderProductString = String.Join('\n',orderProductStrings);
-
-            //_mailService.ConfirmeOrder(order.Email, orderName.FirstName, orderProductString);
+            //_mailService.ConfirmeOrder(order.Email, user.FirstName, orderProductString);
 
             return HttpStatusCode.OK;
         }
@@ -54,6 +43,14 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public async Task<List<Order>> GetOrders()
         {
             return await _dbContext.Orders.ToListAsync();
+        }
+
+        public async Task<List<Order>> GetOrdersByEmail(string email)
+        {
+            return await _dbContext.Orders
+                .Where(o => o.Email == email)
+                .Include(o => o.Items) // Inkluderar OrderItems
+                .ToListAsync();
         }
 
     }

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useLogout } from './useLogout';
 import "../styles/header.scss";
 
 const AdminHeader: React.FC = () => {
+  const logout = useLogout();
 
   return (
     <header className={`admin-header sticky`}>
@@ -10,7 +12,7 @@ const AdminHeader: React.FC = () => {
       </div>
       <nav>
         <div id="nav-right-logout">
-          <button id="logoutButton">Logout</button>
+          <button id="logoutButton" onClick={logout}>Logout</button>
         </div>
       </nav>
     </header>

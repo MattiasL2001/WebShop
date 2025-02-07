@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using WebShop_Backend.Entity;
+﻿using WebShop_Backend.Entity;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {

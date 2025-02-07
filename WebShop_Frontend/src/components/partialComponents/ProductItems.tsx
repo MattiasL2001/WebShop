@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import PaginationControl from '../PaginationControl';
 import { Product } from '../models/Product';
-import defaultImage from "../../images/products/1.png";
+import { getProductImage } from '../getProductImage';
 import { GetNumberOfProducts } from '../../services/webShopServices';
 import { PageProps } from '../models/props/pageProps';
 
@@ -19,6 +19,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page
   });
 
   let totalPages: number
+  const image = getProductImage
 
   if (products.length < numberPerPage && page === 1) { totalPages = 1; }
   else { totalPages = Math.ceil(numberOfProducts / numberPerPage); }
@@ -43,7 +44,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page
           <Link to={`/products/${product.id}`} key={product.id} className="product" state={product}>
             <div className="image-container">
               <img
-                src={product.image || defaultImage}
+                src={image(product.image)}
                 alt={product.name}
               />
             </div>

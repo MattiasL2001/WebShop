@@ -62,9 +62,7 @@ namespace WebShop_Backend.Controllers
                 return NotFound();
             }
 
-            var productsDto = _mapper.Map<List<ProductDto>>(products);
-
-            return Ok(productsDto);
+            return Ok(products);
 
         }
 

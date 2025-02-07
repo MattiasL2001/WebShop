@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using WebShop_Backend.Entity;
+using WebShop_Backend.Services;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
@@ -9,10 +10,12 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     {
 
         private readonly WebShopContext _dbContext;
+        private readonly IPasswordHasherService _passwordHasherService;
 
-        public AuthenticationRepository(WebShopContext dbContext)
+        public AuthenticationRepository(WebShopContext dbContext, IPasswordHasherService passwordHasherService)
         {
             _dbContext = dbContext;
+            _passwordHasherService = passwordHasherService;
         }
 
         public async Task<User> AuthenticateUser(string authorizationHeader)
@@ -29,7 +32,13 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             var ClientId = authSplit[0];
             var ClientSecret = authSplit[1];
 
-            var authUser = await _dbContext.Users.Where(user => user.Email == ClientId && user.Password == ClientSecret).FirstOrDefaultAsync();
+            var authUser = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == ClientId);
+
+            if (authUser == null || !_passwordHasherService.VerifyPassword(authUser.Password, ClientSecret))
+            {
+                return null;
+            }
+
 
             return authUser;
 

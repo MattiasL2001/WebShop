@@ -1,23 +1,35 @@
-﻿namespace WebShop_Backend.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebShop_Backend.Entity
 {
     public class Order
     {
+        [Key]
         public int Id { get; set; }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        public List<int> ProductIds { get; set; }
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
-        public List<int> ProductAmount { get; set; }
+        public string ShippingAddress { get; set; } = string.Empty;
 
-        public string ShippingAddress { get; set; }
+        public string City { get; set; } = string.Empty;
 
-        public string City { get; set;}
+        public string Zip { get; set; } = string.Empty;
 
-        public string Zip { get; set;}
+        public string Country { get; set; } = string.Empty;
 
-        public string Country { get; set;}
+        public string Phone { get; set; }
 
-        public string Phone { get; set;}
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
+
+    public class OrderItem
+    {
+        public int Id { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public int OrderId { get; set; }
+    }
+
 }

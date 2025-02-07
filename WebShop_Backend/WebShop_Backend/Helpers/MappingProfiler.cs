@@ -10,11 +10,10 @@ namespace WebShop_Backend.Helpers
         public MappingProfiler() 
         {
             CreateMap<User, UserDto>();
+            CreateMap<User, EditUserDto>().ReverseMap();
             CreateMap<RegisterUserDto, User>().ReverseMap();
             CreateMap<UserLoginDto, User>();
-
             CreateMap<OrderDto, Order>().ReverseMap(); 
-
             CreateMap<ProductDto, Product>().ReverseMap();
         }
 

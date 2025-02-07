@@ -26,24 +26,19 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ toggleLoginMenu }) => {
         const decodedToken: Record<string, any> = jwtDecode(response.token);
         console.log("JWT Claims:", decodedToken);
 
-        const name = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
-        const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        const email = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
-        const birthDate = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata'];
-        console.log(name);
-        console.log(role);
-        console.log(email);
-        console.log(birthDate);
+        const name = decodedToken['name'];
+        const role = decodedToken['role'];
+        const email = decodedToken['email'];
+        const birthDate = decodedToken['birthdate'];
 
         setAuthenticated(true, { name, role, email, birthDate });
-
-        console.log('Authenticated User from AuthContext:', user);
 
         if (location.pathname === '/register') { 
           navigate('/home'); 
         }
       } else {
         console.log("no token");
+        console.log(response);
       }
     },
     onError: (error) => {

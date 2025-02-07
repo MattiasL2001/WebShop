@@ -404,7 +404,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
   font-size: 16px;
 }
 .form-button:hover {
-  background-color: #ff5a1d;
+  background-color: rgb(255, 89.6971428571, 29);
 }
 
 .register-link {
@@ -521,7 +521,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
   font-size: 16px;
 }
 .checkoutButton:hover {
-  background-color: #ff5a1d;
+  background-color: rgb(255, 89.6971428571, 29);
 }
 
 .closeButton {

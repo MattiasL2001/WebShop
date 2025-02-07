@@ -148,12 +148,17 @@ $dark-grey: #333;
 
   .modal-close {
     position: absolute;
-    top: 10px;
+    top: 0px;
     right: 10px;
     background: none;
     border: none;
     font-size: 1.5em;
     cursor: pointer;
+  }
+
+  .edit-form {
+    overflow-y: auto;
+    max-height: 500px;
   }
 
   .edit-form {
@@ -172,44 +177,44 @@ $dark-grey: #333;
         border-radius: 5px;
       }
     }
+  }
 
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
 
-      .save-button,
-      .cancel-button {
-        padding: 10px 20px;
-        margin-left: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .save-button,
+    .cancel-button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .save-button {
+      background-color: $coral;
+      color: $white;
+
+      &:hover {
+        background-color: rgb(232, 116, 74);
       }
 
-      .save-button {
-        background-color: $coral;
-        color: $white;
+      &:active {
+        background-color: rgb(216, 107, 68);
+      }
+    }
 
-        &:hover {
-          background-color: rgb(232, 116, 74);
-        }
+    .cancel-button {
+      background-color: $grey;
+      color: $dark-grey;
 
-        &:active {
-          background-color: rgb(216, 107, 68);
-        }
+      &:hover {
+        background-color: darken($grey, 10%);
       }
 
-      .cancel-button {
-        background-color: $grey;
-        color: $dark-grey;
-
-        &:hover {
-          background-color: darken($grey, 10%);
-        }
-
-        &:active {
-          background-color: darken($grey, 20%);
-        }
+      &:active {
+        background-color: darken($grey, 20%);
       }
     }
   }

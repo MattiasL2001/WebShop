@@ -85,7 +85,8 @@ select {
 }
 .product img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
 }
 
 .pagination-control {
@@ -176,7 +177,7 @@ select {
   }
   select:focus {
     outline: none;
-    border-color: #ff5a1d;
+    border-color: rgb(255, 89.6971428571, 29);
   }
   option {
     color: black;

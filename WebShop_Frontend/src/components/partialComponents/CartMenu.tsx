@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../Cart';
 import { CartMenuProps } from '../models/props/cart';
-import shirt from "../../images/products/1.png";
+import { getProductImage } from '../getProductImage';
+import { CartItem } from '../models/props/cartItem';
 
 const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
   const { cart, addToCart, removeFromCart } = useCart();
   const [isCartMenuOpen] = useState(true);
+  const image = getProductImage
 
   const handleIncrement = (itemId: number) => {
     const item = cart.find(item => item.id === itemId);
@@ -63,10 +65,10 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
                 <p>Your cart is empty</p>
               ) : (
                 <ul>
-                  {cart.map((item) => (
+                  {cart.map((item: CartItem) => (
                     <li key={item.id} className="cartItem">
                       <div className="cartItemImageContainer">
-                        <img src={shirt} alt={item.name} className="cartItemImage" />
+                      <img src={image(item.image)} alt={item.name} className="cartItemImage" />
                       </div>
                       <div className="cartItemDetails">
                         <Link to={`/products/${item.id}`} state={item} className="cartItemLink">

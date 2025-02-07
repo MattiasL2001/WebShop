@@ -19,16 +19,6 @@ namespace WebShop_Backend.Services
             var imagesPerUser = random.Next(0, profilesToGenerate * 2);
             var commentsPerUser = random.Next(0, profilesToGenerate * 2);
 
-            //var _profileFaker = new Faker<User>()
-            //    .UseSeed(1337)
-            //    .RuleFor(p => p.Id, f => f.IndexFaker + 1)
-            //    .RuleFor(p => p.FirstName, f => f.Internet.UserName(f.Person.FirstName))
-            //    .RuleFor(p => p.LastName, f => f.Internet.UserName(f.Person.LastName))
-            //    .RuleFor(p => p.Email, f => f.Internet.Email())
-            //    .RuleFor(p => p.Password, f => f.Internet.Password());
-
-            //var fakeProfile = _profileFaker.Generate(profilesToGenerate);
-
             var _productFaker = new Faker<Product>()
                 .UseSeed(1337)
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)

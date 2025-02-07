@@ -1,24 +1,28 @@
-﻿namespace WebShop_Backend.Dtos.User
+﻿using System.ComponentModel.DataAnnotations;
+using WebShop_Backend.Entity;
+
+namespace WebShop_Backend.Dtos.User
 {
     public class OrderDto
     {
+        [Key]
         public int Id { get; set; }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        public List<int> ProductAmount { get; set; }
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
-        public List<int> ProductIds { get; set; }
+        public string ShippingAddress { get; set; } = string.Empty;
 
-        public string ShippingAddress { get; set; }
+        public string City { get; set; } = string.Empty;
 
-        public string City { get; set; }
+        public string Zip { get; set; } = string.Empty;
 
-        public string Zip { get; set; }
-
-        public string Country { get; set; }
+        public string Country { get; set; } = string.Empty;
 
         public string Phone { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     }
 }

@@ -10,16 +10,13 @@ namespace WebShop_Backend.Entity
         public string? FirstName { get; set; }
         
         public string? LastName { get; set; }
-        public UserRole Role { get; set; }
+
+        public UserRole? Role { get; set; }
 
         public string? Password { get; set; }
 
         public string? Email { get; set; }
 
         public DateTime? BirthDate { get; set; }
-
-        //[ConcurrencyCheck]
-        public List<int>? Basket { get; set; } = new List<int>(); 
-
     }
 }

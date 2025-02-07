@@ -9,7 +9,6 @@ export default function Footer() {
         <div className="footer-left">
           <Link to="">Created by:</Link>
           <Link to="">Mattias Lindblad</Link>
-          <Link to="">Marcus Karlsson</Link>
         </div>
         
         <div className="footer-right">

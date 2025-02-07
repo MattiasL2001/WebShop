@@ -9,7 +9,7 @@ export const useLogout = () => {
   const logout = () => {
     setAuthenticated(false);
     localStorage.removeItem("jwtToken");
-    if (location.pathname === '/mypage') {
+    if (location.pathname !== '/home') {
       navigate('/home');
     }
   };

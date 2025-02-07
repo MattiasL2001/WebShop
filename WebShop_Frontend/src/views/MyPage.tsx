@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { deleteUser, ChangePassword } from '../services/webShopServices';
+import { deleteUser, ChangePassword, getOrdersByEmail, fetchProductById } from '../services/webShopServices';
 import '../styles/myPage.scss';
+
+interface Order {
+  id: number;
+  email: string;
+  items: { id: number; productId: number; quantity: number; orderId: number }[];
+  shippingAddress: string;
+  city: string;
+  zip: string;
+  country: string;
+  phone: string;
+  createdAt: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
 
 const Webstore: React.FC = () => {
   const navigate = useNavigate();
@@ -10,6 +28,45 @@ const Webstore: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const { user } = useAuth();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [productData, setProductData] = useState<{ [key: number]: Product }>({});
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (activeTab === 'history' && user?.email) {
+        setLoading(true);
+        try {
+          const fetchedOrders: any = await getOrdersByEmail(user.email);
+          setOrders(fetchedOrders);
+  
+          // Använd en Map för att lagra unika produkter istället för Set
+          const productMap = new Map<number, Product>();
+  
+          for (const order of fetchedOrders) {
+            for (const item of order.items) {
+              if (!productMap.has(item.productId)) {
+                const product = await fetchProductById(item.productId);
+                productMap.set(item.productId, product);
+              }
+            }
+          }
+  
+          // Konvertera Map till ett vanligt objekt för state-hantering
+          const productDataObject: { [key: number]: Product } = Object.fromEntries(productMap);
+          setProductData(productDataObject);
+  
+        } catch (error) {
+          console.error('Failed to fetch orders:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+  
+    fetchOrders();
+  }, [activeTab, user?.email]);
+  
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
@@ -42,8 +99,8 @@ const Webstore: React.FC = () => {
       try {
         await deleteUser(user.email);
         alert('Your account has been deleted.');
-        localStorage.removeItem("jwtToken");
-        navigate("/home");
+        localStorage.removeItem('jwtToken');
+        navigate('/home');
         window.location.reload();
       } catch (error) {
         alert('Failed to delete the account. Please try again.');
@@ -75,29 +132,14 @@ const Webstore: React.FC = () => {
               <h2>{user?.name}</h2>
             </div>
             <div>
-              <input
-                type="text"
-                placeholder="Current E-Mail"
-                value={user?.email || ''}
-                readOnly
-              />
+              <input type="text" placeholder="Current E-Mail" value={user?.email || ''} readOnly />
             </div>
             <div>
-              <input
-                type="password"
-                placeholder="New Password"
-                value={newPassword}
-                onChange={handlePasswordChange}
-              />
+              <input type="password" placeholder="New Password" value={newPassword} onChange={handlePasswordChange} />
               {passwordError && <p className="error">{passwordError}</p>}
             </div>
             <div>
-              <input
-                type="button"
-                value="Save Settings"
-                id="registerButton"
-                onClick={handleSaveSettings}
-              />
+              <input type="button" value="Save Settings" id="registerButton" onClick={handleSaveSettings} />
             </div>
             <div>
               <button className="delete-button" onClick={handleDeleteAccount}>
@@ -111,9 +153,39 @@ const Webstore: React.FC = () => {
             <div>
               <h2>Purchase History</h2>
             </div>
-            <div>
+            {loading ? (
+              <p>Loading orders...</p>
+            ) : orders.length > 0 ? (
+              <ul>
+                {orders.map((order) => {
+                  const orderTotal = order.items.reduce((sum, item) => {
+                    const product = productData[item.productId];
+                    return sum + (product ? product.price * item.quantity : 0);
+                  }, 0);
+
+                  return (
+                    <li className='order' key={order.id}>
+                      <strong>Order ID:</strong> {order.id} <br />
+                      <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()} <br />
+                      <strong>Items:</strong>
+                      <ul>
+                        {order.items.map((item) => {
+                          const product = productData[item.productId];
+                          return (
+                            <li key={item.id}>
+                              {product ? `${product.name} x${item.quantity}` : 'Unknown Product'}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <strong>Total Price:</strong> {orderTotal.toFixed(2)} $
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
               <p>No purchase history available.</p>
-            </div>
+            )}
           </article>
         )}
       </div>

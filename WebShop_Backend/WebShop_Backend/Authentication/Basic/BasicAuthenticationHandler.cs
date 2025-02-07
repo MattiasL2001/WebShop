@@ -48,12 +48,14 @@ namespace WebShop_Backend.Authentication.Basic
                 AuthenticationType = BasicAuthenticationDefaults.AuthenticationScheme,
                 IsAuthenticated = true,
                 Name = claim.name,
+                Role = claim.role,
             };
 
             var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(client, new[]
             {
                 new System.Security.Claims.Claim(ClaimTypes.Name, claim.name),
                 new System.Security.Claims.Claim(ClaimTypes.Email, authUser.Email),
+                new System.Security.Claims.Claim(ClaimTypes.Role, authUser.Role.ToString()),
                 new System.Security.Claims.Claim(ClaimTypes.DateOfBirth, claim.birthDate.ToString()),
             }));
 

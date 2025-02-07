@@ -23,6 +23,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
                 return null;
             }
 
+            user.Role = UserRole.Member;
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
@@ -37,11 +38,6 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             if (validUser == null)
             {
                 return HttpStatusCode.NotFound;
-            }
-
-            if (validUser.Email == user.Email && validUser.Password != user.Password)
-            {
-                return HttpStatusCode.Unauthorized;
             }
 
             return HttpStatusCode.OK;
@@ -63,7 +59,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         public async Task<User> GetUserByEmail(string email)
         {
 
-            var user = _dbContext.Users.Where(u => u.Email == email).First();
+            var user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
 
             if (user == null)
             {
@@ -83,20 +79,38 @@ namespace WebShop_Backend.Infrastructure.Repositorys
                 return null;
             }
 
-            Claim claim = new Claim { name=user.FirstName, email=user.Email, birthDate=user.BirthDate };
+            Claim claim = new Claim { name=user.FirstName, email=user.Email, birthDate=user.BirthDate, role=user.Role };
 
             return claim;
 
         }
 
-        public Task ChangeUserPassword(string email, string newPasswordHash)
+        public async Task<User> ChangeUserPassword(string email, string newPasswordHash)
         {
-            throw new NotImplementedException();
+            User user = await GetUserByEmail(email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            user.Password = newPasswordHash;
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
 
-        public Task<bool> DeleteUser(string email)
+        public async Task<User> DeleteUser(string email)
         {
-            throw new NotImplementedException();
+            User user = await GetUserByEmail(email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
 
     }
