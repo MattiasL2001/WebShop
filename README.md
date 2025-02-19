@@ -7,7 +7,7 @@ Welcome to **Webstore**, a modern and simple e-commerce application built to sho
 - **Frontend:** React/TypeScript/SCSS
 - **Backend:** ASP.NET Core Web API with C#
 - **Database:** SQLite, managed with Entity Framework ORM for database interactions
-- **Authentication:** Bearer, BasicAuth, OAuth, JWT
+- **Authentication:** BasicAuth, OAuth, Bearer JWT
 
 ## 🌟 Features
 - **User Registration**
