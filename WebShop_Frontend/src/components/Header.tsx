@@ -5,6 +5,7 @@ import LoginMenu from './partialComponents/LoginMenu';
 import CartMenu from './partialComponents/CartMenu';
 import SidebarMenu from './partialComponents/SidebarMenu';
 import "../styles/header.scss"
+import "../styles/sidePanel.scss"
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

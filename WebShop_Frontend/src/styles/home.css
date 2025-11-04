@@ -195,5 +195,42 @@ select {
     border: 1px solid coral;
   }
 }
+@media only screen and (min-width: 2560px) {
+  .pagination-control {
+    margin: 20px 0;
+  }
+  .pagination-control .pagination-arrow {
+    font-size: 72px;
+    width: 80px;
+    height: 80px;
+  }
+  .pagination-control .pagination-info {
+    font-size: 36px;
+    margin: 0 20px;
+  }
+  #searchArticles {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 50px auto 50px;
+    width: 80%;
+    height: 100px;
+    background-color: white;
+  }
+  select {
+    border: none;
+    outline: none;
+  }
+  .filter, #sort {
+    font-size: 24px;
+    width: 20%;
+    height: 60px;
+    background-color: rgb(245, 245, 245);
+  }
+  .filter:hover, #sort:hover {
+    cursor: pointer;
+    border: 1px solid coral;
+  }
+}
 
 /*# sourceMappingURL=home.css.map */

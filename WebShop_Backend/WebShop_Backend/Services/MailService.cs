@@ -5,15 +5,10 @@ namespace WebShop_Backend.Services
 {
     public class MailService
     {
-
         private readonly IConfiguration _configuration;
-
         private readonly string _emailServer;
-
         private readonly int _port;
-
         private readonly string _fromEmail;
-
         private readonly string _password;
 
         public MailService(IConfiguration configuration)
@@ -27,33 +22,31 @@ namespace WebShop_Backend.Services
 
         public void ConfirmeOrder(string toEmail, string name, string products)
         {
+            var cleanedEmail = toEmail?.Trim() ?? string.Empty;
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("WebShop", _fromEmail));
-            message.To.Add(new MailboxAddress(name, toEmail));
-            message.Subject = "Youre order have ben confiremd";
+            message.To.Add(new MailboxAddress(name, cleanedEmail));
+            message.Subject = "Your order has been confirmed";
 
-            message.Body = new TextPart("plain") 
-            { 
-                Text = 
+            message.Body = new TextPart("plain")
+            {
+                Text =
                 $"""
-                Hello {name}
+                Hello {name},
 
                 This is your receipt:
                 {products}
-                """ 
+                """
             };
 
-            using (var client = new SmtpClient()) 
+            using (var client = new SmtpClient())
             {
                 client.Connect(_emailServer, _port);
                 client.Authenticate(_fromEmail, _password);
                 client.Send(message);
                 client.Disconnect(true);
             }
-            
-            
-
         }
     }
 }

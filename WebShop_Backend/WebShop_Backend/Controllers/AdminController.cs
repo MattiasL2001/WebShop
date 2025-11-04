@@ -116,7 +116,6 @@ namespace WebShop_Backend.Controllers
             return Ok(_mapper.Map<ProductDto>(updatedProduct));
         }
 
-        // Ta bort produkt
         [HttpDelete("products/{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {

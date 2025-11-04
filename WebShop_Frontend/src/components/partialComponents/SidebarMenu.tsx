@@ -8,6 +8,7 @@ import { useAuth } from '../../AuthContext';
 import useSearch from "../Search";
 import SidebarIcon from '../../Icons/SidebarIcon';
 import SearchIcon from '../../Icons/SearchIcon';
+import "../../styles/sidePanel.scss"
 
 const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleSidebarMenu }) => {
   const [email, setEmail] = useState('');

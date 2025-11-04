@@ -56,3 +56,13 @@ footer {
       font-size: 12px;
     }
   }
+
+  @media only screen and (min-width: 2560px) {
+    footer {
+      height: 300px;
+
+      a {
+        font-size: 24px;
+      }
+    }
+  }

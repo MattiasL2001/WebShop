@@ -1,4 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap");
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -41,6 +51,7 @@ body {
 #articleForm {
   margin: 100px auto 0;
   width: 50%;
+  max-width: 960px;
 }
 
 #descriptionText {
@@ -48,6 +59,7 @@ body {
   background-color: white;
   margin: 25px auto;
   width: 50%;
+  max-width: 960px;
 }
 
 #article {
@@ -55,6 +67,7 @@ body {
   background-color: white;
   margin: auto;
   width: 20%;
+  max-width: 384px;
 }
 #article img {
   justify-content: center;
@@ -103,6 +116,7 @@ body {
 .row {
   justify-content: space-between;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .item {
@@ -112,6 +126,8 @@ body {
   color: black;
   background-color: rgb(245, 245, 245);
   width: 25%;
+  max-width: 480px;
+  flex: 1 1 25%;
   cursor: pointer;
 }
 .item:hover {
@@ -177,6 +193,13 @@ body {
 #noPage div {
   width: 30%;
   min-width: 175px;
+  max-width: 576px;
+}
+
+@media (min-width: 1920px) {
+  #articleForm, #descriptionText {
+    max-width: 1100px;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
