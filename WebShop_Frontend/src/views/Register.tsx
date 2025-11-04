@@ -29,69 +29,73 @@ const Webstore: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleRegister = async () => {
-    setErrors({
-      firstname: false,
-      lastname: false,
-      email: false,
-      password: false,
-      confirmPassword: false,
-      birthDate: false,
-    });
+const handleRegister = async () => {
+  setErrors({
+    firstname: false,
+    lastname: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+    birthDate: false,
+  });
 
-    if (!firstname.trim()) {
-      setErrors(prev => ({ ...prev, firstname: true }));
-      alert("First Name must be filled out");
-      return;
-    }
-    if (!lastname.trim()) {
-      setErrors(prev => ({ ...prev, lastname: true }));
-      alert("Last Name must be filled out");
-      return;
-    }
-    if (!email.trim()) {
-      setErrors(prev => ({ ...prev, email: true }));
-      alert("Email Address must be filled out");
-      return;
-    }
-    if (!password.trim()) {
-      setErrors(prev => ({ ...prev, password: true }));
-      alert("Password must be filled out");
-      return;
-    }
-    if (!confirmPassword.trim()) {
-      setErrors(prev => ({ ...prev, confirmPassword: true }));
-      alert("Confirm Password must be filled out");
-      return;
-    }
-    if (!birthDate.trim()) {
-      setErrors(prev => ({ ...prev, birthDate: true }));
-      alert("Birth Date must be filled out");
-      return;
-    }
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  if (!firstname.trim()) {
+    setErrors(prev => ({ ...prev, firstname: true }));
+    alert("First Name must be filled out");
+    return;
+  }
+  if (!lastname.trim()) {
+    setErrors(prev => ({ ...prev, lastname: true }));
+    alert("Last Name must be filled out");
+    return;
+  }
+  if (!email.trim()) {
+    setErrors(prev => ({ ...prev, email: true }));
+    alert("Email Address must be filled out");
+    return;
+  }
+  if (!password.trim()) {
+    setErrors(prev => ({ ...prev, password: true }));
+    alert("Password must be filled out");
+    return;
+  }
+  if (!confirmPassword.trim()) {
+    setErrors(prev => ({ ...prev, confirmPassword: true }));
+    alert("Confirm Password must be filled out");
+    return;
+  }
+  if (!birthDate.trim()) {
+    setErrors(prev => ({ ...prev, birthDate: true }));
+    alert("Birth Date must be filled out");
+    return;
+  }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
 
-    try {
-      const registerUser = {
-        firstname,
-        lastname,
-        email,
-        password,
-        confirmPassword,
-        birthDate
-      };
+  try {
+    const registerUser = {
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
+      birthDate,
+    };
 
-      await Register(registerUser);
-      alert("Registration successful!");
-      navigate('/home');
-    } catch (error) {
-      alert("Registration failed. Please try again.");
-      console.error("Error during registration:", error);
-    }
-  };
+    await Register(registerUser);
+    alert("Registration successful!");
+    navigate("/home");
+  } catch (error: any) {
+    const message =
+      error?.message ||
+      error?.response?.data?.message ||
+      "Registration failed. Please try again.";
+    alert(message);
+    console.error("Error during registration:", message);
+  }
+};
 
   return (
     <>

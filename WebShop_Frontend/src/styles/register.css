@@ -11,6 +11,7 @@
 }
 #registerForm div input[type=text], #registerForm div input[type=password], #registerForm div input[type=date] {
   width: 250px;
+  height: 40px;
   padding: 10px;
   border-radius: 3px;
   border-width: 1px;
@@ -60,6 +61,47 @@
 @media only screen and (max-width: 600px) {
   #registerForm {
     width: auto;
+  }
+}
+@media only screen and (min-width: 2560px) {
+  #registerForm {
+    margin: 100px auto;
+    width: 38%;
+  }
+  #registerForm p {
+    font-size: 36px;
+  }
+  #registerForm div {
+    gap: 18px;
+  }
+  #registerForm div h2 {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+  #registerForm div input[type=text],
+  #registerForm div input[type=password],
+  #registerForm div input[type=date] {
+    width: 600px;
+    padding: 22px;
+    font-size: 28px;
+    border-radius: 6px;
+  }
+  #registerForm #registerButton {
+    margin-top: 75px;
+    width: 450px;
+    height: 100px;
+    padding: 18px 28px;
+    font-size: 36px;
+    border-radius: 10px;
+  }
+  #registerForm #registerText {
+    font-size: 22px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+  #registerForm div input {
+    height: auto;
+    min-height: 60px;
   }
 }
 

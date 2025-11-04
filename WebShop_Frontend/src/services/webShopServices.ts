@@ -1,12 +1,9 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { api } from "../lib/api";
 import { isTokenExpired, refreshAuthToken } from "../utils";
 import { LoginUser } from "../components/models/LoginUser";
 import { RegisterUser } from "../components/models/props/registerUser";
 import { AddProduct } from "../components/models/props/addProduct";
-
-const api = axios.create({
-  baseURL: 'https://localhost:7180',
-});
 
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
@@ -27,15 +24,11 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );
 
 export const Login = async (loginUser: LoginUser) => {
   const basicAuth = btoa(`${loginUser.email}:${loginUser.password}`);
-  console.log(basicAuth)
-
   try {
       const response = await api.post(
           `/auth/token`, 
@@ -53,130 +46,63 @@ export const Login = async (loginUser: LoginUser) => {
 
       return response.data;
   } catch (error) {
-      console.error("Login failed", error);
-      throw error;
+    console.error("Login failed", (error as AxiosError).response?.data || (error as AxiosError).message);
+    throw error;
   }
 };
 
 export const Register = async (registerUser: RegisterUser) => {
-    try {
-        const response = await api.post(`/user/register`, registerUser);
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            console.error("Registration failed", error.response?.data || error.message);
-        } else {
-            console.error("An unexpected error occurred during registration", error);
-        }
-        throw error;
+  try {
+    const response = await api.post(`/api/user/register`, registerUser);
+    return response.data;
+  } catch (error) {
+    let message = "Registration failed. Please try again later.";
+
+    if (error instanceof AxiosError) {
+      message = error.response?.data?.message || message;
+      console.error("Registration failed:", message);
+    } else {
+      console.error("Unexpected error during registration:", error);
     }
+
+    throw new Error(message);
+  }
 };
 
-export const GetUsersAdmin = () => {
-  return api.get(`/api/admin/users`)
-      .then(response => response.data)
-      .catch((error) => {
-          if (error instanceof AxiosError) {
-              console.error("Failed to get users", error.response?.data || error.message);
-          } else {
-              console.error("An unexpected error occurred while getting users", error);
-          }
-          throw error;
-      });
-};
-
-export const GetProductsAdmin = () => {
-    return api.get(`/api/admin/products`)
-        .then(response => response.data)
-        .catch((error) => {
-            if (error instanceof AxiosError) {
-                console.error("Failed to get products", error.response?.data || error.message);
-            } else {
-                console.error("An unexpected error occurred while getting products", error);
-            }
-            throw error;
-        });
-};
-
-export const GetProducts = (
-    numberPerPage: number, 
-    page: number, 
-    type?: number, 
-    color?: number, 
-    gender?: number, 
-    sortBy?: string, 
-    search?: string
-) => {
-    const params: any = { numberPerPage, page };
-
-    if (type !== undefined) params.type = type;
-    if (color !== undefined) params.color = color;
-    if (gender !== undefined) params.gender = gender;
-    if (sortBy !== undefined) params.sortBy = sortBy;
-    if (search !== undefined) params.search = search;
-
-    return api.get(`/Product/products`, { params })
-        .then(response => response.data)
-        .catch((error) => {
-            if (error instanceof AxiosError) {
-                console.error("Failed to get products", error.response?.data || error.message);
-            } else {
-                console.error("An unexpected error occurred while getting products", error);
-            }
-            throw error;
-        });
-};
-
-export const GetNumberOfProducts = async () => {
-    try {
-        const response = await api.get(`/Product/all`);
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            console.error("Failed to get number of products", error.response?.data || error.message);
-        } else {
-            console.error("An unexpected error occurred while getting the number of products", error);
-        }
-        throw error;
+export const ChangePassword = async (oldPassword: string, newPassword: string) => {
+  try {
+    const response = await api.put(`/api/user/change-password`, {
+      oldPassword,
+      newPassword
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Failed to change password", error.response?.data || error.message);
+    } else {
+      console.error("An unexpected error occurred while changing the password", error);
     }
-};
-
-export const ChangePassword = async (email: string, newPassword: string) => {
-    try {
-        const response = await api.put(`/user/${email}/change-password`, null, {
-            params: { newPassword },
-        });
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            console.error("Failed to change password", error.response?.data || error.message);
-        } else {
-            console.error("An unexpected error occurred while changing the password", error);
-        }
-        throw error;
-    }
+    throw error;
+  }
 };
 
 export const deleteUser = async (email: string) => {
-    try {
-      const response = await api.delete(`/user/delete`, {
-        params: { email },
-      });
-  
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Failed to delete user", error.response?.data || error.message);
-      } else {
-        console.error("An unexpected error occurred while deleting the user", error);
-      }
-      throw error;
+  try {
+    const response = await api.delete(`/api/user/delete`, { params: { email } });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Failed to delete user", error.response?.data || error.message);
+    } else {
+      console.error("An unexpected error occurred while deleting the user", error);
     }
+    throw error;
+  }
 };
 
 export const fetchUserById = async (id: number) => {
   try {
-    const response = await api.get(`/user/user`, { params: { id } });
+    const response = await api.get(`/api/user/user`, { params: { userId: id } });
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -188,23 +114,60 @@ export const fetchUserById = async (id: number) => {
   }
 };
 
-export const fetchProductById = async (id: number) => {
+export const placeOrder = async (order: any) => {
   try {
-    const response = await api.get(`/product`, { params: { id } });
+    const response = await api.post(`/api/user/order`, order);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to place order", (error as AxiosError).response?.data || (error as AxiosError).message);
+    throw error;
+  }
+};
+
+export const getOrdersByEmail = async (email: string) => {
+  try {
+    const response = await api.get(`/api/user/${encodeURIComponent(email)}/orders`);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error("Failed to fetch product by ID", error.response?.data || error.message);
+      console.error("Failed to fetch orders", error.response?.data || error.message);
     } else {
-      console.error("An unexpected error occurred while fetching the product", error);
+      console.error("An unexpected error occurred while fetching orders", error);
     }
     throw error;
   }
 };
 
+// -------- ADMIN --------
+export const GetUsersAdmin = () => {
+  return api.get(`/api/admin/users`)
+    .then(r => r.data)
+    .catch((error) => {
+      if (error instanceof AxiosError) {
+        console.error("Failed to get users", error.response?.data || error.message);
+      } else {
+        console.error("An unexpected error occurred while getting users", error);
+      }
+      throw error;
+    });
+};
+
+export const GetProductsAdmin = () => {
+  return api.get(`/api/admin/products`)
+    .then(r => r.data)
+    .catch((error) => {
+      if (error instanceof AxiosError) {
+        console.error("Failed to get products", error.response?.data || error.message);
+      } else {
+        console.error("An unexpected error occurred while getting products", error);
+      }
+      throw error;
+    });
+};
+
 export const adminCreateUser = async (user: RegisterUser) => {
   try {
-    const response = await api.post(`/api/admin/users/`, user);
+    const response = await api.post(`/api/admin/users`, user);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -246,7 +209,7 @@ export const adminDeleteUser = async (id: number) => {
 
 export const adminCreateProduct = async (product: AddProduct) => {
   try {
-    const response = await api.post(`/api/admin/products/`, product);
+    const response = await api.post(`/api/admin/products`, product);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -272,7 +235,6 @@ export const adminUpdateProduct = async (id: number, product: any) => {
   }
 };
 
-
 export const adminDeleteProduct = async (id: number) => {
   try {
     const response = await api.delete(`/api/admin/products/${id}`);
@@ -287,25 +249,58 @@ export const adminDeleteProduct = async (id: number) => {
   }
 };
 
-export const placeOrder = async (order: any) => {
+export const GetProducts = (
+  numberPerPage: number,
+  page: number,
+  type?: number,
+  color?: number,
+  gender?: number,
+  sortBy?: string,
+  search?: string
+) => {
+  const params: any = { numberPerPage, page };
+  if (type !== undefined) params.type = type;
+  if (color !== undefined) params.color = color;
+  if (gender !== undefined) params.gender = gender;
+  if (sortBy !== undefined) params.sortBy = sortBy;
+  if (search !== undefined) params.search = search;
+
+  return api.get(`/api/product/products`, { params })
+    .then(r => r.data)
+    .catch((error) => {
+      if (error instanceof AxiosError) {
+        console.error("Failed to get products", error.response?.data || error.message);
+      } else {
+        console.error("An unexpected error occurred while getting products", error);
+      }
+      throw error;
+    });
+};
+
+export const GetNumberOfProducts = async () => {
   try {
-    const response = await api.post("/user/order", order);
+    const response = await api.get(`/api/product/all`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    if (error instanceof AxiosError) {
+      console.error("Failed to get number of products", error.response?.data || error.message);
+    } else {
+      console.error("An unexpected error occurred while getting the number of products", error);
+    }
+    throw error;
   }
 };
 
-export const getOrdersByEmail = async (email: string) => {
+export const fetchProductById = async (id: number) => {
   try {
-      const response = await api.get(`/user/${email}/orders`);
-      return response.data;
+    const response = await api.get(`/api/product/${id}`);
+    return response.data;
   } catch (error) {
-      if (error instanceof AxiosError) {
-          console.error("Failed to fetch orders", error.response?.data || error.message);
-      } else {
-          console.error("An unexpected error occurred while fetching orders", error);
-      }
-      throw error;
+    if (error instanceof AxiosError) {
+      console.error("Failed to fetch product by ID", error.response?.data || error.message);
+    } else {
+      console.error("An unexpected error occurred while fetching the product", error);
+    }
+    throw error;
   }
 };

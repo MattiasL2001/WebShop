@@ -3,8 +3,8 @@ import { LoginUser } from "../components/models/LoginUser";
 import { Login } from '../services/webShopServices';
 
 interface UseLoginProps {
-  onSuccess: (response: { token: string }) => void; // Adjust based on actual backend response
-  onError: (error: unknown) => void; // Prefer `unknown` over `any` for better type safety
+  onSuccess: (response: { token: string }) => void;
+  onError: (error: unknown) => void;
 }
 
 export const useLogin = ({ onSuccess, onError }: UseLoginProps) => {

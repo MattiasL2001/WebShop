@@ -1,175 +1,136 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Security.Claims;
+using WebShop_Backend.Dtos.User;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
-using WebShop_Backend.Dtos.User;
-using System.Net;
-using Microsoft.AspNetCore.Authorization;
 using WebShop_Backend.Services;
 
 namespace WebShop_Backend.Controllers
 {
     [ApiController]
-    [Route("user")]
+    [Route("api/user")]
     public class UserController : ControllerBase
     {
+        private readonly IUserService _users;
+        private readonly IAuthService _auth;
+        private readonly IOrderRepository _orders;
         private readonly IUserRepository _userRepository;
-        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
-        private readonly IPasswordHasherService _passwordHasherService;
 
         public UserController(
+            IUserService users,
+            IAuthService auth,
+            IOrderRepository orders,
             IUserRepository userRepository,
-            IOrderRepository orderRepository,
-            IMapper mapper,
-            IPasswordHasherService passwordHasherService)
+            IMapper mapper)
         {
+            _users = users;
+            _auth = auth;
+            _orders = orders;
             _userRepository = userRepository;
-            _orderRepository = orderRepository;
             _mapper = mapper;
-            _passwordHasherService = passwordHasherService;
         }
 
-        [HttpPost]
-        [Route("register")]
-        public async Task<ActionResult<RegisterUserDto>> RegisterUser(RegisterUserDto registerUserDto)
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDto>> Register([FromBody] RegisterUserDto dto, CancellationToken ct)
         {
-            // Hashar lösenordet innan användaren sparas
-            string hashedPassword = _passwordHasherService.HashPassword(registerUserDto.Password);
-
-            var user = _mapper.Map<User>(registerUserDto);
-            user.Password = hashedPassword;
-
-            var registeredUser = await _userRepository.CreateUser(user);
-
-            if (registeredUser == null)
+            try
             {
-                return BadRequest("Could not register the user.");
+                var created = await _users.RegisterAsync(dto, ct);
+                return CreatedAtAction(nameof(GetUser), new { userId = created.Id }, created);
             }
-
-            registerUserDto = _mapper.Map<RegisterUserDto>(registeredUser);
-            return CreatedAtAction("GetUser", new { firstName = registerUserDto.Firstname }, registerUserDto);
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unexpected error: " + ex.Message });
+            }
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<ActionResult> LoginUser(UserLoginDto userLoginDto)
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<ActionResult> Login([FromBody] UserLoginDto dto, CancellationToken ct)
         {
-            var user = await _userRepository.GetUserByEmail(userLoginDto.Email);
-
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
-
-            bool isPasswordValid = _passwordHasherService.VerifyPassword(user.Password, userLoginDto.Password);
-            if (!isPasswordValid)
-            {
-                Console.WriteLine(user.Password);
-                Console.WriteLine(userLoginDto.Password);
-                return Unauthorized("Invalid password.");
-            }
-            return Ok("Login successful.");
+            var token = await _auth.LoginBasicAsync(dto.Email, dto.Password);
+            return Ok(token);
         }
+
+        public record ChangePasswordDto(string OldPassword, string NewPassword);
 
         [Authorize]
-        [HttpPut("{email}/change-password")]
-        public async Task<IActionResult> ChangePassword(string email, string newPassword)
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto, CancellationToken ct)
         {
-            // Hämta användaren
-            var user = await _userRepository.GetUserByEmail(email);
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
+            var email =
+                User.FindFirst(ClaimTypes.Email)?.Value ??
+                User.FindFirst("email")?.Value ??
+                User.Identity?.Name ??
+                throw new UnauthorizedAccessException("Missing user email claim.");
 
-            // Hashar det nya lösenordet
-            string hashedPassword = _passwordHasherService.HashPassword(newPassword);
-
-            // Uppdaterar lösenordet i databasen
-            await _userRepository.ChangeUserPassword(email, hashedPassword);
-            return Ok("Password changed successfully.");
+            await _users.ChangePasswordAsync(email, dto.OldPassword, dto.NewPassword, ct);
+            return NoContent();
         }
 
-        [HttpPost]
-        [Route("logout")]
-        public async Task<ActionResult> LogoutUser(UserLoginDto userLoginDto)
-        {
-            // Observera att logout inte brukar kräva användning av lösenord
-            return Ok("Logout successful.");
-        }
 
-        [HttpPost]
-        [Route("order")]
-        public async Task<ActionResult> Order(OrderDto orderDto)
-        {
-            var order = _mapper.Map<Order>(orderDto);
-            var orderStatus = await _orderRepository.AddOrder(order);
-
-            if (orderStatus == HttpStatusCode.BadRequest)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
-
+        [Authorize]
         [HttpDelete("delete")]
-        [Authorize]
-        public async Task<IActionResult> DeleteAccount(string email)
+        public async Task<IActionResult> DeleteAccount([FromQuery] string? email)
         {
-            var user = await _userRepository.DeleteUser(email);
-            if (user == null)
-            {
+            var targetEmail = string.IsNullOrWhiteSpace(email)
+                ? (User.FindFirst("email")?.Value ?? throw new UnauthorizedAccessException("Missing email claim."))
+                : email;
+
+            var deleted = await _userRepository.DeleteUser(targetEmail);
+            if (deleted is null)
                 return BadRequest("Could not delete the user.");
-            }
 
             return Ok();
         }
 
-        [HttpGet]
-        [Route("user")]
-        public async Task<ActionResult<UserDto>> GetUser(int userId)
+        [HttpGet("user")]
+        public async Task<ActionResult<UserDto>> GetUser([FromQuery] int userId, CancellationToken ct)
         {
-            var registeredUser = await _userRepository.GetUser(userId);
-
-            if (registeredUser == null)
-            {
-                return NotFound();
-            }
+            var registeredUser = await (_orders as IUserRepository)!.GetUser(userId);
+            if (registeredUser == null) return NotFound();
 
             var userDto = _mapper.Map<UserDto>(registeredUser);
             return Ok(userDto);
         }
 
-        [HttpGet]
-        [Route("orders")]
-        public async Task<ActionResult<List<OrderDto>>> GetOrders()
+        [HttpPost("order")]
+        public async Task<ActionResult> Order([FromBody] OrderDto orderDto, CancellationToken ct)
         {
-            var orders = await _orderRepository.GetOrders();
-            var orderDtos = _mapper.Map<List<OrderDto>>(orders);
+            var order = _mapper.Map<Order>(orderDto);
+            var status = await _orders.AddOrder(order);
+            if (status == HttpStatusCode.BadRequest) return BadRequest();
+            return Ok();
+        }
 
-            return Ok(orderDtos);
+        [HttpGet("orders")]
+        public async Task<ActionResult<List<OrderDto>>> GetOrders(CancellationToken ct)
+        {
+            var orders = await _orders.GetOrders();
+            var dtos = _mapper.Map<List<OrderDto>>(orders);
+            return Ok(dtos);
         }
 
         [HttpGet("{email}/orders")]
-        public async Task<ActionResult<List<OrderDto>>> GetOrdersByEmail(string email)
+        public async Task<ActionResult<List<OrderDto>>> GetOrdersByEmail(string email, CancellationToken ct)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return BadRequest("Email is required.");
-            }
+            if (string.IsNullOrWhiteSpace(email)) return BadRequest("Email is required.");
 
-            var orders = await _orderRepository.GetOrdersByEmail(email);
+            var orders = await _orders.GetOrdersByEmail(email);
+            if (orders == null || !orders.Any()) return NotFound("No orders found for this email.");
 
-            if (orders == null || !orders.Any())
-            {
-                return NotFound("No orders found for this email.");
-            }
-
-            var orderDtos = _mapper.Map<List<OrderDto>>(orders);
-            return Ok(orderDtos);
+            var dtos = _mapper.Map<List<OrderDto>>(orders);
+            return Ok(dtos);
         }
-
     }
 }

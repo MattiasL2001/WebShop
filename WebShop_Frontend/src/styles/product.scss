@@ -71,3 +71,54 @@
       width: 80%;
     }
   }
+
+@media only screen and (min-width: 2560px) {
+
+.product-page {
+
+    margin-top: 50px;
+  
+    .product-image {
+      margin-right: 40px !important;
+      img {
+        max-width: 600px !important;
+      }
+    }
+  
+    .separator {
+      border-left: 2px solid #ccc;
+      height: 600px;
+      margin: 0 20px;
+    }
+  
+    .product-details {
+      h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+  
+      p {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+  
+      .add-to-cart-button {
+        padding: 20px 40px;
+        font-size: 36px;
+      }
+    }
+  }
+  
+  .product-description {
+    margin-top: 30px;
+    font-size: 36px;
+    line-height: 1.6;
+    width: 60%;
+    margin: auto;
+  
+    p {
+      margin-bottom: 15px;
+    }
+  }
+
+}

@@ -1,0 +1,335 @@
+.loginBackdrop, .cartBackdrop {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loginBackdrop.open, .cartBackdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loginMenu, .cartMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  max-width: 500px;
+  width: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
+.sidebarMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: white;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+.sidebarMenu.open {
+  transform: translateX(0);
+}
+.sidebarMenu .closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.sidebarMenu .closeButton button {
+  font-size: 1.5rem;
+}
+.sidebarMenu .closeButton img {
+  top: 10px;
+  right: 10px;
+  width: 30px;
+}
+.sidebarMenu #menuContent {
+  display: flex;
+  flex-direction: column;
+}
+.sidebarMenu #menuContent #loginMobileMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sidebarMenu #menuContent .loginMenu,
+.sidebarMenu #menuContent #cartContent {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.sidebarMenu #menuContent .form-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.sidebarMenu #menuContent .form-button {
+  width: 100%;
+  padding: 0.5rem;
+}
+.sidebarMenu #menuContent #forgotPasswordForm {
+  text-align: center;
+}
+.sidebarMenu #menuContent #welcome-container {
+  text-align: center;
+}
+.sidebarMenu #menuContent #cartContentItems ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemImageContainer {
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemImageContainer .cartItemImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemLink {
+  text-decoration: none;
+  color: inherit;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+.sidebarMenu #menuContent #cartContentItems ul .cartItem .cartItemDetails .cartItemButtons button {
+  padding: 0.25rem 0.5rem;
+}
+
+#forgotPasswordForm {
+  width: 50%;
+}
+
+.loginMenu form, #cartContent {
+  margin-top: 75px;
+}
+
+.loginMenu form {
+  max-width: 200px;
+}
+
+.loginBackdrop.open .loginMenu, .cartBackdrop.open .cartMenu {
+  right: 0;
+}
+
+.loginMenu h2, .cartMenu h2 {
+  color: coral;
+  margin-bottom: 20px;
+}
+
+.form-group, .cartContent {
+  margin-bottom: 10px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: "MuseoModerno", sans-serif;
+  font-size: 14px;
+}
+.form-input:focus {
+  border-color: coral;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 165, 79, 0.8);
+}
+
+.form-button {
+  width: 100%;
+  background-color: coral;
+  color: white;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "MuseoModerno", sans-serif;
+  font-size: 16px;
+}
+.form-button:hover {
+  background-color: rgb(255, 89.6971428571, 29);
+}
+
+.register-link {
+  color: coral;
+  border: none;
+  text-decoration: none;
+  font-family: "MuseoModerno", sans-serif;
+}
+.register-link:hover {
+  text-decoration: underline;
+}
+
+#cartContent {
+  height: 100%;
+  width: 80%;
+}
+
+#cartContentItems {
+  height: 60%;
+  overflow-y: auto;
+  overflow-x: clip;
+}
+
+.cartContent ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+.cartItem:last-child {
+  border-bottom: none;
+}
+.cartItem .cartItemImageContainer {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+.cartItem .cartItemImageContainer .cartItemImage {
+  max-width: 80px;
+  height: auto;
+  display: block;
+}
+.cartItem .cartItemDetails {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+.cartItem .cartItemDetails .cartItemLink {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+.cartItem .cartItemDetails .cartItemLink:hover {
+  text-decoration: underline;
+}
+.cartItem .cartItemDetails .cartItemName {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.cartItem .cartItemDetails .cartItemQuantity {
+  margin-right: 10px;
+  font-size: 14px;
+}
+.cartItem .cartItemDetails .cartItemButtons {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+.cartItem .cartItemDetails .cartItemButtons button {
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.cartItemLink {
+  flex: 1;
+  color: black;
+  text-decoration: none;
+  font-family: "MuseoModerno", sans-serif;
+}
+.cartItemLink:hover {
+  text-decoration: underline;
+}
+
+.iconButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.iconButton:hover {
+  color: coral;
+}
+
+.totalPrice {
+  margin-top: 25px;
+}
+
+.checkoutButton {
+  background-color: coral;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "MuseoModerno", sans-serif;
+  font-size: 16px;
+}
+.checkoutButton:hover {
+  background-color: rgb(255, 89.6971428571, 29);
+}
+
+.closeButton {
+  display: flex;
+  justify-content: end;
+}
+
+.closeButton button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  cursor: pointer;
+  color: coral;
+  font-size: 36px;
+  border: none;
+  background: none;
+}
+
+.closeButton:hover {
+  color: darkorange;
+}
+
+#welcome-container {
+  margin-top: 75px;
+}
+#welcome-container p {
+  color: coral;
+}
+#welcome-container p a {
+  color: deepskyblue;
+  text-decoration: none;
+}
+#welcome-container button {
+  margin-top: 30px;
+}
+
+/*# sourceMappingURL=sidePanel.css.map */
