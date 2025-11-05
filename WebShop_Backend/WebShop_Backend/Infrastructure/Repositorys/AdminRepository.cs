@@ -17,10 +17,10 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         {
             if (_dbContext.Users.Any(u => u.Email == user.Email))
             {
-                return null; // Undvik duplicerade användare
+                return null;
             }
 
-            user.Role = UserRole.Member; // Standardroll
+            user.Role = UserRole.Member;
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
@@ -42,7 +42,6 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             if (user == null)
                 return null;
 
-            // Uppdatera egenskaper här
             _dbContext.Users.Update(user);
             await _dbContext.SaveChangesAsync();
             return user;
@@ -64,6 +63,12 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
                 return null;
+
+            var orders = await _dbContext.Orders
+                .Where(o => o.Email == user.Email)
+                .ToListAsync();
+
+            _dbContext.Orders.RemoveRange(orders);
 
             _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
@@ -113,7 +118,6 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             if (product == null)
                 return null;
 
-            // Uppdatera egenskaper här
             _dbContext.Products.Update(product);
             await _dbContext.SaveChangesAsync();
             return product;

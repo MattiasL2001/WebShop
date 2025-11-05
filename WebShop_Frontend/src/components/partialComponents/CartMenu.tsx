@@ -68,14 +68,18 @@ const CartMenu: React.FC<CartMenuProps> = ({ toggleCartMenu }) => {
                   {cart.map((item: CartItem) => (
                     <li key={item.id} className="cartItem">
                       <div className="cartItemImageContainer">
-                      <img src={image(item.image)} alt={item.name} className="cartItemImage" />
+                        <img src={image(item.image)} alt={item.name} className="cartItemImage" />
                       </div>
                       <div className="cartItemDetails">
                         <Link to={`/products/${item.id}`} state={item} className="cartItemLink">
                           <p className="cartItemName">{item.name}</p>
                         </Link>
-                        <p className="cartItemPrice">Price: ${item.price}</p>
-                        <p className="cartItemQuantity">Quantity: {item.quantity}</p>
+                        <p className="cartItemPrice">
+                          Price:<br />${item.price}
+                        </p>
+                        <p className="cartItemQuantity">
+                          Quantity:<br />{item.quantity}
+                        </p>
                         <div className="cartItemButtons">
                           <button onClick={() => handleIncrement(item.id)}>➕</button>
                           <button onClick={() => handleDecrement(item.id)}>➖</button>
