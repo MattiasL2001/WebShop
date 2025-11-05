@@ -20,6 +20,9 @@ namespace WebShop_Backend.Services
         {
             var normalizedEmail = NormalizeEmail(input.Email);
 
+            if (string.IsNullOrWhiteSpace(input.Password) || input.Password.Length < 5)
+                throw new InvalidOperationException("Password must be at least 5 characters long.");
+
             var exists = await _db.Users.AnyAsync(u => u.Email == normalizedEmail, ct);
             if (exists)
                 throw new InvalidOperationException("Email is already registered.");
@@ -50,7 +53,6 @@ namespace WebShop_Backend.Services
         {
             var normalized = (email ?? string.Empty).Trim().ToLower();
 
-            // Hitta användaren robust (tillåt case-skillnader)
             var user = await _db.Users
                 .FirstOrDefaultAsync(u => u.Email != null && u.Email.ToLower() == normalized, ct);
 

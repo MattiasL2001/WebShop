@@ -19,7 +19,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         }
         public async Task<HttpStatusCode> AddOrder(Order order)
         {
-            if (order.Items.Count == 0) // Kollar om det finns några produkter i ordern
+            if (order.Items.Count == 0)
             {
                 return HttpStatusCode.BadRequest;
             }
@@ -31,7 +31,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             {
                 var product = _dbContext.Products.Find(item.ProductId);
                 return product != null ? $"{product.Name} x{item.Quantity}" : null;
-            }).Where(str => str != null); // Tar bort eventuella null-värden
+            }).Where(str => str != null);
 
             var orderProductString = string.Join('\n', orderProductStrings);
 
@@ -49,7 +49,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         {
             return await _dbContext.Orders
                 .Where(o => o.Email == email)
-                .Include(o => o.Items) // Inkluderar OrderItems
+                .Include(o => o.Items)
                 .ToListAsync();
         }
 

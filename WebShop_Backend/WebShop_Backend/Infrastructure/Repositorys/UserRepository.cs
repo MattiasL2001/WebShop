@@ -132,10 +132,17 @@ namespace WebShop_Backend.Infrastructure.Repositorys
                 return null;
             }
 
+            var orders = await _dbContext.Orders
+                .Where(o => o.Email == user.Email)
+                .ToListAsync();
+
+            _dbContext.Orders.RemoveRange(orders);
+
             _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("[DEBUG] User deleted successfully: {Email}", email);
             return user;
         }
+
     }
 }

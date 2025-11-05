@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -149,6 +150,17 @@ builder.Services.AddOptions<JwtBearerSettings>()
     .Bind(builder.Configuration.GetSection("JwtBearer"))
     .ValidateDataAnnotations();
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("DefaultPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 20;
+        limiterOptions.Window = TimeSpan.FromSeconds(10);
+        limiterOptions.QueueLimit = 0;
+    });
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -167,6 +179,8 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 

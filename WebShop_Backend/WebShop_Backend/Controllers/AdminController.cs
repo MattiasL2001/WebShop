@@ -36,7 +36,6 @@ namespace WebShop_Backend.Controllers
         [HttpPost("users")]
         public async Task<IActionResult> CreateUser([FromBody] EditUserDto createUserDto)
         {
-            // Hashar lösenordet innan användaren sparas
             string hashedPassword = _passwordHasherService.HashPassword(createUserDto.Password);
             createUserDto.Password = hashedPassword;
 
@@ -51,7 +50,6 @@ namespace WebShop_Backend.Controllers
             return Ok(_mapper.Map<EditUserDto>(createdUser));
         }
 
-        // Hämta användare
         [HttpPut("users/{id}")]
         public async Task<IActionResult> EditUser(int id, [FromBody] EditUserDto editedUserDto)
         {
@@ -68,7 +66,6 @@ namespace WebShop_Backend.Controllers
             return Ok(_mapper.Map<EditUserDto>(updatedUser));
         }
 
-        // Ta bort användare
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -90,7 +87,6 @@ namespace WebShop_Backend.Controllers
         }
 
 
-        // Skapa produkt
         [HttpPost("products")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto createProductDto)
         {
@@ -100,7 +96,6 @@ namespace WebShop_Backend.Controllers
             return Ok(_mapper.Map<ProductDto>(createdProduct));
         }
 
-        // Redigera produkt
         [HttpPut("products/{id}")]
         public async Task<IActionResult> EditProduct(int id, [FromBody] ProductDto editProductDto)
         {
