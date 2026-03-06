@@ -34,6 +34,18 @@ namespace WebShop_Backend.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("verify-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail([FromQuery] string token, CancellationToken ct)
+        {
+            var success = await _users.VerifyEmailAsync(token, ct);
+
+            if (!success)
+                return BadRequest("Invalid or expired token.");
+
+            return Ok("Email verified successfully.");
+        }
+
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Register([FromBody] RegisterUserDto dto, CancellationToken ct)
@@ -97,19 +109,43 @@ namespace WebShop_Backend.Controllers
         [HttpGet("user")]
         public async Task<ActionResult<UserDto>> GetUser([FromQuery] int userId, CancellationToken ct)
         {
-            var registeredUser = await (_orders as IUserRepository)!.GetUser(userId);
+            var registeredUser = await _userRepository.GetUser(userId);
             if (registeredUser == null) return NotFound();
 
             var userDto = _mapper.Map<UserDto>(registeredUser);
             return Ok(userDto);
         }
 
+        [Authorize]
         [HttpPost("order")]
         public async Task<ActionResult> Order([FromBody] OrderDto orderDto, CancellationToken ct)
         {
+            // 1) Hämta email från JWT
+            var email =
+                User.FindFirst(ClaimTypes.Email)?.Value ??
+                User.FindFirst("email")?.Value ??
+                User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(email))
+                return Unauthorized("Missing email claim.");
+
+            // 2) Hämta user från DB
+            var user = await _userRepository.GetUserByEmail(email); // du behöver ha en sådan metod
+            if (user == null) return Unauthorized();
+
+            // 3) Blockera om inte verifierad
+            if (!user.EmailVerified)
+                return BadRequest("Verify email before ordering.");
+
+            // 4) Skapa order och koppla till rätt user
             var order = _mapper.Map<Order>(orderDto);
+
+            // rekommenderat: tvinga in email/userId från token så klienten inte kan spoofa
+            order.Email = user.Email;        // om du har Email på Order
+
             var status = await _orders.AddOrder(order);
             if (status == HttpStatusCode.BadRequest) return BadRequest();
+
             return Ok();
         }
 

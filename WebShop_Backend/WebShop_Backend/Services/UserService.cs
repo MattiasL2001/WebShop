@@ -2,6 +2,7 @@
 using WebShop_Backend.Dtos.User;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure;
+using WebShop_Backend.Clients;
 
 namespace WebShop_Backend.Services
 {
@@ -9,11 +10,19 @@ namespace WebShop_Backend.Services
     {
         private readonly WebShopContext _db;
         private readonly IPasswordHasherService _hasher;
+        private readonly MailClient _mailClient;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(WebShopContext db, IPasswordHasherService hasher)
+        public UserService(
+            WebShopContext db,
+            IPasswordHasherService hasher,
+            MailClient mailClient,
+            ILogger<UserService> logger)
         {
             _db = db;
             _hasher = hasher;
+            _mailClient = mailClient;
+            _logger = logger;
         }
 
         public async Task<UserDto> RegisterAsync(RegisterUserDto input, CancellationToken ct = default)
@@ -27,6 +36,8 @@ namespace WebShop_Backend.Services
             if (exists)
                 throw new InvalidOperationException("Email is already registered.");
 
+            var token = Guid.NewGuid().ToString();
+
             var user = new User
             {
                 FirstName = input.Firstname?.Trim(),
@@ -34,11 +45,26 @@ namespace WebShop_Backend.Services
                 Email = normalizedEmail,
                 BirthDate = input.BirthDate,
                 Role = UserRole.Member,
-                Password = _hasher.HashPassword(input.Password)
+                Password = _hasher.HashPassword(input.Password),
+
+                EmailVerified = false,
+                EmailVerificationToken = token,
+                EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24)
             };
 
             _db.Users.Add(user);
             await _db.SaveChangesAsync(ct);
+
+            var link = $"https://localhost:7180/api/user/verify-email?token={token}";
+
+            try
+            {
+                await _mailClient.SendVerificationEmail(user.Email!, link);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send verification email");
+            }
 
             return new UserDto
             {
@@ -47,6 +73,26 @@ namespace WebShop_Backend.Services
                 LastName = user.LastName!,
                 Email = user.Email!
             };
+        }
+
+        public async Task<bool> VerifyEmailAsync(string token, CancellationToken ct = default)
+        {
+            var user = await _db.Users
+                .FirstOrDefaultAsync(u => u.EmailVerificationToken == token, ct);
+
+            if (user == null)
+                return false;
+
+            if (user.EmailVerificationTokenExpiry < DateTime.UtcNow)
+                return false;
+
+            user.EmailVerified = true;
+            user.EmailVerificationToken = null;
+            user.EmailVerificationTokenExpiry = null;
+
+            await _db.SaveChangesAsync(ct);
+
+            return true;
         }
 
         public async Task ChangePasswordAsync(string email, string oldPassword, string newPassword, CancellationToken ct = default)
@@ -66,12 +112,6 @@ namespace WebShop_Backend.Services
 
             if (user is null)
                 throw new KeyNotFoundException("User not found.");
-
-            // *** VIKTIGT: slopa kravet på korrekt oldPassword för inloggad användare ***
-            // Om du VILL behålla kravet ibland: lägg tillbaka verifieringen här.
-            // if (string.IsNullOrWhiteSpace(user.Password) ||
-            //     !_hasher.VerifyPassword(user.Password!, oldPassword))
-            //     throw new UnauthorizedAccessException("Old password is incorrect.");
 
             user.Password = _hasher.HashPassword(newPassword);
             await _db.SaveChangesAsync(ct);

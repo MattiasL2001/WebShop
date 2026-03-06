@@ -14,6 +14,7 @@ using WebShop_Backend.Helpers;
 using WebShop_Backend.Infrastructure;
 using WebShop_Backend.Infrastructure.Repositorys;
 using WebShop_Backend.Services;
+using WebShop_Backend.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -89,6 +90,7 @@ builder.Services.AddCors(options =>
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
+builder.Services.AddSingleton<SqliteConnectionFactory>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -98,6 +100,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddHttpClient<MailClient>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiler));
 
@@ -160,6 +163,11 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
+builder.Services.AddHttpClient<MailClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7019");
+    client.Timeout = TimeSpan.FromSeconds(5);
+});
 
 var app = builder.Build();
 
@@ -197,7 +205,7 @@ try
 
     if (!context.Products.Any())
     {
-        FakeData.InitializeData(60);
+        FakeData.InitializeData(500);
     }
 }
 catch (Exception ex)

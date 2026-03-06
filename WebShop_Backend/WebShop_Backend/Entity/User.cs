@@ -20,5 +20,11 @@ namespace WebShop_Backend.Entity
         public string? Email { get; set; }
 
         public DateTime? BirthDate { get; set; }
+
+        public bool EmailVerified { get; set; } = false;
+
+        public string? EmailVerificationToken { get; set; }
+
+        public DateTime? EmailVerificationTokenExpiry { get; set; }
     }
 }

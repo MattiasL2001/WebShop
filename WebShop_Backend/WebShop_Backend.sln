@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop_Backend", "WebShop_Backend\WebShop_Backend.csproj", "{CBA70256-D631-43F6-829C-F23CF5F98A7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailService.API", "MailService.API\MailService.API.csproj", "{BD19B007-7AD5-44BC-A46B-62ADEA3F10C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CBA70256-D631-43F6-829C-F23CF5F98A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA70256-D631-43F6-829C-F23CF5F98A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBA70256-D631-43F6-829C-F23CF5F98A7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD19B007-7AD5-44BC-A46B-62ADEA3F10C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD19B007-7AD5-44BC-A46B-62ADEA3F10C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD19B007-7AD5-44BC-A46B-62ADEA3F10C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD19B007-7AD5-44BC-A46B-62ADEA3F10C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

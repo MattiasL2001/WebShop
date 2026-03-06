@@ -10,12 +10,10 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     {
 
         private WebShopContext _dbContext;
-        private MailService _mailService;
 
         public OrderRepository(WebShopContext dbContext, IConfiguration configuration) { 
         
             _dbContext = dbContext;
-            _mailService = new MailService(configuration);
         }
         public async Task<HttpStatusCode> AddOrder(Order order)
         {
