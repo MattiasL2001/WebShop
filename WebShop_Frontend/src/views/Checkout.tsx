@@ -99,18 +99,25 @@ const Webstore: React.FC = () => {
       phone: "",
       createdAt: new Date().toISOString()
     };
-  
-    console.log("Sending order data:", orderData);
-  
+    
     try {
       await placeOrder(orderData);
       setPurchasedItems(cartItems);
       setOrderConfirmed(true);
       clearCart();
       setCartItems([]);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error placing order:", error);
-      alert("Error placing order.");
+      if (error.response?.status === 401) {
+        alert("You must be logged in to place an order.");
+        return;
+      }
+
+      if (error.response?.data) {
+        alert(error.response.data);
+      } else {
+        alert("Error placing order.");
+      }
     }
   };  
 

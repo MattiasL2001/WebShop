@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
+using WebShop_Backend.Clients;
 using WebShop_Backend.Dtos.User;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure.Repositorys;
@@ -14,22 +15,28 @@ namespace WebShop_Backend.Controllers
     [Route("api/user")]
     public class UserController : ControllerBase
     {
+        private readonly MailClient _mailClient;
         private readonly IUserService _users;
         private readonly IAuthService _auth;
         private readonly IOrderRepository _orders;
+        private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
         public UserController(
+            MailClient mailClient,
             IUserService users,
             IAuthService auth,
             IOrderRepository orders,
+            IProductRepository productRepository,
             IUserRepository userRepository,
             IMapper mapper)
         {
+            _mailClient = mailClient;
             _users = users;
             _auth = auth;
             _orders = orders;
+            _productRepository = productRepository;
             _userRepository = userRepository;
             _mapper = mapper;
         }
@@ -120,33 +127,81 @@ namespace WebShop_Backend.Controllers
         [HttpPost("order")]
         public async Task<ActionResult> Order([FromBody] OrderDto orderDto, CancellationToken ct)
         {
-            // 1) Hämta email från JWT
             var email =
                 User.FindFirst(ClaimTypes.Email)?.Value ??
                 User.FindFirst("email")?.Value ??
                 User.Identity?.Name;
 
             if (string.IsNullOrWhiteSpace(email))
-                return Unauthorized("Missing email claim.");
+                return Unauthorized("You must be logged in to place an order.");
 
-            // 2) Hämta user från DB
-            var user = await _userRepository.GetUserByEmail(email); // du behöver ha en sådan metod
-            if (user == null) return Unauthorized();
+            var user = await _userRepository.GetUserByEmail(email);
 
-            // 3) Blockera om inte verifierad
+            if (user == null)
+                return Unauthorized("User account not found.");
+
             if (!user.EmailVerified)
-                return BadRequest("Verify email before ordering.");
+                return BadRequest("You must verify your email before placing orders.");
 
-            // 4) Skapa order och koppla till rätt user
             var order = _mapper.Map<Order>(orderDto);
 
-            // rekommenderat: tvinga in email/userId från token så klienten inte kan spoofa
-            order.Email = user.Email;        // om du har Email på Order
+            order.Email = user.Email;
 
             var status = await _orders.AddOrder(order);
-            if (status == HttpStatusCode.BadRequest) return BadRequest();
 
-            return Ok();
+            if (status == HttpStatusCode.BadRequest)
+                return BadRequest("Failed to create order.");
+
+            var products = new List<Product>();
+
+            foreach (var item in order.Items)
+            {
+                var product = await _productRepository.GetProduct(item.ProductId);
+                if (product != null)
+                    products.Add(product);
+            }
+
+            var productLines = "";
+
+            foreach (var item in order.Items)
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+
+                if (product != null)
+                {
+                    productLines += $"<li>{product.Name} - ${product.Price} x {item.Quantity}</li>";
+                }
+            }
+
+            decimal totalPrice = 0;
+
+            foreach (var item in order.Items)
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+
+                if (product != null)
+                {
+                    totalPrice += product.Price * item.Quantity;
+                }
+            }
+
+            var html = $@"
+            <h2>Thank you for your order!</h2>
+
+            <p><strong>Order number:</strong> {order.Id}</p>
+
+            <h3>Products</h3>
+            <ul>
+                {productLines}
+            </ul>
+
+            <p><strong>Total price:</strong> ${totalPrice}</p>
+
+            <p>We will notify you when your order ships.</p>";
+
+            await _mailClient.SendOrderConfirmationEmail(user.Email, order.Id, html);
+
+            return Ok("Order placed successfully.");
         }
 
         [HttpGet("orders")]

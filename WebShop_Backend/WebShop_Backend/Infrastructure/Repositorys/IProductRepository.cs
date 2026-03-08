@@ -8,6 +8,7 @@ namespace WebShop_Backend.Infrastructure.Repositorys
     {
         public Task<Product> CreateProduct(Product product);
         public Task<List<Product>> GetProducts(int numberPerPage, int page, FilterDto filterDto);
+        public Task<int> GetFilteredProductCount(FilterDto filterDto);
         public Task<Product> GetProduct(int id);
         public Task<int> GetNumberOfProducts();
 

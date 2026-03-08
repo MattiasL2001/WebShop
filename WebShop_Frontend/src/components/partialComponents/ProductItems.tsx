@@ -4,25 +4,33 @@ import { Link } from 'react-router-dom';
 import PaginationControl from '../PaginationControl';
 import { Product } from '../models/Product';
 import { getProductImage } from '../getProductImage';
-import { GetNumberOfProducts } from '../../services/webShopServices';
+import { GetFilteredProductCount } from '../../services/webShopServices';
 import { PageProps } from '../models/props/pageProps';
 
 interface ProductItemsProps {
   products: Product[];
   pageProps: PageProps;
+  filters: {
+    type?: number;
+    color?: number;
+    gender?: number;
+    search?: string;
+  };
 }
 
-const ProductItems: React.FC<ProductItemsProps> = ({ products, pageProps: { page, numberPerPage, setPage } }) => {
-  const { data: numberOfProducts = 0 } = useQuery<number>({
-    queryKey: ['numberOfProducts'],
-    queryFn: GetNumberOfProducts,
-  });
+const ProductItems: React.FC<ProductItemsProps> = ({
+  products,
+  pageProps: { page, numberPerPage, setPage },
+  filters: { type, color, gender, search }
+}) => {
+const { data: numberOfProducts = 0 } = useQuery<number>({
+  queryKey: ['filteredProductCount', type, color, gender, search],
+  queryFn: () => GetFilteredProductCount(type, color, gender, search),
+});
 
-  let totalPages: number
-  const image = getProductImage
+const image = getProductImage
 
-  if (products.length < numberPerPage && page === 1) { totalPages = 1; }
-  else { totalPages = Math.ceil(numberOfProducts / numberPerPage); }
+const totalPages = Math.ceil(numberOfProducts / numberPerPage);
 
   const handleChangePage = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {

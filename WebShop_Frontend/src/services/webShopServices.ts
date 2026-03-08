@@ -277,6 +277,30 @@ export const GetProducts = (
     });
 };
 
+export const GetFilteredProductCount = (
+  type?: number,
+  color?: number,
+  gender?: number,
+  search?: string
+) => {
+  const params: any = {};
+  if (type !== undefined) params.type = type;
+  if (color !== undefined) params.color = color;
+  if (gender !== undefined) params.gender = gender;
+  if (search !== undefined) params.search = search;
+
+  return api.get(`/api/product/products/count`, { params })
+    .then(r => r.data)
+    .catch((error) => {
+      if (error instanceof AxiosError) {
+        console.error("Failed to get filtered product count", error.response?.data || error.message);
+      } else {
+        console.error("An unexpected error occurred while getting filtered product count", error);
+      }
+      throw error;
+    });
+};
+
 export const GetNumberOfProducts = async () => {
   try {
     const response = await api.get(`/api/product/all`);

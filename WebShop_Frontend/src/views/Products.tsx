@@ -109,7 +109,13 @@ const Products: React.FC = () => {
           const newParams = new URLSearchParams(prevParams);
           newParams.set('page', newPage.toString());
           return newParams;
-        }) }}
+        })}}
+        filters={{
+          type: productTypeFilter,
+          color: colorFilter,
+          gender: genderFilter,
+          search: searchFilter
+        }}
       />
     </>
   );

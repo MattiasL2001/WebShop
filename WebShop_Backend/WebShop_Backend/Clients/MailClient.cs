@@ -31,5 +31,21 @@ namespace WebShop_Backend.Clients
 
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task SendOrderConfirmationEmail(string email, int orderId, string html)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email must be provided.", nameof(email));
+
+            var request = new SendEmailRequest(
+                To: email,
+                Subject: $"Order confirmation #{orderId}",
+                Html: html
+            );
+
+            var response = await _httpClient.PostAsJsonAsync("/api/email/send", request);
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

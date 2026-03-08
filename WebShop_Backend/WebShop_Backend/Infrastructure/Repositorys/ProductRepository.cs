@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Dapper;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WebShop_Backend.Dtos.Product;
 using WebShop_Backend.Entity;
-using System.Text;
+using WebShop_Backend.Helpers;
 
 namespace WebShop_Backend.Infrastructure.Repositorys
 {
@@ -32,44 +33,21 @@ namespace WebShop_Backend.Infrastructure.Repositorys
         }
 
         public async Task<List<Product>> GetProducts(
-        int numberPerPage,
-        int page,
-        FilterDto filterDto)
+            int numberPerPage,
+            int page,
+            FilterDto filterDto)
         {
             if (numberPerPage <= 0 || page <= 0)
                 return null;
 
             using var connection = _factory.Create();
 
+            var (whereClause, parameters) = BuildFilterQuery.Build(filterDto);
+
             var sql = new StringBuilder();
             sql.Append("SELECT Id, Name, Description, Price, ProductType, Image, ProductColor, ProductGender ");
-            sql.Append("FROM Products WHERE 1=1 ");
-
-            var parameters = new DynamicParameters();
-
-            if (!string.IsNullOrWhiteSpace(filterDto?.Search))
-            {
-                sql.Append("AND (LOWER(Name) LIKE @Search OR LOWER(Description) LIKE @Search) ");
-                parameters.Add("@Search", $"%{filterDto.Search.Trim().ToLower()}%");
-            }
-
-            if (filterDto?.Type != null)
-            {
-                sql.Append("AND ProductType = @Type ");
-                parameters.Add("@Type", filterDto.Type);
-            }
-
-            if (filterDto?.Color != null)
-            {
-                sql.Append("AND ProductColor = @Color ");
-                parameters.Add("@Color", filterDto.Color);
-            }
-
-            if (filterDto?.Gender != null)
-            {
-                sql.Append("AND ProductGender = @Gender ");
-                parameters.Add("@Gender", filterDto.Gender);
-            }
+            sql.Append("FROM Products ");
+            sql.Append(whereClause);
 
             if (filterDto?.SortBy == "price-lowest-first")
                 sql.Append("ORDER BY Price ASC ");
@@ -86,6 +64,22 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             var products = await connection.QueryAsync<Product>(sql.ToString(), parameters);
 
             return products.ToList();
+        }
+
+        public async Task<int> GetFilteredProductCount(FilterDto filterDto)
+        {
+            using var connection = _factory.Create();
+
+            var (whereClause, parameters) = BuildFilterQuery.Build(filterDto);
+
+            var sql = new StringBuilder();
+            sql.Append("SELECT COUNT(*) ");
+            sql.Append("FROM Products ");
+            sql.Append(whereClause);
+
+            var count = await connection.ExecuteScalarAsync<int>(sql.ToString(), parameters);
+
+            return count;
         }
 
         //public async Task<List<Product>> GetProducts(int numberPerPage, int page, FilterDto filterDto)

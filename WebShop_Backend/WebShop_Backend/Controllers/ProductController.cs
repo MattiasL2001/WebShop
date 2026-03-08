@@ -63,6 +63,26 @@ namespace WebShop_Backend.Controllers
             return Ok(products);
         }
 
+        [HttpGet("products/count")] // GET /api/product/products/count?type=&color=&gender=&search=
+        public async Task<ActionResult<int>> GetFilteredProductCount(
+            [FromQuery] int? type,
+            [FromQuery] int? color,
+            [FromQuery] int? gender,
+            [FromQuery] string? search)
+        {
+            var filterDto = new FilterDto
+            {
+                Type = type,
+                Color = color,
+                Gender = gender,
+                Search = search
+            };
+
+            var count = await _productRepository.GetFilteredProductCount(filterDto);
+
+            return Ok(count);
+        }
+
         [HttpGet("all")] // GET /api/product/all
         public async Task<ActionResult<int>> GetNumberOfProducts()
         {
