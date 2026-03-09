@@ -1,4 +1,5 @@
 ﻿using WebShop_Backend.Dtos.User;
+using WebShop_Backend.Entity;
 
 namespace WebShop_Backend.Services
 {
@@ -11,5 +12,7 @@ namespace WebShop_Backend.Services
         Task<bool> EmailExistsAsync(string email, CancellationToken ct = default);
 
         Task<bool> VerifyEmailAsync(string token, CancellationToken ct = default);
+
+        Task GeneratePasswordResetAsync(User user, CancellationToken ct);
     }
 }

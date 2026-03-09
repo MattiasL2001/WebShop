@@ -121,6 +121,33 @@ namespace WebShop_Backend.Infrastructure.Repositorys
             return user;
         }
 
+        public async Task<User?> GetUserByResetToken(string token)
+        {
+            _logger.LogInformation("[DEBUG] Fetching user by reset token");
+
+            var user = await _dbContext.Users
+                .FirstOrDefaultAsync(u => u.PasswordResetToken == token);
+
+            if (user == null)
+                _logger.LogWarning("[DEBUG] No user found for reset token");
+            else
+                _logger.LogInformation("[DEBUG] User found for reset token: {Email}", user.Email);
+
+            return user;
+        }
+
+        public async Task<User?> UpdateUser(User user)
+        {
+            _logger.LogInformation("[DEBUG] Updating user: {Email}", user.Email);
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+
+            _logger.LogInformation("[DEBUG] User updated successfully: {Email}", user.Email);
+
+            return user;
+        }
+
         public async Task<User?> DeleteUser(string email)
         {
             _logger.LogInformation("[DEBUG] Deleting user {Email}", email);

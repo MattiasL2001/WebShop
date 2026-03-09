@@ -86,6 +86,27 @@ export const ChangePassword = async (oldPassword: string, newPassword: string) =
   }
 };
 
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await api.post(`/api/user/forgot-password`, { email });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Failed to send forgot password request", error.response?.data || error.message);
+    } else {
+      console.error("An unexpected error occurred while sending forgot password request", error);
+    }
+    throw error;
+  }
+};
+
+export const resetPassword = async (token: string, newPassword: string) => {
+  return api.post(`/api/user/reset-password`, {
+    token,
+    newPassword
+  });
+};
+
 export const deleteUser = async (email: string) => {
   try {
     const response = await api.delete(`/api/user/delete`, { params: { email } });

@@ -5,6 +5,7 @@ import { useLogout } from "../useLogout";
 import { LoginMenuProps } from '../models/props/login';
 import { useAuth } from '../../AuthContext';
 import { jwtDecode } from 'jwt-decode';
+import { forgotPassword } from '../../services/webShopServices';
 
 const LoginMenu: React.FC<LoginMenuProps> = ({ toggleLoginMenu }) => {
   const { isAuthenticated, user, setAuthenticated } = useAuth();
@@ -59,15 +60,22 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ toggleLoginMenu }) => {
     setErrorMessage("");
   }
 
-  const handleForgotPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (email !== "") { 
-      setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.'); 
-    } else { 
-      setForgotPasswordMessage('Input field cannot be empty!'); 
-    }
+const handleForgotPasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+
+  if (email.trim() === "") {
+    setForgotPasswordMessage('Input field cannot be empty!');
+    return;
+  }
+
+  try {
+    await forgotPassword(email);
+    setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.');
     setEmail('');
-  };
+  } catch (error) {
+    setForgotPasswordMessage('Failed to send reset link.');
+  }
+};
 
   const handleBackToLogin = () => {
     setShowForgotPasswordForm(false);

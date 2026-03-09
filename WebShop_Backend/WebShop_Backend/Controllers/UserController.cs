@@ -97,6 +97,38 @@ namespace WebShop_Backend.Controllers
             return NoContent();
         }
 
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto, CancellationToken ct)
+        {
+            var user = await _userRepository.GetUserByEmail(dto.Email);
+
+            if (user == null)
+                return Ok();
+
+            await _users.GeneratePasswordResetAsync(user, ct);
+
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, CancellationToken ct)
+        {
+            var user = await _userRepository.GetUserByResetToken(dto.Token);
+
+            if (user == null || user.PasswordResetTokenExpiry < DateTime.UtcNow)
+                return BadRequest("Invalid or expired reset token.");
+
+            await _users.ChangePasswordAsync(user.Email, user.Password, dto.NewPassword, ct);
+
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpiry = null;
+
+            await _userRepository.UpdateUser(user);
+
+            return Ok("Password updated successfully.");
+        }
 
         [Authorize]
         [HttpDelete("delete")]

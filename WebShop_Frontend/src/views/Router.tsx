@@ -7,6 +7,7 @@ import Support from './Support';
 import Checkout from './Checkout';
 import NoPage from './NoPage';
 import MyPage from './MyPage';
+import ResetPassword from './ResetPassword';
 import Admin from "./Admin";
 import ProductPage from './ProductPage';
 import Page from '../components/Page';
@@ -33,6 +34,7 @@ const Router: React.FC = () => {
             <Route path="support" element={<Support />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="mypage" element={<MyPage />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="unauthorized" element={<UnauthorizedPage />} />
             <Route path='*' element={<NoPage />} />
           </Routes>

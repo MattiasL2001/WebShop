@@ -3,23 +3,27 @@ using WebShop_Backend.Dtos.User;
 using WebShop_Backend.Entity;
 using WebShop_Backend.Infrastructure;
 using WebShop_Backend.Clients;
+using WebShop_Backend.Infrastructure.Repositorys;
 
 namespace WebShop_Backend.Services
 {
     public class UserService : IUserService
     {
         private readonly WebShopContext _db;
+        private readonly IUserRepository _userRepository;
         private readonly IPasswordHasherService _hasher;
         private readonly MailClient _mailClient;
         private readonly ILogger<UserService> _logger;
 
         public UserService(
             WebShopContext db,
+            IUserRepository userRepository,
             IPasswordHasherService hasher,
             MailClient mailClient,
             ILogger<UserService> logger)
         {
             _db = db;
+            _userRepository = userRepository;
             _hasher = hasher;
             _mailClient = mailClient;
             _logger = logger;
@@ -93,6 +97,20 @@ namespace WebShop_Backend.Services
             await _db.SaveChangesAsync(ct);
 
             return true;
+        }
+
+        public async Task GeneratePasswordResetAsync(User user, CancellationToken ct)
+        {
+            var token = Guid.NewGuid().ToString();
+
+            user.PasswordResetToken = token;
+            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+
+            await _userRepository.UpdateUser(user);
+
+            var link = $"http://localhost:3000/reset-password?token={token}";
+
+            await _mailClient.SendPasswordResetEmail(user.Email, link);
         }
 
         public async Task ChangePasswordAsync(string email, string oldPassword, string newPassword, CancellationToken ct = default)

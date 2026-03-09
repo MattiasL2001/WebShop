@@ -47,5 +47,21 @@ namespace WebShop_Backend.Clients
 
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task SendPasswordResetEmail(string email, string link)
+        {
+            var request = new SendEmailRequest(
+                To: email,
+                Subject: "Reset your password",
+                Html: $@"
+                <h2>Password reset</h2>
+                <p>Click the link below to reset your password:</p>
+                <a href='{link}'>Reset password</a>"
+            );
+
+            var response = await _httpClient.PostAsJsonAsync("/api/email/send", request);
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }
