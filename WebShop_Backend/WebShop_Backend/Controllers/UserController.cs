@@ -101,14 +101,28 @@ namespace WebShop_Backend.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto, CancellationToken ct)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = await _userRepository.GetUserByEmail(dto.Email);
 
-            if (user == null)
-                return Ok();
+            if (user != null)
+            {
+                try
+                {
+                    await _users.GeneratePasswordResetAsync(user, ct);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Rate limit triggered
+                    // Intentionally ignored to prevent account enumeration
+                }
+            }
 
-            await _users.GeneratePasswordResetAsync(user, ct);
-
-            return Ok();
+            return Ok(new
+            {
+                message = "If an account with that email exists, a password reset link has been sent."
+            });
         }
 
         [HttpPost("reset-password")]

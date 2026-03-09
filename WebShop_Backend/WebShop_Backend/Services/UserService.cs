@@ -101,10 +101,17 @@ namespace WebShop_Backend.Services
 
         public async Task GeneratePasswordResetAsync(User user, CancellationToken ct)
         {
+            if (user.LastPasswordResetRequest.HasValue &&
+                user.LastPasswordResetRequest.Value > DateTime.UtcNow.AddMinutes(-1))
+            {
+                throw new InvalidOperationException("Password reset requested too recently.");
+            }
+
             var token = Guid.NewGuid().ToString();
 
             user.PasswordResetToken = token;
             user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+            user.LastPasswordResetRequest = DateTime.UtcNow;
 
             await _userRepository.UpdateUser(user);
 

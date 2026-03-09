@@ -55,10 +55,11 @@ const LoginMenu: React.FC<LoginMenuProps> = ({ toggleLoginMenu }) => {
     login({ email, password });
   };
 
-  const handleForgotPasswordLink = () => {
-    setShowForgotPasswordForm(true);
-    setErrorMessage("");
-  }
+const handleForgotPasswordLink = () => {
+  setShowForgotPasswordForm(true);
+  setErrorMessage("");
+  setForgotPasswordMessage("");
+}
 
 const handleForgotPasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -73,7 +74,7 @@ const handleForgotPasswordSubmit = async (event: React.FormEvent<HTMLFormElement
     setForgotPasswordMessage('If there is an account with the given email, a reset link has been sent.');
     setEmail('');
   } catch (error) {
-    setForgotPasswordMessage('Failed to send reset link.');
+    setForgotPasswordMessage("Something went wrong. Please try again later.");
   }
 };
 

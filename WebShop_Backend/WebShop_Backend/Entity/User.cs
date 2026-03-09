@@ -30,5 +30,7 @@ namespace WebShop_Backend.Entity
         public string? PasswordResetToken { get; set; }
 
         public DateTime? PasswordResetTokenExpiry { get; set; }
+
+        public DateTime? LastPasswordResetRequest { get; set; }
     }
 }
