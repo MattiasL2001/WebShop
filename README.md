@@ -7,29 +7,62 @@ Welcome to **Webstore**, a modern and simple e-commerce application built to sho
 - **Frontend:** React/TypeScript/SCSS
 - **Backend:** ASP.NET Core Web API with C#
 - **Database:** SQLite, managed with Entity Framework ORM for database interactions
-- **Authentication:** BasicAuth, OAuth, Bearer JWT
+- **Authentication:** OAuth, Bearer JWT
+- **Email (Development):** MailHog
 
 ## 🌟 Features
+
+### User Account
 - **User Registration**
 - **User Login**
+- **Email Verification After Registration**
+- **Forgot Password**
+- **Reset Password Using Email Token**
 - **User See Previous Orders Linked With The Specific Account Email**
 - **User Change Password**
 - **User Delete Account**
 
+### Products
 - **See All Products Stored In The Database**
 - **Filter Products By Color, Gender And Product Type**
 - **Sort Products By Price**
 - **Search For Products By Name**
 
+### Store Functionality
 - **Product Display Page**
 - **Add Items To Cart**
 - **Checkout Your Order At The Checkout Page**
+- **Place Order (Requires Logged In And Verified Email Account)**
 
-- **Place Order Logged In Or Not**
-  
+### Emails
+- **Email Verification When Registering**
+- **Password Reset Email**
+- **Order Confirmation Email**
+
+Order confirmation emails include:
+
+- **Order Number**
+- **Purchased Products**
+- **Total Price**
+
+### Security
 - **Backend Password Hashing**
+- **Email Verification Required Before Placing Orders**
+- **Rate Limiting On Password Reset Requests**
 
+### Admin Panel
 - **Create/Edit/Delete Users And Products In the Admin Panel That Only Admin Role Users Have Access To**
+
+## 🏗️ Architecture
+
+The backend follows a layered architecture to separate responsibilities:
+
+- **Controllers** – Handle HTTP requests and responses
+- **Services** – Contain business logic
+- **Repositories** – Handle database access
+- **Database** – SQLite managed with Entity Framework
+
+This structure helps keep the application modular and easier to maintain.
 
 ## 🖼️ Screenshots and video
 
