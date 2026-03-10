@@ -1,15 +1,11 @@
+@use "./variables" as *;
 @import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap");
 
-$font-family: 'MuseoModerno', sans-serif;
-$coral: coral;
-$border-color: rgb(250, 118, 70);
-$white: white;
-$black: black;
 $backdrop-color: rgba(0, 0, 0, 0.5);
 $box-shadow-color: rgba(0, 0, 0, 0.1);
 
 body {
-  font-family: $font-family;
+  font-family: $font-primary;
 }
 
 header, nav {
@@ -18,8 +14,8 @@ header, nav {
   height: 4.688rem;
   display: flex;
   align-items: center;
-  background-color: $coral;
-  border-bottom: 2px solid $border-color;
+  background-color: $color-primary;
+  border-bottom: 2px solid $color-primary-light;
   animation: anim 0.2s;
 }
 
@@ -70,7 +66,7 @@ header, nav {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: $white;
+    color: $color-background;
     font-weight: 500;
     font-size: 20pt;
   }
@@ -100,7 +96,7 @@ header, nav {
   top: -5px;
   right: -5px;
   background-color: red;
-  color: white;
+  color: $color-background;
   border-radius: 50%;
   padding: 0;
   width: 20px;
@@ -113,7 +109,7 @@ header, nav {
 }
 
 #registerText, #logOut a {
-  color: $coral;
+  color: $color-primary;
   text-decoration: none;
 
   &:hover {
@@ -132,14 +128,14 @@ nav {
 
     a {
       height: 100%;
-      color: $white;
+      color: $color-background;
       text-decoration: none;
       margin: 0 10px 0 20px;
       font-weight: 500;
       font-size: 20pt;
 
       &:hover {
-        border-bottom: 5px solid $white;
+        border-bottom: 5px solid $color-background;
       }
     }
   }
@@ -174,7 +170,7 @@ nav {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: $white;
+  background-color: $color-background;
   border-radius: 10px;
   height: 40px;
   width: 40%;
@@ -234,7 +230,7 @@ nav {
 }
 
 #logoutButton {
-  color: $white;
+  color: $color-background;
 }
 
 @media only screen and (min-width: 2560px) {
@@ -248,8 +244,8 @@ nav {
 
   header, nav {
   height: 8rem;
-  background-color: $coral;
-  border-bottom: 4px solid $border-color;
+  background-color: $color-primary;
+  border-bottom: 4px solid $color-primary-light;
 }
 
 .navbar.scrolled {
@@ -267,7 +263,7 @@ nav {
       font-size: 36pt;
 
       &:hover {
-        border-bottom: 5px solid $white;
+        border-bottom: 5px solid $color-background;
       }
     }
   }
@@ -400,7 +396,7 @@ nav {
 
   #searchMobile {
     display: flex;
-    border: 2px solid coral;
+    border: 2px solid $color-primary;
     width: 100% !important;
     margin-bottom: 10px;
     margin-right: 0 !important;
@@ -428,7 +424,7 @@ nav {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: $white;
+    background-color: $color-background;
     width: 100%;
     position: fixed;
     top: 0;
@@ -464,7 +460,7 @@ nav {
 
   .loginMenu form, #cartContent {
     margin-top: 0 !important;
-}
+  }
 
   .sidebarMenu .form-group {
     display: flex;
@@ -520,6 +516,7 @@ nav {
           .cartItemButtons {
             display: flex;
             gap: 0.5rem;
+
             button {
               padding: 0.25rem 0.5rem;
             }

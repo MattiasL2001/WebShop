@@ -1,84 +1,82 @@
-$font-family: MuseoModerno, sans-serif;
-$coral: coral;
-$gray: gray;
-$white: white;
+@use "./variables" as *;
 
 #registerForm {
-    margin: 25px auto 0;
-    width: 50%;
-  
-    div {
-      flex-direction: column;
-      align-items: center;
-  
-      h2 {
-        color: $coral;
+  margin: 25px auto 0;
+  width: 50%;
+
+  div {
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      color: $color-primary;
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=date] {
+      width: 250px;
+      height: 40px;
+      padding: 10px;
+      border-radius: 3px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: $color-border;
+      outline: none;
+      font-family: $font-primary;
+      font-size: 16px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      &.registerError {
+        border-color: $color-error;
       }
-  
-      input[type=text], input[type=password], input[type=date] {
-        width: 250px;
-        height: 40px;
-        padding: 10px;
-        border-radius: 3px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $gray;
-        outline: none;
-        font-family: $font-family;
-        font-size: 16px;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    
-        &.registerError {
-            border-color: red;
-        }
-    }
-    
-    }
-
-    #registerButton {
-        margin: 25px 0;
-        width: 175px;
-        height: 35px;
-        background-color: $coral;
-        color: $white;
-        border: none;
-        border-radius: 5px;
-        padding: 8px 15px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-          background-color: rgb(232, 116, 74);
-        }
-
-        &:active {
-          background-color: rgb(216, 107, 68);
-        }
-    }
-  
-    #registerText {
-      font-size: 12px;
-      margin-top: 10px;
-    }
-  }
-  
-  #registerForm div {
-    margin-bottom: 5px;
-  }
-
-  #registerForm div input {
-    height: 20px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    #registerForm {
-      width: auto;
     }
   }
 
-  @media only screen and (min-width: 2560px) {
+  #registerButton {
+    margin: 25px 0;
+    width: 175px;
+    height: 35px;
+    background-color: $color-primary;
+    color: $color-background;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $color-primary-hover;
+    }
+
+    &:active {
+      background-color: $color-primary-active;
+    }
+  }
+
+  #registerText {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+}
+
+#registerForm div {
+  margin-bottom: 5px;
+}
+
+#registerForm div input {
+  height: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  #registerForm {
+    width: auto;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
   #registerForm {
     margin: 100px auto;
     width: 38%;
@@ -86,9 +84,10 @@ $white: white;
     p {
       font-size: 36px;
     }
-    
+
     div {
       gap: 18px;
+
       h2 {
         font-size: 48px;
         line-height: 1.2;

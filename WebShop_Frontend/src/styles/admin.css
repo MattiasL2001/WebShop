@@ -1,10 +1,14 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 .admin-main {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 20px auto;
   padding: 20px;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -16,7 +20,7 @@
 
 .create-button {
   background-color: #007bff;
-  color: white;
+  color: #ffffff;
   border: none;
   width: 150px;
   height: 40px;
@@ -41,14 +45,14 @@
 .tabs .adminTab {
   padding: 10px 20px;
   font-size: 1em;
-  background-color: #f5f5f5;
+  background-color: rgb(245, 245, 245);
   border: none;
   cursor: pointer;
   border-radius: 5px 5px 0 0;
   margin-right: 5px;
 }
 .tabs .adminTab.active {
-  background-color: white;
+  background-color: #ffffff;
   color: coral;
   border-bottom: 2px solid coral;
 }
@@ -68,9 +72,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid rgb(245, 245, 245);
   width: 100%;
-  background-color: white;
+  background-color: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-bottom: 10px;
@@ -89,7 +93,7 @@
 }
 .item-list .item .edit-button {
   background-color: coral;
-  color: white;
+  color: #ffffff;
 }
 .item-list .item .edit-button:hover {
   background-color: rgb(232, 116, 74);
@@ -99,7 +103,7 @@
 }
 .item-list .item .delete-button {
   background-color: red;
-  color: white;
+  color: #ffffff;
 }
 .item-list .item .delete-button:hover {
   background-color: #cc0000;
@@ -122,7 +126,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: #ffffff;
   padding: 20px;
   border-radius: 10px;
   width: 500px;
@@ -153,7 +157,7 @@
 .modal-content .edit-form .form-group input {
   width: 95%;
   padding: 10px;
-  border: 1px solid #f5f5f5;
+  border: 1px solid rgb(245, 245, 245);
   border-radius: 5px;
 }
 .modal-content .form-actions {
@@ -170,7 +174,7 @@
 }
 .modal-content .form-actions .save-button {
   background-color: coral;
-  color: white;
+  color: #ffffff;
 }
 .modal-content .form-actions .save-button:hover {
   background-color: rgb(232, 116, 74);
@@ -179,8 +183,8 @@
   background-color: rgb(216, 107, 68);
 }
 .modal-content .form-actions .cancel-button {
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: rgb(245, 245, 245);
+  color: rgb(43, 43, 43);
 }
 .modal-content .form-actions .cancel-button:hover {
   background-color: rgb(219.5, 219.5, 219.5);

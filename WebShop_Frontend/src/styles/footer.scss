@@ -1,68 +1,69 @@
-$white: white;
+@use "./variables" as *;
 
 footer {
-    display: flex;
-    margin-top: auto;
-    height: 150px;
-    background-color: rgb(43, 43, 43);
-    color: rgb(245, 245, 245);
-  
-    div {
-      display: flex;
-      width: 80%;
-  
-      &.footer-left {
-        margin: auto;
-        flex-direction: column;
-        align-items: start;
-        width: 50%;
-        pointer-events: none;
-        cursor: default;
-  
-        a {
-          text-decoration: none;
-          color: $white;
-        }
-      }
-  
-      &.footer-middle {
-        flex-direction: column;
-        justify-content: end;
-        align-items: center;
-        width: 100px;
-  
-        img {
-          height: 36px;
-          width: 36px;
-        }
-      }
-  
-      &.footer-right {
-        margin: auto;
-        flex-direction: column;
-        align-items: end;
-        width: 50%;
-  
-        a {
-          text-decoration: none;
-          color: $white;
-        }
-      }
-    }
-  }
-  
-  @media only screen and (max-width: 500px) {
-    .footer-left a, .footer-right a {
-      font-size: 12px;
-    }
-  }
+  display: flex;
+  margin-top: auto;
+  height: 150px;
+  background-color: $color-text-dark;
+  color: $color-surface;
 
-  @media only screen and (min-width: 2560px) {
-    footer {
-      height: 300px;
+  div {
+    display: flex;
+    width: 80%;
+
+    &.footer-left {
+      margin: auto;
+      flex-direction: column;
+      align-items: start;
+      width: 50%;
+      pointer-events: none;
+      cursor: default;
 
       a {
-        font-size: 24px;
+        text-decoration: none;
+        color: $color-background;
+      }
+    }
+
+    &.footer-middle {
+      flex-direction: column;
+      justify-content: end;
+      align-items: center;
+      width: 100px;
+
+      img {
+        height: 36px;
+        width: 36px;
+      }
+    }
+
+    &.footer-right {
+      margin: auto;
+      flex-direction: column;
+      align-items: end;
+      width: 50%;
+
+      a {
+        text-decoration: none;
+        color: $color-background;
       }
     }
   }
+}
+
+@media only screen and (max-width: 500px) {
+  .footer-left a,
+  .footer-right a {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  footer {
+    height: 300px;
+
+    a {
+      font-size: 24px;
+    }
+  }
+}

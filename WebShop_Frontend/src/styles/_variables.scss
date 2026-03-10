@@ -1,0 +1,43 @@
+/* FONTS */
+
+$font-primary: "MuseoModerno", sans-serif;
+$font-family: $font-primary;
+
+
+/* BASE COLORS */
+
+$color-primary: coral;
+$color-primary-hover: rgb(232, 116, 74);
+$color-primary-active: rgb(216, 107, 68);
+$color-primary-light: rgb(250, 118, 70);
+
+$color-background: #ffffff;
+$color-surface: rgb(245, 245, 245);
+$color-surface-hover: rgb(235, 235, 235);
+
+$color-text: #333;
+$color-text-dark: rgb(43, 43, 43);
+
+$color-border: #ccc;
+$color-border-light: #ddd;
+
+$color-shadow: rgba(0,0,0,0.1);
+
+$color-error: #f44336;
+$color-error-dark: #d32f2f;
+
+
+/* TYPOGRAPHY SIZES */
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-md: 18px;
+$font-size-lg: 24px;
+$font-size-xl: 36px;
+
+
+/* UI */
+
+$border-radius: 6px;
+$transition-fast: 0.2s ease;

@@ -1,8 +1,4 @@
-$font-family: MuseoModerno, sans-serif;
-$coral: coral;
-$white: white;
-$black: black;
-$gray: gray;
+@use "./variables" as *;
 
 #searchArticles {
   display: flex;
@@ -11,7 +7,7 @@ $gray: gray;
   margin: 50px auto 50px;
   width: 80%;
   height: 100px;
-  background-color: $white;
+  background-color: $color-background;
 }
 
 select {
@@ -19,17 +15,18 @@ select {
   outline: none;
 }
 
-.filter, #sort {
+.filter,
+#sort {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   width: 20%;
   height: 35px;
-  background-color: rgb(245, 245, 245);
+  background-color: $color-surface;
 
   &:hover {
     cursor: pointer;
-    border: 1px solid $coral;
+    border: 1px solid $color-primary;
   }
 }
 
@@ -37,17 +34,17 @@ select {
 .error,
 .no-products {
   text-align: center;
-  font-family: $font-family;
-  color: $gray;
+  font-family: $font-primary;
+  color: $color-border;
   padding: 20px;
 }
 
 .loading {
-  color: $coral;
+  color: $color-primary;
 }
 
 .error {
-  color: red;
+  color: $color-error;
 }
 
 #articles {
@@ -63,14 +60,14 @@ select {
   margin-bottom: 50px !important;
   height: auto;
   padding: 20px;
-  background-color: $white;
+  background-color: $color-background;
   cursor: pointer;
   text-decoration: none;
-  color: $black;
+  color: $color-text-dark;
 
   h2 {
     font-size: 18px;
-    color: $coral;
+    color: $color-primary;
     margin-bottom: 10px;
   }
 
@@ -111,8 +108,8 @@ select {
 
   .pagination-arrow {
     border: none;
-    color: coral;
-    font-family: MuseoModerno, sans-serif;
+    color: $color-primary;
+    font-family: $font-primary;
     font-size: 36px;
     width: 40px;
     height: 40px;
@@ -124,7 +121,7 @@ select {
 
     &:disabled {
       cursor: default;
-      color: $gray;
+      color: $color-border;
     }
   }
 
@@ -132,17 +129,17 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: $font-family;
+    font-family: $font-primary;
     font-size: 20px;
     margin: 0 10px;
-    color: $black;
+    color: $color-text-dark;
   }
 
   .page-number {
-    background-color: $white;
-    border: 1px solid $coral;
-    color: $coral;
-    font-family: $font-family;
+    background-color: $color-background;
+    border: 1px solid $color-primary;
+    color: $color-primary;
+    font-family: $font-primary;
     font-size: 16px;
     padding: 10px;
     margin: 0 5px;
@@ -156,14 +153,14 @@ select {
     transition: background-color 0.3s ease, color 0.3s ease;
 
     &.active {
-      background-color: $coral;
-      color: $white;
-      border-color: $coral;
+      background-color: $color-primary;
+      color: $color-background;
+      border-color: $color-primary;
     }
 
     &:hover {
-      background-color: rgba($coral, 0.1);
-      color: $coral;
+      background-color: rgba($color-primary, 0.1);
+      color: $color-primary;
     }
   }
 }
@@ -193,77 +190,80 @@ select {
 
   select {
     outline: none;
-    font-family: $font-family;
+    font-family: $font-primary;
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
-    color: $black;
-  
+    color: $color-text-dark;
+
     &:focus {
       outline: none;
-      border-color: darken($coral, 10%);
+      border-color: darken($color-primary, 10%);
     }
   }
-  
+
   option {
-    color: $black;
+    color: $color-text-dark;
   }
-  .filter, #sort {
+
+  .filter,
+  #sort {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     width: 75%;
     height: 35px;
-    background-color: rgb(245, 245, 245);
-  
+    background-color: $color-surface;
+
     &:hover {
       cursor: pointer;
-      border: 1px solid $coral;
+      border: 1px solid $color-primary;
     }
   }
 }
 
 @media only screen and (min-width: 2560px) {
-  
+
   .pagination-control {
-  margin: 20px 0;
+    margin: 20px 0;
 
-  .pagination-arrow {
-    font-size: 72px;
-    width: 80px;
-    height: 80px;
+    .pagination-arrow {
+      font-size: 72px;
+      width: 80px;
+      height: 80px;
+    }
+
+    .pagination-info {
+      font-size: 36px;
+      margin: 0 20px;
+    }
   }
 
-  .pagination-info {
-    font-size: 36px;
-    margin: 0 20px;
+  #searchArticles {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 50px auto 50px;
+    width: 80%;
+    height: 100px;
+    background-color: $color-background;
   }
-}
 
-#searchArticles {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin: 50px auto 50px;
-  width: 80%;
-  height: 100px;
-  background-color: $white;
-}
-
-select {
-  border: none;
-  outline: none;
-}
-
-.filter, #sort {
-  font-size: 24px;
-  width: 20%;
-  height: 60px;
-  background-color: rgb(245, 245, 245);
-
-  &:hover {
-    cursor: pointer;
-    border: 1px solid $coral;
+  select {
+    border: none;
+    outline: none;
   }
-}
+
+  .filter,
+  #sort {
+    font-size: 24px;
+    width: 20%;
+    height: 60px;
+    background-color: $color-surface;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $color-primary;
+    }
+  }
 }

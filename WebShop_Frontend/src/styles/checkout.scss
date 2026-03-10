@@ -1,14 +1,11 @@
-$font-family: MuseoModerno, sans-serif;
-$coral: coral;
-$gray: gray;
-$white: white;
+@use "./variables" as *;
 
 #checkoutArticles {
-  border-right: 2px solid $coral;
+  border-right: 2px solid $color-primary;
 }
 
 .arrowIcon {
-  fill: $coral;
+  fill: $color-primary;
 }
 
 .cart-item {
@@ -22,10 +19,10 @@ $white: white;
 }
 
 .cart-item-buttons button {
-  color: $white;
+  color: $color-background;
   border: solid;
   border-width: 1px;
-  border-color: $coral;
+  border-color: $color-primary;
   border-radius: 5px;
   cursor: pointer;
   padding: 5px 10px;
@@ -35,13 +32,12 @@ $white: white;
 }
 
 .cart-item-buttons button:hover {
-  box-shadow: 0 0 3px $coral;
+  box-shadow: 0 0 3px $color-primary;
 }
 
 .cart-item-buttons button:active {
-  box-shadow: 0 0 5px $coral;
+  box-shadow: 0 0 5px $color-primary;
 }
-
 
 #shippingInfo,
 #paymentInfo {
@@ -82,7 +78,7 @@ $white: white;
 }
 
 #checkoutForm h2 {
-  color: $coral;
+  color: $color-primary;
   margin-bottom: 20px;
 }
 
@@ -91,7 +87,7 @@ $white: white;
   margin: 8px 0;
   border: none;
   outline: none;
-  font-family: $font-family;
+  font-family: $font-primary;
   font-size: 16px;
 }
 
@@ -99,10 +95,11 @@ $white: white;
 #checkoutForm input[type=date],
 #checkoutForm input[type=month] {
   border-radius: 5px;
-  border: 1px solid $gray;
+  border: 1px solid $color-border;
 }
 
-#shippingInfo input, #paymentInfo input {
+#shippingInfo input,
+#paymentInfo input {
   padding: 10px;
   width: 100%;
 }
@@ -113,8 +110,8 @@ $white: white;
 
 #placeOrderButton {
   width: 100%;
-  background-color: $coral;
-  color: $white;
+  background-color: $color-primary;
+  color: $color-background;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -122,11 +119,11 @@ $white: white;
 }
 
 #placeOrderButton:hover {
-  background-color: rgb(232, 116, 74);
+  background-color: $color-primary-hover;
 }
 
 #placeOrderButton:active {
-  background-color: rgb(216, 107, 68);
+  background-color: $color-primary-active;
 }
 
 .toggleSection {
@@ -168,8 +165,10 @@ $white: white;
     width: 40% !important;
   }
 
-  #checkoutArticles, #checkoutPayment,
-  #shippingInfo input, #paymentInfo input {
+  #checkoutArticles,
+  #checkoutPayment,
+  #shippingInfo input,
+  #paymentInfo input {
     width: 75%;
   }
 }
@@ -178,6 +177,7 @@ $white: white;
   .arrowIcon {
     display: none;
   }
+
   .toggleSection {
     cursor: default;
   }

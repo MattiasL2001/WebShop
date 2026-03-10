@@ -1,3 +1,7 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 .loginBackdrop, .cartBackdrop {
   position: fixed;
   z-index: 100;
@@ -23,7 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: #ffffff;
   padding: 0px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -42,7 +46,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: white;
+  background: #ffffff;
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
@@ -135,16 +139,19 @@
   max-width: 200px;
 }
 
-.loginBackdrop.open .loginMenu, .cartBackdrop.open .cartMenu {
+.loginBackdrop.open .loginMenu,
+.cartBackdrop.open .cartMenu {
   right: 0;
 }
 
-.loginMenu h2, .cartMenu h2 {
+.loginMenu h2,
+.cartMenu h2 {
   color: coral;
   margin-bottom: 20px;
 }
 
-.form-group, .cartContent {
+.form-group,
+.cartContent {
   margin-bottom: 10px;
 }
 
@@ -168,7 +175,7 @@
 .form-button {
   width: 100%;
   background-color: coral;
-  color: white;
+  color: #ffffff;
   padding: 10px;
   margin: 8px 0;
   border: none;
@@ -233,7 +240,7 @@
 }
 .cartItem .cartItemDetails .cartItemLink {
   text-decoration: none;
-  color: #333;
+  color: rgb(43, 43, 43);
   font-weight: bold;
 }
 .cartItem .cartItemDetails .cartItemLink:hover {
@@ -261,7 +268,7 @@
 
 .cartItemLink {
   flex: 1;
-  color: black;
+  color: rgb(43, 43, 43);
   text-decoration: none;
   font-family: "MuseoModerno", sans-serif;
 }
@@ -286,7 +293,7 @@
 
 .checkoutButton {
   background-color: coral;
-  color: white;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;

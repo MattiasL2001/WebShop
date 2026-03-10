@@ -1,12 +1,5 @@
+@use "./variables" as *;
 @import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap");
-
-$font-family: MuseoModerno, sans-serif;
-$coral: coral;
-$border-color: rgb(250, 118, 70);
-$white: white;
-$black: black;
-$gray: gray;
-$purple: purple;
 
 *, *::before, *::after { box-sizing: border-box; }
 img, svg, video, canvas { max-width: 100%; height: auto; display: block; }
@@ -14,7 +7,7 @@ img, svg, video, canvas { max-width: 100%; height: auto; display: block; }
 * {
   margin: 0;
   padding: 0;
-  font-family: $font-family;
+  font-family: $font-primary;
 
   input[type="search"]::-webkit-search-decoration,
   input[type="search"]::-webkit-search-cancel-button,
@@ -41,10 +34,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  background-color: rgb(245, 245, 245);
+  background-color: $color-surface;
 }
 
-#articleForm, #descriptionText, #article, #description, #buyDiv, #articles, 
+#articleForm, #descriptionText, #article, #description, #buyDiv, #articles,
 #supportText, .row, .item, .buyButton, #cartMenu, #loginMenu, #loginRegister, footer {
   display: flex;
   justify-content: center;
@@ -58,8 +51,8 @@ body {
 }
 
 #descriptionText {
-  border: 1px solid $gray;
-  background-color: $white;
+  border: 1px solid $color-border;
+  background-color: $color-background;
   margin: 25px auto;
   width: 50%;
   max-width: 960px;
@@ -67,7 +60,7 @@ body {
 
 #article {
   flex-direction: column;
-  background-color: $white;
+  background-color: $color-background;
   margin: auto;
   width: 20%;
   max-width: 384px;
@@ -100,20 +93,20 @@ body {
   }
 
   #quantity {
-    border: 1px solid $coral;
+    border: 1px solid $color-primary;
   }
 
   h2 {
-    background-color: $purple;
+    background-color: $color-primary-light;
   }
 }
 
 .add-to-cart-button:hover {
-  background-color: rgb(232, 116, 74);
+  background-color: $color-primary;
 }
 
 .add-to-cart-button:active {
-  background-color: rgb(216, 107, 68);
+  background-color: $color-primary-active;
 }
 
 #supportText {
@@ -132,15 +125,15 @@ body {
   flex-direction: column;
   margin: 20px 0;
   text-decoration: none;
-  color: $black;
-  background-color: rgb(245, 245, 245);
+  color: $color-text-dark;
+  background-color: $color-surface;
   width: 25%;
   max-width: 480px;
   flex: 1 1 25%;
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(235, 235, 235);
+    background-color: $color-surface-hover;
   }
 
   img {
@@ -159,43 +152,43 @@ body {
 }
 
 .buyButton {
-  background-color: $coral;
+  background-color: $color-primary;
 
   &:hover {
-    background-color: rgb(232, 116, 74);
+    background-color: $color-primary-hover;
   }
 
   &:active {
-    background-color: rgb(216, 107, 68);
+    background-color: $color-primary-active;
   }
 }
 
 #cartContent div a {
   text-decoration: none;
-  color: $black;
+  color: $color-text-dark;
 }
 
 #basketButton, #loginButton {
-  background-color: $coral;
-  color: $white;
+  background-color: $color-primary;
+  color: $color-background;
   border: none;
-  border-radius: 5px;
+  border-radius: $border-radius;
   padding: 8px 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: rgb(232, 116, 74);
+    background-color: $color-primary-hover;
   }
 
   &:active {
-    background-color: rgb(216, 107, 68);
+    background-color: $color-primary-active;
   }
 }
 
 #homePageLink {
-  color: $black;
-  size: 24px;
+  color: $color-text-dark;
+  font-size: $font-size-lg;
 }
 
 #noPage {

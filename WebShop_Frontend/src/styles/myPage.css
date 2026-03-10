@@ -1,3 +1,7 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 .page-container {
   width: 50%;
   margin: 0 auto;
@@ -43,11 +47,10 @@
   transition: background-color 0.3s ease;
   text-align: left;
   width: 100%;
-  text-align: left;
 }
 .tabs button.active {
   background-color: coral;
-  color: #fff;
+  color: #ffffff;
 }
 .tabs button:hover:not(.active) {
   background-color: #ddd;
@@ -60,19 +63,22 @@
   width: 50%;
 }
 
-#userForm, #purchaseHistory {
+#userForm,
+#purchaseHistory {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#userForm h2, #purchaseHistory h2 {
+#userForm h2,
+#purchaseHistory h2 {
   color: coral;
   font-size: 24px;
   margin-bottom: 20px;
 }
 #userForm input[type=text],
 #userForm input[type=password],
-#userForm input[type=button], #purchaseHistory input[type=text],
+#userForm input[type=button],
+#purchaseHistory input[type=text],
 #purchaseHistory input[type=password],
 #purchaseHistory input[type=button] {
   width: 100%;
@@ -84,26 +90,31 @@
   border-radius: 5px;
   box-sizing: border-box;
 }
-#userForm input[type=text][readonly], #purchaseHistory input[type=text][readonly] {
-  background-color: #f0f0f0;
-  color: #333;
+#userForm input[type=text][readonly],
+#purchaseHistory input[type=text][readonly] {
+  background-color: rgb(245, 245, 245);
+  color: rgb(43, 43, 43);
 }
-#userForm input[type=button], #purchaseHistory input[type=button] {
+#userForm input[type=button],
+#purchaseHistory input[type=button] {
   background-color: coral;
-  color: #fff;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-#userForm input[type=button]:hover, #purchaseHistory input[type=button]:hover {
+#userForm input[type=button]:hover,
+#purchaseHistory input[type=button]:hover {
   background-color: rgb(232, 116, 74);
 }
-#userForm input[type=button]:active, #purchaseHistory input[type=button]:active {
+#userForm input[type=button]:active,
+#purchaseHistory input[type=button]:active {
   background-color: rgb(216, 107, 68);
 }
-#userForm .delete-button, #purchaseHistory .delete-button {
+#userForm .delete-button,
+#purchaseHistory .delete-button {
   background-color: #f44336;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   padding: 10px;
@@ -111,13 +122,16 @@
   transition: background-color 0.3s ease;
   margin-bottom: 25px;
 }
-#userForm .delete-button:hover, #purchaseHistory .delete-button:hover {
+#userForm .delete-button:hover,
+#purchaseHistory .delete-button:hover {
   background-color: #d32f2f;
 }
-#userForm .delete-button:active, #purchaseHistory .delete-button:active {
-  background-color: #b71c1c;
+#userForm .delete-button:active,
+#purchaseHistory .delete-button:active {
+  background-color: rgb(170.8571428571, 36.1428571429, 36.1428571429);
 }
-#userForm .order, #purchaseHistory .order {
+#userForm .order,
+#purchaseHistory .order {
   list-style: none;
   border-bottom: 2px solid coral;
   padding: 12px;
@@ -125,7 +139,8 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.order ul, .order li {
+.order ul,
+.order li {
   list-style: none;
   margin: 0;
   padding: 0;

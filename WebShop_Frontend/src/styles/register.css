@@ -1,3 +1,7 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 #registerForm {
   margin: 25px auto 0;
   width: 50%;
@@ -9,30 +13,34 @@
 #registerForm div h2 {
   color: coral;
 }
-#registerForm div input[type=text], #registerForm div input[type=password], #registerForm div input[type=date] {
+#registerForm div input[type=text],
+#registerForm div input[type=password],
+#registerForm div input[type=date] {
   width: 250px;
   height: 40px;
   padding: 10px;
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: gray;
+  border-color: #ccc;
   outline: none;
-  font-family: MuseoModerno, sans-serif;
+  font-family: "MuseoModerno", sans-serif;
   font-size: 16px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
-#registerForm div input[type=text].registerError, #registerForm div input[type=password].registerError, #registerForm div input[type=date].registerError {
-  border-color: red;
+#registerForm div input[type=text].registerError,
+#registerForm div input[type=password].registerError,
+#registerForm div input[type=date].registerError {
+  border-color: #f44336;
 }
 #registerForm #registerButton {
   margin: 25px 0;
   width: 175px;
   height: 35px;
   background-color: coral;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   padding: 8px 15px;

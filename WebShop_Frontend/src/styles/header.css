@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500&display=swap");
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 body {
   font-family: "MuseoModerno", sans-serif;
 }
@@ -60,7 +64,7 @@ header, nav {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  color: white;
+  color: #ffffff;
   font-weight: 500;
   font-size: 20pt;
 }
@@ -87,7 +91,7 @@ header, nav {
   top: -5px;
   right: -5px;
   background-color: red;
-  color: white;
+  color: #ffffff;
   border-radius: 50%;
   padding: 0;
   width: 20px;
@@ -117,14 +121,14 @@ nav #nav-left, nav #nav-left-logout {
 }
 nav #nav-left a, nav #nav-left-logout a {
   height: 100%;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
   margin: 0 10px 0 20px;
   font-weight: 500;
   font-size: 20pt;
 }
 nav #nav-left a:hover, nav #nav-left-logout a:hover {
-  border-bottom: 5px solid white;
+  border-bottom: 5px solid #ffffff;
 }
 nav #nav-right, nav #nav-right-logout {
   display: flex;
@@ -151,7 +155,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 10px;
   height: 40px;
   width: 40%;
@@ -204,7 +208,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
 }
 
 #logoutButton {
-  color: white;
+  color: #ffffff;
 }
 
 @media only screen and (min-width: 2560px) {
@@ -229,7 +233,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
     font-size: 36pt;
   }
   nav #nav-left a:hover, nav #nav-left-logout a:hover {
-    border-bottom: 5px solid white;
+    border-bottom: 5px solid #ffffff;
   }
   nav #nav-right, nav #nav-right-logout {
     margin-right: 10%;
@@ -359,7 +363,7 @@ nav #nav-right img, nav #nav-right svg, nav #nav-right-logout img, nav #nav-righ
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #ffffff;
     width: 100%;
     position: fixed;
     top: 0;

@@ -1,3 +1,7 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 #checkoutArticles {
   border-right: 2px solid coral;
 }
@@ -17,7 +21,7 @@
 }
 
 .cart-item-buttons button {
-  color: white;
+  color: #ffffff;
   border: solid;
   border-width: 1px;
   border-color: coral;
@@ -85,7 +89,7 @@
   margin: 8px 0;
   border: none;
   outline: none;
-  font-family: MuseoModerno, sans-serif;
+  font-family: "MuseoModerno", sans-serif;
   font-size: 16px;
 }
 
@@ -93,10 +97,11 @@
 #checkoutForm input[type=date],
 #checkoutForm input[type=month] {
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 1px solid #ccc;
 }
 
-#shippingInfo input, #paymentInfo input {
+#shippingInfo input,
+#paymentInfo input {
   padding: 10px;
   width: 100%;
 }
@@ -108,7 +113,7 @@
 #placeOrderButton {
   width: 100%;
   background-color: coral;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -158,8 +163,10 @@
   #placeOrderButton {
     width: 40% !important;
   }
-  #checkoutArticles, #checkoutPayment,
-  #shippingInfo input, #paymentInfo input {
+  #checkoutArticles,
+  #checkoutPayment,
+  #shippingInfo input,
+  #paymentInfo input {
     width: 75%;
   }
 }

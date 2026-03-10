@@ -1,3 +1,7 @@
+/* FONTS */
+/* BASE COLORS */
+/* TYPOGRAPHY SIZES */
+/* UI */
 footer {
   display: flex;
   margin-top: auto;
@@ -19,7 +23,7 @@ footer div.footer-left {
 }
 footer div.footer-left a {
   text-decoration: none;
-  color: white;
+  color: #ffffff;
 }
 footer div.footer-middle {
   flex-direction: column;
@@ -39,11 +43,12 @@ footer div.footer-right {
 }
 footer div.footer-right a {
   text-decoration: none;
-  color: white;
+  color: #ffffff;
 }
 
 @media only screen and (max-width: 500px) {
-  .footer-left a, .footer-right a {
+  .footer-left a,
+  .footer-right a {
     font-size: 12px;
   }
 }
