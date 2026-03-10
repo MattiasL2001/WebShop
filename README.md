@@ -35,6 +35,11 @@ Welcome to **Webstore**, a modern and simple e-commerce application built to sho
 
 ![Skärmbild 2025-02-07 153927](https://github.com/user-attachments/assets/0b566d5e-a1b1-4360-958a-23c4fb2158b0)
 ![Skärmbild 2025-02-07 154403](https://github.com/user-attachments/assets/4df58b9f-ec86-4d5e-89cc-4956ced07d9d)
+
+<img width="1912" height="916" alt="Skärmbild 2026-03-10 140800" src="https://github.com/user-attachments/assets/29af1839-7aca-430b-a302-e1030c825710" />
+<img width="1918" height="912" alt="Skärmbild 2026-03-10 140813" src="https://github.com/user-attachments/assets/e157f112-42e3-4b4a-a674-f8f1b460f30c" />
+
+
 ![Skärmbild 2025-02-07 154112](https://github.com/user-attachments/assets/93b429c2-49fd-4c77-b69c-30e402af7b76)
 ![Skärmbild 2025-02-07 154345](https://github.com/user-attachments/assets/740dbba8-2990-4b99-ad30-0bb5b9f8a72d)
 ![Skärmbild 2025-02-07 154030](https://github.com/user-attachments/assets/c7cb2f25-971f-4727-9e14-2000f68b72aa)
